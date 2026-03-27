@@ -1,10 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
+import dynamic from 'next/dynamic'
 import { Plus, TrendingUp, Ruler, Weight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
-import { GrowthChart } from '@/components/charts/GrowthChart'
 import { Button } from '@/components/ui/Button'
+
+const GrowthChart = dynamic(
+  () => import('@/components/charts/GrowthChart').then(m => ({ default: m.GrowthChart })),
+  {
+    loading: () => <div className="h-48 flex items-center justify-center text-gray-400 text-sm">載入圖表中…</div>,
+    ssr: false,
+  }
+)
 import { Input } from '@/components/ui/Input'
 import { Card } from '@/components/ui/Card'
 import { formatAge, calcAgeMonths } from '@/lib/utils'

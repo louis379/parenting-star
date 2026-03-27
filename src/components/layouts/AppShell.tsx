@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, TrendingUp, Utensils, Star, Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const navItems = [
   { href: '/dashboard', icon: Home, label: '首頁' },
@@ -19,7 +20,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen" style={{ background: '#fffbf5' }}>
       <main className="pb-nav max-w-md mx-auto">
-        {children}
+        <ErrorBoundary>{children}</ErrorBoundary>
       </main>
 
       {/* Bottom Navigation */}
