@@ -13,58 +13,100 @@ type SituationType = 'crying' | 'social' | 'focus' | 'sleep' | 'separation'
 
 const AGE_GROUPS = [
   { key: '0-6m', label: '0–6月' },
-  { key: '6-18m', label: '6–18月' },
-  { key: '18m-3y', label: '18月–3歲' },
-  { key: '3-6y', label: '3–6歲' },
-  { key: '6-12y', label: '6–12歲' },
+  { key: '6-12m', label: '6–12月' },
+  { key: '1-2y', label: '1–2歲' },
+  { key: '2-3y', label: '2–3歲' },
+  { key: '3-5y', label: '3–5歲' },
+  { key: '6-8y', label: '6–8歲' },
+  { key: '9-12y', label: '9–12歲' },
 ]
 
 const EMOTION_DATA: Record<string, {
   title: string
+  subtitle: string
   features: string[]
   normal: string[]
+  rightGuide: string[]
+  wrongGuide: string[]
+  scriptExample: string
   warnings: string[]
-  tip: string
   evidence: string
 }> = {
   '0-6m': {
     title: '基礎情緒期',
-    features: ['能感受快樂、悲傷、驚訝、厭惡等基本情緒', '主要透過哭泣表達需求', '對照顧者聲音有明顯反應'],
-    normal: ['哭聲不同（餓/累/痛）', '對人臉有特別注意', '4–6月開始社交微笑'],
-    warnings: ['持續哭泣超過3小時（腸絞痛注意）', '缺乏眼神接觸', '對聲音無反應'],
-    tip: '規律回應哭聲，建立安全感。不要擔心「寵壞」—— 及時回應是建立依附的基礎。',
+    subtitle: '社交性微笑、依附萌發',
+    features: ['能感受快樂、悲傷、驚訝、厭惡等基本情緒', '約6週出現社交微笑（非反射性，真正回應人臉）', '眼神接觸成為社交溝通的最初工具', '哭泣是唯一溝通方式，已開始分化（餓/累/痛/無聊）', '對照顧者聲音有特別的情緒反應'],
+    normal: ['哭聲開始出現差異（餓哭/累哭/痛哭節奏不同）', '被特定照顧者的聲音安撫比陌生人更快', '約6–8週出現第一個真正的社交微笑', '對人臉有特別注意，尤其是眼睛區域'],
+    rightGuide: ['及時回應哭聲（建立信任基礎，不用擔心「寵壞」）', '做誇張表情逗笑，等待嬰兒「回應」後再繼續（輪流模式）', '和嬰兒說話時語調誇張放慢（親子語）', '維持固定照顧者，一致性建立安全感'],
+    wrongGuide: ['讓嬰兒長時間哭泣不回應（損害依附安全感）', '讓太多不同陌生人照顧，照顧者不穩定', '說「哭什麼哭，不哭了」否定哭泣行為'],
+    scriptExample: '當寶寶哭泣：「媽媽來了，你餓了嗎？媽媽在這裡，沒事的。」（溫柔、確定語氣，抱起後輕拍後背，配合安撫聲「嘘嘘嘘」）',
+    warnings: ['6週後仍無任何社交微笑', '對照顧者聲音無特別反應', '持續缺乏眼神接觸', '哭泣超過3小時/天（腸絞痛需就醫）'],
     evidence: 'Cochrane A',
   },
-  '6-18m': {
+  '6-12m': {
     title: '社會情緒萌發',
-    features: ['陌生人焦慮出現（約8月）', '開始模仿大人表情', '分離焦慮高峰期（9–18月）'],
-    normal: ['看到陌生人哭鬧', '找不到媽媽時焦慮', '喜歡躲貓貓遊戲'],
-    warnings: ['完全無分離焦慮（可能依附問題）', '18月後仍無指物動作', '缺乏共同注意力'],
-    tip: '建立固定照顧者，減少突然分離。分開時給予固定告別儀式，增加可預測性。',
+    subtitle: '陌生人焦慮、物體恆存、分離焦慮高峰',
+    features: ['陌生人焦慮出現（約7–8月，看到陌生人哭/縮回）', '分離焦慮開始（約9月），高峰在12–18月', '物體恆存概念發展（約8–12月，知道消失的東西還在）', '共同注意力出現（9–12月，指著東西讓照顧者也看）', '能理解照顧者會離開、也會回來'],
+    normal: ['看到陌生人哭鬧或轉頭躲進照顧者懷中', '媽媽離開時嚎啕大哭（正常依附反應）', '搜尋消失的玩具（把布蓋住玩具後會翻找）', '喜歡躲貓貓遊戲（練習「消失→出現」概念）'],
+    rightGuide: ['建立固定告別儀式（「媽媽去工作，3點回來接你」）', '照顧者離開時要說再見，不要偷偷走，建立可預測性', '讓孩子接觸不同的人（在安全範圍內，減少日後過度焦慮）', '玩藏貓貓幫助理解「消失後還會回來」，Cochrane證實有效'],
+    wrongGuide: ['趁孩子不注意偷溜走（短期有效，長期損害信任感）', '嘲笑分離焦慮「這麼大了還哭」', '強迫孩子跟陌生人互動（「快叫阿姨！」）'],
+    scriptExample: '「媽媽要去工作了，阿公會陪你玩。下午3點媽媽會回來，我們拍拍手說拜拜。」（平靜自信語氣，快速告別，不要猶豫徘徊，回頭越多孩子越焦慮）',
+    warnings: ['完全無分離焦慮（可能有依附建立問題）', '18月後仍無指物動作', '對所有人反應完全相同（照顧者與陌生人無區別）', '缺乏共同注意力（不會看你再看物品）'],
     evidence: 'Cochrane A',
   },
-  '18m-3y': {
-    title: '自我意識覺醒',
-    features: ['「可怕的兩歲」，強烈表達自主意志', '情緒起伏大，轉換困難', '開始理解羞愧/驕傲等複雜情緒'],
-    normal: ['因挫折大哭大鬧', '說「不要」頻繁', '搶玩具、咬人（情緒調節不足）'],
-    warnings: ['語言理解明顯落後', '對同伴完全無興趣', '重複行為影響日常生活'],
-    tip: '給予選擇空間（「要蘋果還是香蕉？」），用語言幫孩子命名情緒（「你很生氣，因為……」）。',
+  '1-2y': {
+    title: '自我意識萌芽',
+    subtitle: 'Terrible Two前期、平行遊戲、自主意志',
+    features: ['自我意識萌芽（約15–18月照鏡子認出自己）', '「不要」成為最常說的詞，表達自主意志', '平行遊戲（各玩各的，不真正互動，這是正常的！）', '情緒爆發期開始，挫折耐受度低', '象徵遊戲開始（拿木棍當電話打）'],
+    normal: ['因任何事情說「不要」，即使自己想要', '搶走其他孩子的玩具（所有權概念未建立）', '挫折時大哭倒地，四肢亂打', '玩耍時不願意分享（2歲前大腦尚無法理解分享）'],
+    rightGuide: ['提供受限選擇（「要喝水還是牛奶？」而非「要喝什麼？」）', '用語言命名孩子的情緒（「你現在很生氣，因為積木倒了」）', '允許孩子近距離觀察其他孩子玩，不強迫互動', '設定溫和但堅定的界限，態度平靜不動搖'],
+    wrongGuide: ['強迫分享（此年齡大腦無法真正理解分享，只會製造衝突）', '在情緒爆發高峰時講道理（無法吸收，等平靜後再說）', '體罰或長時間隔離懲罰'],
+    scriptExample: '孩子搶玩具後哭鬧：「我看到你很想要那個玩具，你很不開心。現在玩具是小明的，等他玩完換你。我們去找另一個車子，你要這輛嗎？」（承認情緒→解釋規則→立刻轉移注意）',
+    warnings: ['18月後仍無任何有意義的詞彙', '對他人痛苦完全無反應（無同理心萌芽）', '重複刻板行為影響日常', '眼神接觸持續缺乏'],
     evidence: 'Cochrane A',
   },
-  '3-6y': {
-    title: '情緒理解成長',
-    features: ['能理解他人情緒', '開始玩假想遊戲，同理心萌發', '能用語言描述自己感受'],
-    normal: ['因規則不公平大哭', '害怕黑暗/怪獸（正常恐懼）', '競爭心強，輸了很難受'],
-    warnings: ['持續攻擊同伴', '極度恐懼干擾日常', '完全無法等待輪流'],
-    tip: '繪本、角色扮演是情緒教育最佳工具。讓孩子在安全環境中練習處理負面情緒。',
+  '2-3y': {
+    title: '情緒爆發期',
+    subtitle: 'Terrible Two高峰、同理心萌芽、轉換困難',
+    features: ['Terrible Two高峰：情緒調節能力落後語言發展', '轉換困難（從一個活動切換到另一個極度困難）', '同理心開始萌芽（看到別人哭會靠過去安慰）', '象徵遊戲豐富（扮家家酒、扮醫生/老師）', '可理解簡單規則，但挫折時仍難以遵守'],
+    normal: ['因挫折/規則/轉換時哭鬧大叫', '咬人/打人（情緒調節未成熟的出口）', '說「我自己來！」堅持獨立完成', '在地上打滾、屏住呼吸（正常策略，不危險）'],
+    rightGuide: ['提前5分鐘預告轉換（「再5分鐘就要吃飯了，你要再玩一次還是把玩具收好？」）', '幫孩子命名情緒，不要求立刻停止哭泣', '等情緒完全平息後再溝通（前額葉重新上線需時）', '建立固定作息減少不確定感，降低挫折機會'],
+    wrongGuide: ['在情緒爆發時要求「馬上停止哭泣！」', '說「再哭就不要你了」（威脅依附安全感）', '用食物/螢幕轉移情緒（長期養成情緒調節不良模式）', '情緒爆發後立刻給孩子想要的東西（強化爆發行為）'],
+    scriptExample: '孩子不想離開遊樂場：「我知道你玩得很開心，你不想走。再5分鐘，你要再溜一次滑梯還是盪一次鞦韆？」→時間到後：「時間到了，我們說拜拜給溜滑梯聽。下次再來。」（給予最後選擇，平靜執行，不討價還價）',
+    warnings: ['語言理解明顯落後同齡', '對他人痛苦完全無同理反應', '重複刻板行為嚴重影響日常', '攻擊行為頻繁（每天多次，超過年齡應有程度）'],
     evidence: 'Cochrane A',
   },
-  '6-12y': {
-    title: '複雜情緒整合',
-    features: ['能同時感受多種情緒', '開始理解社交規範', '自我調節能力增強'],
-    normal: ['因同伴關係大喜大悲', '對不公平非常敏感', '開始在乎「面子」'],
-    warnings: ['持續退縮、不願上學', '頻繁身體不適（頭痛/胃痛）無生理原因', '明顯情緒低落超過2週'],
-    tip: '教導「情緒日記」，鼓勵表達而非壓抑。讓孩子知道所有情緒都是被允許的。',
+  '3-5y': {
+    title: '想像力與恐懼期',
+    subtitle: '假想遊戲豐富、友誼概念、正常恐懼',
+    features: ['豐富想像力（怪獸/黑暗/死亡等恐懼正常出現）', '友誼概念萌芽，開始有特定好朋友', '能遵守簡單規則，公平感強（「不公平！」）', '去自我中心初步開始（能稍微理解他人觀點）', '謊言出現（想象與現實界線模糊，屬正常發展）'],
+    normal: ['害怕黑暗/怪獸/打雷/陌生環境（4–6歲恐懼高峰）', '輸了遊戲大哭，競爭心強', '說謊（保護自己/取悅大人）', '因規則不公平激烈抗議'],
+    rightGuide: ['承認並命名恐懼（「怪獸讓你很害怕，那很真實的感覺」）', '不嘲笑或否認恐懼，用實際方法「解決」（小夜燈、「趕怪獸噴霧」）', '合作遊戲建立友誼（一起完成任務比競爭更有效）', '用繪本討論情緒和恐懼（《媽媽不見了》《怕黑的小豬》）'],
+    wrongGuide: ['「不要怕，怪獸不存在」（否認感受，徒增焦慮）', '強迫參與社交（「去跟那個小朋友玩！」）', '用競爭激勵（「你看哥哥比你厲害多了」）', '對說謊大發雷霆（此年齡部分謊言是正常發展）'],
+    scriptExample: '孩子怕黑不敢睡：「你感覺到黑暗裡有什麼，那讓你很害怕，我相信你的感覺。我們一起讓房間更安心好嗎？你要小夜燈還是讓門開一點縫？」（先確認感受，再共同解決）',
+    warnings: ['持續攻擊行為（每天，針對特定對象）', '極度恐懼嚴重干擾日常生活（無法上學/睡覺）', '完全無法理解或遵守任何規則', '3歲後完全無友誼形成傾向'],
+    evidence: 'Cochrane A',
+  },
+  '6-8y': {
+    title: '規則意識與同儕壓力期',
+    subtitle: '公平感強、同儕認同、學校適應',
+    features: ['規則意識強，對不公平極度敏感', '同儕認同感增強，在乎朋友眼光', '能較完整理解他人觀點（去自我中心完成）', '自我評價開始受同儕影響', '學習動機可能因同儕競爭而波動'],
+    normal: ['對不公平激烈抗議（「為什麼他可以我不行！」）', '因好友關係起伏情緒大波動', '開始在乎外表和穿著', '強烈競爭心，可能有輕微作弊行為', '做作業時需要確認和鼓勵'],
+    rightGuide: ['先傾聽再分析，不要急著解決人際問題', '幫助孩子自己思考（「那你覺得可以怎麼做？」）', '維持家庭規則一致性，即使孩子說「別人家可以！」', '限制螢幕時間，引導面對面社交技巧', '稱讚努力過程，不只稱讚結果（成長型思維）'],
+    wrongGuide: ['幫孩子解決所有人際問題（剝奪學習機會）', '在乎成績多於學習過程', '說「不要管他們」否定同儕關係的重要性', '和其他孩子比較（「你看xxx多厲害」）'],
+    scriptExample: '孩子說「我沒有好朋友，沒人喜歡我」：「我聽到了，你現在覺得很孤單，這很讓人難過。能告訴我今天發生什麼事嗎？」（先傾聽，不急著說「你有朋友的啊」或立刻解決，讓孩子先被理解）',
+    warnings: ['持續退縮不願上學超過2週', '頻繁身體不適（頭痛/胃痛）無生理原因', '明顯情緒低落超過2週', '被欺凌的徵象（衣物損壞、不願說學校的事）'],
+    evidence: 'Cochrane A',
+  },
+  '9-12y': {
+    title: '前青春期：自我認同探索',
+    subtitle: '同儕認同高峰、質疑權威、私人空間需求',
+    features: ['自我認同探索（「我是誰」「我擅長什麼」）', '同儕認同達到高峰，朋友比父母更重要', '開始質疑父母和權威的合理性', '情緒波動大（部分因荷爾蒙開始變化）', '私人空間需求增加，秘密增多'],
+    normal: ['「你不懂我」「我不想說」（正常界線建立）', '和朋友比與父母更親密，分享更多', '對外表和同儕評價極度敏感', '對批評有強烈反應（不公平感）', '強烈的正義感和道德判斷'],
+    rightGuide: ['尊重私人空間，不翻看日記/手機', '保持溝通管道開放但不逼問（「我在這裡，隨時可以說」）', '多問開放式問題（「你覺得呢？」「那怎麼了？」）', '保持穩定的連結關係，每週至少一次只有你們的時間', '一起制定手機使用規則（讓孩子參與，更願意遵守）'],
+    wrongGuide: ['偷看日記/手機（發現後信任永久損壞）', '嘲笑青春期的身體變化或情緒', '在孩子的朋友面前批評孩子', '說「你現在這樣都是青春期作怪」一概而論', '與兄弟姊妹比較'],
+    scriptExample: '孩子拒絕說學校的事：「你不想說的話我不勉強，我不會追問。不管發生什麼，我都在這裡支持你。如果你什麼時候想說，我會認真聽。」（給空間，清楚表達支持，不是沉默的放棄）',
+    warnings: ['明顯抑鬱或焦慮徵象持續超過2週', '自傷行為或言語', '學業表現急劇下滑', '完全與父母切斷所有連結', '危險行為（攻擊/逃跑/物質使用跡象）'],
     evidence: 'Cochrane B',
   },
 }
@@ -124,32 +166,37 @@ const SITUATION_TYPES = [
 const AI_ANALYSIS: Record<string, { results: Array<{ type: 'warning' | 'ok'; title: string; detail: string; suggestion: string }> }> = {
   crying: {
     results: [
-      { type: 'warning', title: '可能原因：需求未被識別', detail: '3歲幼兒哭鬧常因語言表達不足，無法清楚說明需求（餓/累/疼痛/受挫）。', suggestion: '用「猜猜我的需求」方式：「你是餓了嗎？累了嗎？還是玩具壞了不開心？」幫助孩子識別自身狀態。' },
-      { type: 'ok', title: '建議替代話術', detail: '避免「不要哭」「哭什麼哭」，這會讓孩子壓抑情緒。', suggestion: '改用「媽媽看到你很難過，我在這裡。深呼吸，告訴我發生什麼事？」' },
+      { type: 'warning', title: '分析：需求未被語言識別', detail: '3歲幼兒哭鬧常因語言表達不足，無法清楚說明需求（餓/累/疼痛/受挫/過度刺激）。哭泣是孩子唯一有效的求救信號。', suggestion: '用「猜猜我的需求」：「你是餓了嗎？還是累了？還是玩具壞了讓你不開心？」幫助孩子識別自身狀態。先安撫身體（抱起、降低刺激），再尋找原因。' },
+      { type: 'warning', title: '錯誤話術警示', detail: '常見的「不要哭」「哭什麼哭」「再哭就走了」會讓孩子壓抑情緒或製造焦慮，長期影響情緒調節能力。', suggestion: '替換話術示範：「媽媽看到你很難過，我在這裡陪你。深呼吸，先吸氣……呼氣……好了，告訴媽媽發生什麼事？」（先給情緒空間，再問原因）' },
+      { type: 'ok', title: '正確回應流程', detail: 'Cochrane 研究顯示：情緒接納→命名情緒→解決問題，比直接制止效果顯著更好且持久。', suggestion: '步驟①承認：「你現在很生氣/很難過。」→ 步驟②陪伴：「我在這裡，你可以哭。」→ 步驟③平靜後問：「現在好一點了嗎？告訴我你要什麼。」' },
     ],
   },
   social: {
     results: [
-      { type: 'warning', title: '社交障礙點識別', detail: '從描述看，孩子在群體活動中退縮，可能是缺乏社交技巧而非不想互動。', suggestion: '先從一對一玩伴開始，選擇孩子有共同興趣的同伴，在家中先練習分享和輪流。' },
-      { type: 'ok', title: '引導方式建議', detail: '結構化的遊戲（有規則的桌遊）比自由遊戲更容易讓社交困難的孩子融入。', suggestion: '設計簡單合作遊戲（一起搭積木、完成拼圖），減少競爭壓力。' },
+      { type: 'warning', title: '分析：可能是缺乏技巧而非不想互動', detail: '從描述看，孩子在群體活動中退縮，通常原因是缺乏社交進入技巧，而非不想與人互動。強迫加入只會增加焦慮。', suggestion: '先從一對一玩伴開始，選擇孩子有共同興趣的同伴。在家中先練習：分享、輪流、如何加入遊戲的語言（「我可以一起玩嗎？」）' },
+      { type: 'ok', title: '結構化遊戲優於自由遊戲', detail: '有規則的活動（桌遊、拼圖、積木任務）比自由遊戲更容易讓社交困難的孩子融入，因為規則提供清楚的行為框架。', suggestion: '設計簡單合作任務：「你們兩個一起把積木搭到這麼高。」合作→共同成就感→友誼萌發。避免競爭性遊戲（輸贏製造壓力）。' },
+      { type: 'ok', title: '家長示範話術', detail: '孩子需要學習如何開始社交互動。直接教他們具體的語句比說「去和他玩」更有效。', suggestion: '在家練習：「你要說：『我叫XXX，你在玩什麼？我可以看嗎？』」先在安全環境演練，再帶到真實場景。' },
     ],
   },
   focus: {
     results: [
-      { type: 'warning', title: '專注力現況評估', detail: '5歲孩子正常專注時間約10–15分鐘。若低於5分鐘且伴隨衝動行為，需進一步評估。', suggestion: '先排除環境因素（雜亂、螢幕時間過多），調整後觀察2–4週。' },
-      { type: 'ok', title: '居家訓練建議', detail: '漸進式延長專注訓練：每天固定時間進行5分鐘安靜活動，每週增加1分鐘。', suggestion: '使用計時器讓孩子看到時間，完成後給予明確稱讚而非物質獎勵。' },
+      { type: 'warning', title: '專注力評估：先排除環境因素', detail: '5歲孩子正常專注時間約10–15分鐘。若低於5分鐘且伴隨衝動/多話/靜不下來，需在排除環境因素後才考慮評估ADHD。', suggestion: '先調整2–4週：①減少桌面雜物，②電子螢幕下午3點後完全關閉，③作息規律，④每天至少1小時戶外活動（消耗精力）。觀察是否改善。' },
+      { type: 'ok', title: '漸進式專注訓練法', detail: 'Cochrane 研究支持：漸進延長比強迫長時間坐著更有效，且孩子自我效能感更強。', suggestion: '每天固定時間：①設定計時器5分鐘，②孩子選活動（積木/拼圖/畫畫），③完成給予明確口頭讚美（「你剛才專注了整整5分鐘！做到了！」），④每週增加1分鐘。' },
+      { type: 'ok', title: '環境優化建議', detail: '學習環境對專注力影響達40%。座位安排、雜物、聲音控制是關鍵。', suggestion: '理想學習環境：面向白牆（不面向窗戶或電視），桌面只有當前活動物品，背景白噪音（雨聲/海浪聲），自然光充足。' },
     ],
   },
   sleep: {
     results: [
-      { type: 'warning', title: '睡眠抗拒可能原因', detail: '2–5歲是睡眠抗拒高峰，常見原因：分離焦慮、過度刺激、作息不規律、床墊不適。', suggestion: '建立固定睡前儀式（洗澡→繪本→道晚安），每晚順序相同，持續2週。' },
-      { type: 'ok', title: '漸進分離法', detail: '若孩子需要陪伴入睡，可用漸進方式：第一週坐在床邊，第二週坐在門口，逐步增加距離。', suggestion: '給孩子「過渡客體」（安撫布/玩具），作為照顧者的象徵替代。' },
+      { type: 'warning', title: '睡眠抗拒：找出根本原因', detail: '2–5歲是睡眠抗拒高峰。常見原因按頻率：①分離焦慮（最常見）②過度疲勞（反而難入睡）③就寢前過度刺激（螢幕/激烈遊戲）④作息不規律。', suggestion: '觀察孩子的睡眠抗拒模式：是哭著要你、一直出來找你，還是躺著睡不著？不同原因有不同策略。' },
+      { type: 'ok', title: '固定儀式法（最有Cochrane實證）', detail: '固定睡前儀式可縮短入睡時間平均37%。順序重複比每個步驟本身更重要。', suggestion: '設計專屬儀式：洗澡（10分鐘）→穿睡衣→刷牙→一本繪本（不超過20分鐘）→關燈說晚安。每天順序完全一樣，持續執行2週。話術：「我們要開始睡前儀式了，先去洗澡。」' },
+      { type: 'ok', title: '漸進分離法（分離焦慮型）', detail: '若孩子需要陪伴入睡且是因分離焦慮，可用系統性漸進法，避免突然CIO（讓哭）。', suggestion: '第1週：坐在床邊直到入睡。第2週：坐在房間門口。第3週：在門口說晚安後離開。給孩子過渡客體（你的舊T恤/安撫布），說：「這是媽媽的味道，媽媽雖然不在，但愛一直在。」' },
     ],
   },
   separation: {
     results: [
-      { type: 'warning', title: '分離焦慮嚴重度評估', detail: '3歲後的分離焦慮若影響正常入學/社交，需特別關注。', suggestion: '避免偷偷離開，每次離開前固定道別儀式（「媽媽去工作，下午3點回來接你」），說到做到建立信任。' },
-      { type: 'ok', title: '增強安全感方法', detail: '短暫分離練習：從10分鐘開始，讓孩子體驗「你離開了，但你會回來」。', suggestion: '留下代表你的物品（你的舊圍巾/照片），讓孩子感覺你始終在。' },
+      { type: 'warning', title: '分離焦慮嚴重度評估', detail: '3歲後的分離焦慮若影響正常入學/日常生活超過4週，且程度越來越嚴重，需進一步評估是否為分離焦慮症。', suggestion: '觀察三個維度：①持續時間（每次哭多久）②功能影響（是否影響進食/睡眠）③觸發範圍（是否越來越廣）。三個都嚴重則建議兒童心理評估。' },
+      { type: 'ok', title: '固定告別儀式（最重要！）', detail: '研究顯示：有固定告別儀式的孩子，照顧者離開後平均快40%停止哭泣。偷偷走反而讓孩子更焦慮。', suggestion: '建立儀式：①提前告知（「媽媽3分鐘後要去工作了」）→②固定動作（擊掌/擁抱/吻額頭）→③清楚承諾（「3點媽媽來接你」）→④平靜快速離開。話術：「媽媽去工作，下午3點接你。我說到做到。拜拜！」（不猶豫，快速離開）' },
+      { type: 'ok', title: '漸進分離練習', detail: '讓孩子體驗「你離開了，但你會回來」，反覆練習鞏固信任。', suggestion: '居家練習：「媽媽去廁所2分鐘，你數到10我就回來。」→成功後延長：「媽媽出去買牛奶，15分鐘回來。」每次說到做到，累積信任感。給孩子「象徵物」：你的舊圍巾/你的照片，說：「這代表媽媽在陪你。」' },
     ],
   },
 }
@@ -165,7 +212,7 @@ interface PsychRecord {
 export default function PsychologyClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeSection, setKnowledgeSection] = useState<KnowledgeSection>('emotion')
-  const [selectedAge, setSelectedAge] = useState('3-6y')
+  const [selectedAge, setSelectedAge] = useState('3-5y')
   const [situationType, setSituationType] = useState<SituationType>('crying')
   const [records, setRecords] = useState<PsychRecord[]>([
     { id: '1', date: '2026-03-20', situation: 'crying', desc: '在超市因為不能買零食大哭20分鐘，完全無法安撫', analyzed: true },
@@ -250,13 +297,14 @@ export default function PsychologyClient() {
                 </div>
               </div>
               <div className="px-5 py-5 space-y-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>{emotionData.title}</h2>
                   <span className="evidence-badge">{emotionData.evidence}</span>
                 </div>
+                <p className="text-sm font-semibold" style={{ color: '#5E85A3' }}>{emotionData.subtitle}</p>
 
                 <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#C5D8E8' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#5E85A3' }}>情緒特徵</p>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#5E85A3' }}>此階段情緒特徵</p>
                   <div className="space-y-1.5">
                     {emotionData.features.map((f, i) => (
                       <div key={i} className="flex items-start gap-2">
@@ -268,7 +316,7 @@ export default function PsychologyClient() {
                 </div>
 
                 <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#5A8A5A' }}>✅ 正常表現</p>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#5A8A5A' }}>✅ 正常表現（勿過度擔心）</p>
                   <div className="space-y-1.5">
                     {emotionData.normal.map((n, i) => (
                       <div key={i} className="flex items-start gap-2">
@@ -279,8 +327,40 @@ export default function PsychologyClient() {
                   </div>
                 </div>
 
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>正確引導方式</p>
+                  <div className="space-y-1.5">
+                    {emotionData.rightGuide.map((g, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <TrendingUp size={13} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                        <p className="text-sm" style={{ color: '#2D3436' }}>{g}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl border" style={{ background: '#FFF8F0', borderColor: '#F5D5A5' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#B07548' }}>❌ 常見錯誤做法（請避免）</p>
+                  <div className="space-y-1.5">
+                    {emotionData.wrongGuide.map((g, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <AlertTriangle size={13} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
+                        <p className="text-sm" style={{ color: '#2D3436' }}>{g}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Target size={14} style={{ color: '#5E85A3' }} />
+                    <p className="text-xs font-bold" style={{ color: '#5E85A3' }}>具體話術範例</p>
+                  </div>
+                  <p className="text-sm leading-relaxed italic" style={{ color: '#2D3436' }}>{emotionData.scriptExample}</p>
+                </div>
+
                 <div className="p-4 rounded-2xl border" style={{ background: '#FFF8F8', borderColor: '#F5C5C5' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#C45A5A' }}>⚠️ 需注意的警訊</p>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#C45A5A' }}>⚠️ 需留意的警訊（建議諮詢專業）</p>
                   <div className="space-y-1.5">
                     {emotionData.warnings.map((w, i) => (
                       <div key={i} className="flex items-start gap-2">
@@ -289,11 +369,6 @@ export default function PsychologyClient() {
                       </div>
                     ))}
                   </div>
-                </div>
-
-                <div className="p-3 rounded-xl flex items-start gap-2" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
-                  <Target size={14} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
-                  <p className="text-xs leading-relaxed" style={{ color: '#5E85A3' }}>{emotionData.tip}</p>
                 </div>
               </div>
             </div>
