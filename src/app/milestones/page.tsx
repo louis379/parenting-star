@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import MilestonesClient from './MilestonesClient'
+
+export const metadata: Metadata = {
+  title: '里程碑追蹤 | 育兒智多星',
+  description: '記錄孩子重要發展里程碑，從第一次翻身到開口說話，一一珍藏',
+  openGraph: {
+    title: '里程碑追蹤 | 育兒智多星',
+    description: '記錄孩子重要發展里程碑，從第一次翻身到開口說話，一一珍藏',
+  },
+}
 
 export default async function MilestonesPage() {
   const supabase = await createClient()

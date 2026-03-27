@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import ReportsClient from './ReportsClient'
+
+export const metadata: Metadata = {
+  title: 'AI 分析報告 | 育兒智多星',
+  description: 'AI 生成個性化月度育兒報告，涵蓋生長趨勢、營養缺口分析與專屬建議',
+  openGraph: {
+    title: 'AI 分析報告 | 育兒智多星',
+    description: 'AI 生成個性化月度育兒報告，涵蓋生長趨勢、營養缺口分析與專屬建議',
+  },
+}
 
 export default async function ReportsPage() {
   const supabase = await createClient()

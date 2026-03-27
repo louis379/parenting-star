@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import MealsClient from './MealsClient'
+
+export const metadata: Metadata = {
+  title: '飲食日記 | 育兒智多星',
+  description: '記錄孩子每日飲食與副食品添加進度，掌握營養均衡狀況',
+  openGraph: {
+    title: '飲食日記 | 育兒智多星',
+    description: '記錄孩子每日飲食與副食品添加進度，掌握營養均衡狀況',
+  },
+}
 
 export default async function MealsPage() {
   const supabase = await createClient()

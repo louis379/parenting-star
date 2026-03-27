@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import GrowthClient from './GrowthClient'
+
+export const metadata: Metadata = {
+  title: '生長記錄 | 育兒智多星',
+  description: '追蹤孩子身高體重發育曲線，對照 WHO 標準，掌握每個成長里程碑',
+  openGraph: {
+    title: '生長記錄 | 育兒智多星',
+    description: '追蹤孩子身高體重發育曲線，對照 WHO 標準，掌握每個成長里程碑',
+  },
+}
 
 export default async function GrowthPage() {
   const supabase = await createClient()

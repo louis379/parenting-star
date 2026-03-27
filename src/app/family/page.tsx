@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import FamilyClient from './FamilyClient'
+
+export const metadata: Metadata = {
+  title: '家庭協作 | 育兒智多星',
+  description: '邀請家人共同育兒，多代養者協作看板，分工合作讓育兒更輕鬆',
+  openGraph: {
+    title: '家庭協作 | 育兒智多星',
+    description: '邀請家人共同育兒，多代養者協作看板，分工合作讓育兒更輕鬆',
+  },
+}
 
 export default async function FamilyPage() {
   const supabase = await createClient()

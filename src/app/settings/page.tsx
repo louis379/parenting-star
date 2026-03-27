@@ -1,7 +1,17 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import SettingsClient from './SettingsClient'
+
+export const metadata: Metadata = {
+  title: '設定 | 育兒智多星',
+  description: '管理帳號、孩子資料、家庭成員、通知偏好與隱私設定',
+  openGraph: {
+    title: '設定 | 育兒智多星',
+    description: '管理帳號、孩子資料、家庭成員、通知偏好與隱私設定',
+  },
+}
 
 export default async function SettingsPage() {
   const supabase = await createClient()
