@@ -89,11 +89,13 @@ const SPOTS_DATA = {
   ],
   lower:     [
     { name: '🧱 公主樂糕殿', note: '樂高主題樂園，超人氣！', tag: '熱門' },
+    { name: '🐠 屏東海生館', note: '海底隧道穿越珊瑚礁，生態教育絕佳場所', tag: '熱門' },
     { name: '🚀 國立自然科學博物館', note: '台中、恐龍化石必看', tag: '' },
     { name: '⚽ 運動中心', note: '游泳、球類一次滿足', tag: '' },
     { name: '📚 各縣市圖書館兒童區', note: '說故事活動、閱讀空間', tag: '' },
   ],
   upper:     [
+    { name: '🐠 屏東海生館', note: '2026必訪！全台最大水族館，海底隧道超震撼', tag: '熱門' },
     { name: '🏕️ 合歡山露營區', note: '高山體驗、觀星', tag: '' },
     { name: '🧪 科技部科普活動', note: '實驗工作坊、程式營', tag: '' },
     { name: '🎭 兩廳院兒童劇', note: '培養藝術欣賞能力', tag: '' },
@@ -401,6 +403,7 @@ function HomePage({ selectedAge, setSelectedAge, children }) {
               { name: '🚂 國家鐵道博物館', tag: '台北', hot: true },
               { name: '🎪 星夢森林劇場', tag: '全台', hot: true },
               { name: '🧱 公主樂糕殿', tag: '台北', hot: true },
+              { name: '🐠 屏東海生館', tag: '屏東', hot: true },
             ].map(item => (
               <div key={item.name} className="flex items-center justify-between py-1">
                 <span className="text-sm text-gray-700">{item.name}</span>
