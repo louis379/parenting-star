@@ -9,37 +9,37 @@ const navItems = [
   {
     href: '/growth',
     icon: TrendingUp,
-    label: '生長',
+    label: '生長發展',
     color: '#7B9EBD',
     activeColor: '#5E85A3',
   },
   {
     href: '/psychology',
     icon: Brain,
-    label: '心理',
-    color: '#9B8BB4',
-    activeColor: '#7A6A96',
+    label: '心理培養',
+    color: '#7B9EBD',
+    activeColor: '#5E85A3',
   },
   {
     href: '/education',
     icon: BookOpen,
-    label: '教育',
-    color: '#7BA87B',
-    activeColor: '#5A8A5A',
+    label: '教育發展',
+    color: '#7B9EBD',
+    activeColor: '#5E85A3',
   },
   {
     href: '/schools',
     icon: School,
-    label: '學校',
-    color: '#D4956A',
-    activeColor: '#B07548',
+    label: '教育環境',
+    color: '#7B9EBD',
+    activeColor: '#5E85A3',
   },
   {
     href: '/places',
     icon: MapPin,
-    label: '景點',
-    color: '#7BB8A8',
-    activeColor: '#5A9888',
+    label: '親子景點',
+    color: '#7B9EBD',
+    activeColor: '#5E85A3',
   },
 ]
 
@@ -74,7 +74,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   />
                 )}
                 <Icon
-                  size={22}
+                  size={20}
                   style={{
                     transform: isActive ? 'scale(1.1)' : 'scale(1)',
                     strokeWidth: isActive ? 2.5 : 1.8,
@@ -82,7 +82,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   }}
                 />
                 <span
-                  className="text-[10px]"
+                  className="text-[9px] leading-tight text-center"
                   style={{ fontWeight: isActive ? 700 : 500 }}
                 >
                   {label}
