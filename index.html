@@ -4,8 +4,1003 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>育兒智多星</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fdf4f0; }
+    .gradient-header { background: linear-gradient(135deg, #ff7043 0%, #ff4081 60%, #e91e63 100%); }
+    .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #f0e0d8; z-index: 100; }
+    .content-area { padding-bottom: 80px; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    input, textarea, select { outline: none; }
+    .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .scroll-x::-webkit-scrollbar { display: none; }
+  </style>
 </head>
 <body>
-  <h1>育兒智多星</h1>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ─── 資料區 ───────────────────────────────────────────────
+
+const AGE_STAGES = [
+  { id: 'newborn', label: '新生兒', sub: '0–3 個月', emoji: '🐣', color: '#FFB74D' },
+  { id: 'infant',  label: '嬰兒期', sub: '4–12 個月', emoji: '🍼', color: '#FF8A65' },
+  { id: 'toddler', label: '幼兒期', sub: '1–2 歲',   emoji: '🦆', color: '#EF5350' },
+  { id: 'preschool', label: '學齡前', sub: '3–5 歲', emoji: '🎨', color: '#E91E63' },
+  { id: 'lower',   label: '低年級', sub: '6–8 歲',   emoji: '📚', color: '#9C27B0' },
+  { id: 'upper',   label: '中高年級', sub: '9–12 歲', emoji: '🚀', color: '#3F51B5' },
+];
+
+const FOOD_DATA = {
+  newborn:   ['母乳或配方奶每2-3小時','不需補充副食品','注意過敏反應','每次哺乳10-20分鐘'],
+  infant:    ['4月起可試副食品','米糊、南瓜泥先行','7月起嘗試蛋黃、豆腐','避免蜂蜜、鹽巴、糖'],
+  toddler:   ['一日三餐+兩次點心','全脂牛奶500ml','軟爛飯菜為主','鼓勵自己動手吃'],
+  preschool: ['均衡五大類食物','多蔬果少加工食品','學習使用筷子','參與簡單烹飪'],
+  lower:     ['早餐最重要勿跳過','補充DHA助腦發育','零食選擇堅果水果','每天喝水1000ml以上'],
+  upper:     ['青春期需補充鈣鐵鋅','避免含糖飲料','三餐規律不外食過量','運動後適量蛋白質'],
+};
+
+const PLAY_DATA = {
+  newborn:   ['黑白卡視覺刺激','輕柔搖籃曲','肌膚接觸袋鼠式護理','嬰兒按摩'],
+  infant:    ['捉迷藏peek-a-boo','疊疊樂積木','爬行障礙訓練','拍手互動歌謠'],
+  toddler:   ['沙水玩具感官遊戲','簡單拼圖2-4片','跑跑追逐遊戲','繪本親子共讀'],
+  preschool: ['角色扮演家家酒','黏土/水彩創作','拼圖12-24片','桌遊記憶翻牌'],
+  lower:     ['樂高創意積木','桌遊大富翁/撲克','戶外運動騎腳踏車','閱讀橋梁書'],
+  upper:     ['策略棋類象棋/圍棋','程式入門Scratch','運動球類團體賽','閱讀少年小說'],
+};
+
+const MILESTONE_DATA = {
+  newborn:   ['1月：對聲音有反應','2月：社交性微笑','3月：追視移動物體','3月：俯臥抬頭45度'],
+  infant:    ['4月：翻身俯→仰','6月：坐立需支撐','9月：扶站','12月：邁出第一步、說第一個字'],
+  toddler:   ['15月：獨立行走穩','18月：說10個詞彙','2歲：跑跳開始','2歲：兩個字組合句'],
+  preschool: ['3歲：穿脫簡單衣物','4歲：單腳站立','5歲：認識數字1-10','5歲：畫人形(頭+四肢)'],
+  lower:     ['6歲：換牙開始','7歲：邏輯推理萌芽','8歲：閱讀流暢','8歲：加減乘除運算'],
+  upper:     ['9歲：抽象概念理解','10歲：開始有強烈同儕意識','11歲：前青春期跡象','12歲：自我認同探索'],
+};
+
+const SPOTS_DATA = {
+  newborn:   [
+    { name: '居家環境優先', note: '0-3月寶寶不宜外出過久' },
+    { name: '兒科診所親子等候區', note: '有安全設施' },
+  ],
+  infant:    [
+    { name: '🚂 國家鐵道博物館', note: '2026熱門！室內展區、親子友善', tag: '熱門' },
+    { name: '🌳 大安森林公園', note: '鋪草坪適合爬行', tag: '' },
+    { name: '🐟 台北市立動物園', note: '兒童動物區、推車友善', tag: '' },
+  ],
+  toddler:   [
+    { name: '🚂 國家鐵道博物館', note: '小小火車迷必去！', tag: '熱門' },
+    { name: '🎪 星夢森林劇場', note: '2026新開！沉浸式親子劇場', tag: '新開' },
+    { name: '🌊 兒童新樂園', note: '台北最大兒童遊樂園', tag: '' },
+    { name: '🏖️ 福隆海水浴場', note: '沙灘玩水、親子同樂', tag: '' },
+  ],
+  preschool: [
+    { name: '🎪 星夢森林劇場', note: '2026話題！互動式森林探險', tag: '熱門' },
+    { name: '🧱 公主樂糕殿', note: '樂高授權旗艦店，2026開幕', tag: '新開' },
+    { name: '🔬 國立台灣科學教育館', note: '動手做科學實驗', tag: '' },
+    { name: '🎨 奇美博物館', note: '台南必訪、仿歐宮廷建築', tag: '' },
+  ],
+  lower:     [
+    { name: '🧱 公主樂糕殿', note: '樂高主題樂園，超人氣！', tag: '熱門' },
+    { name: '🚀 國立自然科學博物館', note: '台中、恐龍化石必看', tag: '' },
+    { name: '⚽ 運動中心', note: '游泳、球類一次滿足', tag: '' },
+    { name: '📚 各縣市圖書館兒童區', note: '說故事活動、閱讀空間', tag: '' },
+  ],
+  upper:     [
+    { name: '🏕️ 合歡山露營區', note: '高山體驗、觀星', tag: '' },
+    { name: '🧪 科技部科普活動', note: '實驗工作坊、程式營', tag: '' },
+    { name: '🎭 兩廳院兒童劇', note: '培養藝術欣賞能力', tag: '' },
+    { name: '🚲 自行車環島路線', note: '台灣好行親子單車遊', tag: '' },
+  ],
+};
+
+const TALENT_DATA = {
+  newborn:   ['嬰兒游泳(水育課)','音樂律動感統課','親子瑜珈'],
+  infant:    ['嬰兒游泳','音樂律動','感覺統合課','繪本親子課'],
+  toddler:   ['律動/舞蹈啟蒙','美術塗鴉課','英語親子共學','感統遊戲課'],
+  preschool: ['鋼琴/小提琴啟蒙','兒童舞蹈芭蕾/街舞','兒童美術','英語幼稚園課後班','游泳課','體操/柔道'],
+  lower:     ['鋼琴/吉他/烏克麗麗','圍棋入門','程式Scratch','游泳/籃球/足球','英語/日語','繪畫水彩'],
+  upper:     ['樂器進階考級','程式Python/App開發','棋類進階','才藝競賽準備','運動專項訓練','語言檢定(GEPT/JLPT)'],
+};
+
+const SOS_DATA = [
+  {
+    id: 'tantrum',
+    emoji: '😭',
+    title: '大哭大鬧',
+    subtitle: '情緒崩潰處理',
+    color: '#FF5722',
+    steps: [
+      { icon: '🛑', title: '先冷靜自己', desc: '深呼吸3次，不對孩子發火。你的平靜是他的錨。' },
+      { icon: '🤝', title: '同理情緒', desc: '蹲下來說：「我知道你現在很難過/生氣，沒關係。」' },
+      { icon: '🏠', title: '移到安全空間', desc: '帶離刺激環境，到安靜的角落，給予身體安撫。' },
+      { icon: '⏰', title: '等待情緒平息', desc: '不說教、不講道理，等哭聲平緩後再溝通。' },
+      { icon: '💬', title: '事後討論', desc: '情緒平穩後，一起回顧發生什麼事，引導表達感受。' },
+    ],
+    tips: ['3歲以下哭鬧多為生理需求，先檢查是否累/餓/不舒服', '設定溫和而堅定的界線', '記錄哭鬧規律找出觸發點'],
+  },
+  {
+    id: 'no-eat',
+    emoji: '🍽️',
+    title: '不吃飯',
+    subtitle: '拒食偏食應對',
+    color: '#FF9800',
+    steps: [
+      { icon: '🔍', title: '找出原因', desc: '零食吃太多？太累？不喜歡食物？正常發育期食慾減退？' },
+      { icon: '🎨', title: '增加趣味性', desc: '做成卡通造型、讓孩子參與備餐、使用可愛餐具。' },
+      { icon: '⏱️', title: '固定用餐時間', desc: '每天固定時間吃飯，餐前1小時不給零食點心。' },
+      { icon: '🚫', title: '不強迫不妥協', desc: '不追著餵，也不以糖果換吃飯。吃不吃尊重孩子身體。' },
+      { icon: '🌱', title: '多次嘗試新食物', desc: '新食物需嘗試8-15次才會接受，持續少量提供。' },
+    ],
+    tips: ['幼兒食慾天生有調節機制，不吃多半無礙', '全家一起吃，示範多蔬果', '不把吃飯變成戰場'],
+  },
+  {
+    id: 'no-sleep',
+    emoji: '🌙',
+    title: '不睡覺',
+    subtitle: '入睡困難對策',
+    color: '#7E57C2',
+    steps: [
+      { icon: '🌅', title: '建立睡前儀式', desc: '洗澡→換睡衣→刷牙→說故事→關燈，每天固定順序。' },
+      { icon: '📵', title: '睡前1小時戒螢幕', desc: '藍光抑制褪黑激素，改為安靜讀書或聽音樂。' },
+      { icon: '🌡️', title: '調整睡眠環境', desc: '室溫22-25°C，遮光窗簾，白噪音機輔助。' },
+      { icon: '🏃', title: '增加白天活動量', desc: '充分的體能消耗是最好的睡前準備。' },
+      { icon: '🕐', title: '固定就寢時間', desc: '幼兒7:30-8:30，學齡8:30-9:00，週末也不例外。' },
+    ],
+    tips: ['分離焦慮期可放同一件你的衣物在床上', '漸進式獨睡訓練比突然分房效果好', '睡眠不足會影響學習與情緒調節'],
+  },
+  {
+    id: '3c-addiction',
+    emoji: '📱',
+    title: '3C成癮',
+    subtitle: '螢幕時間管理',
+    color: '#2196F3',
+    steps: [
+      { icon: '📋', title: '制定家規', desc: '全家共同討論螢幕時間規定，寫下來貼在冰箱上。' },
+      { icon: '⏰', title: '使用計時器', desc: '時間到前5分鐘提醒，讓孩子心理準備，避免突然中斷。' },
+      { icon: '🎮', title: '選擇優質內容', desc: '教育性節目、互動遊戲，父母一起觀看討論。' },
+      { icon: '🌳', title: '提供替代活動', desc: '戶外遊戲、閱讀、手作、社交活動作為替代選項。' },
+      { icon: '🙅', title: '身教重於言教', desc: '父母帶頭放下手機，吃飯時間全家無手機。' },
+    ],
+    tips: ['2歲以下除視訊外不建議使用螢幕', '2-5歲每天不超過1小時', '6歲以上制定合理規則比完全禁止有效'],
+  },
+  {
+    id: 'sibling',
+    emoji: '👫',
+    title: '手足爭吵',
+    subtitle: '兄弟姊妹衝突',
+    color: '#E91E63',
+    steps: [
+      { icon: '👀', title: '先觀察再介入', desc: '輕微衝突讓孩子自行解決，學習協商是重要能力。' },
+      { icon: '⚖️', title: '不偏袒不比較', desc: '聽完雙方說法，不急著評斷誰對誰錯。' },
+      { icon: '🎭', title: '引導表達感受', desc: '「你被搶走玩具，你覺得怎樣？」教導用語言代替行動。' },
+      { icon: '🤝', title: '一起找解決方法', desc: '「你們想到什麼好辦法嗎？」鼓勵共同創造解決方案。' },
+      { icon: '❤️', title: '個別相處時光', desc: '每個孩子都需要單獨與父母的高品質時間。' },
+    ],
+    tips: ['避免貼標籤(哥哥要讓弟弟)', '大孩子不代表要無條件讓步', '手足關係是最初的社交練習場'],
+  },
+];
+
+const DEFAULT_PLANS = {
+  newborn:   [
+    { time: '06:00', activity: '🍼 哺乳/餵奶', done: false },
+    { time: '08:00', activity: '🛁 晨浴與按摩', done: false },
+    { time: '09:00', activity: '😴 上午小睡', done: false },
+    { time: '10:30', activity: '🍼 哺乳/餵奶', done: false },
+    { time: '11:00', activity: '⚫ 黑白卡視覺遊戲', done: false },
+    { time: '12:00', activity: '😴 中午小睡', done: false },
+    { time: '14:00', activity: '🍼 哺乳/餵奶', done: false },
+    { time: '15:00', activity: '🎵 聽音樂互動', done: false },
+    { time: '18:00', activity: '🍼 哺乳/餵奶', done: false },
+    { time: '21:00', activity: '🌙 就寢', done: false },
+  ],
+  infant:    [
+    { time: '07:00', activity: '🍼 早奶+副食品', done: false },
+    { time: '09:00', activity: '🐛 爬行遊戲', done: false },
+    { time: '10:00', activity: '😴 上午小睡', done: false },
+    { time: '12:00', activity: '🥣 午餐副食品', done: false },
+    { time: '13:00', activity: '😴 午睡', done: false },
+    { time: '15:00', activity: '🎈 感官玩具遊戲', done: false },
+    { time: '17:30', activity: '🥣 晚餐副食品', done: false },
+    { time: '19:30', activity: '🛁 洗澡', done: false },
+    { time: '20:30', activity: '📖 睡前故事', done: false },
+    { time: '21:00', activity: '🌙 就寢', done: false },
+  ],
+  toddler:   [
+    { time: '07:30', activity: '🥣 早餐', done: false },
+    { time: '09:00', activity: '🎨 創意遊戲', done: false },
+    { time: '10:30', activity: '🌳 戶外玩耍', done: false },
+    { time: '12:00', activity: '🍱 午餐', done: false },
+    { time: '13:00', activity: '😴 午睡', done: false },
+    { time: '15:00', activity: '🧩 益智玩具', done: false },
+    { time: '17:00', activity: '🍎 點心時間', done: false },
+    { time: '18:30', activity: '🍽️ 晚餐', done: false },
+    { time: '20:00', activity: '🛁 洗澡+睡前故事', done: false },
+    { time: '20:30', activity: '🌙 就寢', done: false },
+  ],
+  preschool: [
+    { time: '07:00', activity: '🥣 早餐', done: false },
+    { time: '08:00', activity: '🏫 上幼兒園', done: false },
+    { time: '11:30', activity: '🍱 在園午餐', done: false },
+    { time: '15:00', activity: '🏠 回家+點心', done: false },
+    { time: '16:00', activity: '🎨 才藝課/自由遊戲', done: false },
+    { time: '18:30', activity: '🍽️ 晚餐', done: false },
+    { time: '19:00', activity: '📖 親子共讀', done: false },
+    { time: '20:00', activity: '🛁 洗澡', done: false },
+    { time: '20:30', activity: '🌙 就寢', done: false },
+  ],
+  lower:     [
+    { time: '07:00', activity: '🥣 早餐', done: false },
+    { time: '07:40', activity: '🏫 上學', done: false },
+    { time: '12:00', activity: '🍱 午餐+午休', done: false },
+    { time: '16:00', activity: '🏠 放學回家', done: false },
+    { time: '16:30', activity: '🏃 體育活動/才藝課', done: false },
+    { time: '18:00', activity: '📚 寫作業', done: false },
+    { time: '19:00', activity: '🍽️ 晚餐', done: false },
+    { time: '20:00', activity: '📖 自由閱讀', done: false },
+    { time: '21:00', activity: '🌙 就寢', done: false },
+  ],
+  upper:     [
+    { time: '06:30', activity: '🥣 早餐', done: false },
+    { time: '07:20', activity: '🏫 上學', done: false },
+    { time: '12:00', activity: '🍱 午餐+午休', done: false },
+    { time: '17:00', activity: '🏠 放學/補習', done: false },
+    { time: '18:30', activity: '🍽️ 晚餐', done: false },
+    { time: '19:30', activity: '📚 複習/作業', done: false },
+    { time: '21:00', activity: '🌙 就寢準備', done: false },
+    { time: '21:30', activity: '😴 就寢', done: false },
+  ],
+};
+
+// ─── 工具函式 ─────────────────────────────────────────────
+
+function useLocalStorage(key, defaultValue) {
+  const [value, setValue] = useState(() => {
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : defaultValue;
+    } catch { return defaultValue; }
+  });
+  const set = useCallback((v) => {
+    setValue(v);
+    try { localStorage.setItem(key, JSON.stringify(v)); } catch {}
+  }, [key]);
+  return [value, set];
+}
+
+function calcAge(birthdate) {
+  if (!birthdate) return '';
+  const now = new Date();
+  const b = new Date(birthdate);
+  const months = (now.getFullYear() - b.getFullYear()) * 12 + now.getMonth() - b.getMonth();
+  if (months < 1) return '未滿1個月';
+  if (months < 12) return `${months} 個月`;
+  const years = Math.floor(months / 12);
+  const rem = months % 12;
+  return rem > 0 ? `${years} 歲 ${rem} 個月` : `${years} 歲`;
+}
+
+// ─── 元件：頂部標題列 ─────────────────────────────────────
+
+function Header({ title, subtitle }) {
+  return (
+    <div className="gradient-header text-white px-4 pt-10 pb-6">
+      <div className="text-2xl font-bold">{title}</div>
+      {subtitle && <div className="text-sm opacity-80 mt-1">{subtitle}</div>}
+    </div>
+  );
+}
+
+// ─── 元件：年齡選擇器 ────────────────────────────────────
+
+function AgeSelector({ selectedAge, onChange }) {
+  return (
+    <div className="scroll-x flex gap-3 px-4 py-3">
+      {AGE_STAGES.map(s => (
+        <button
+          key={s.id}
+          onClick={() => onChange(s.id)}
+          className="flex-shrink-0 flex flex-col items-center px-3 py-2 rounded-2xl text-center transition-all"
+          style={{
+            background: selectedAge === s.id ? s.color : 'white',
+            color: selectedAge === s.id ? 'white' : '#555',
+            boxShadow: selectedAge === s.id ? `0 4px 15px ${s.color}66` : '0 2px 8px rgba(0,0,0,0.08)',
+            minWidth: 72,
+          }}
+        >
+          <span className="text-xl">{s.emoji}</span>
+          <span className="text-xs font-bold mt-1">{s.label}</span>
+          <span className="text-xs opacity-75">{s.sub}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ─── 頁面：首頁 ──────────────────────────────────────────
+
+function HomePage({ selectedAge, setSelectedAge, children }) {
+  const stage = AGE_STAGES.find(s => s.id === selectedAge);
+  const today = new Date().toLocaleDateString('zh-TW', { weekday: 'long', month: 'long', day: 'numeric' });
+
+  return (
+    <div>
+      <div className="gradient-header text-white px-4 pt-10 pb-8">
+        <div className="text-xl font-bold">育兒智多星 🌟</div>
+        <div className="text-sm opacity-75 mt-1">{today}</div>
+        {children.length > 0 && (
+          <div className="mt-3 flex gap-2 flex-wrap">
+            {children.map(c => (
+              <div key={c.id} className="bg-white bg-opacity-20 rounded-full px-3 py-1 text-sm">
+                {c.name} · {calcAge(c.birthdate)}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="px-4 py-3 -mt-2">
+        <div className="card p-4 mb-4">
+          <div className="text-sm font-semibold text-gray-500 mb-2">📍 選擇年齡階段</div>
+          <AgeSelector selectedAge={selectedAge} onChange={setSelectedAge} />
+        </div>
+
+        <div className="card p-4 mb-4" style={{ borderLeft: `4px solid ${stage.color}` }}>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl">{stage.emoji}</span>
+            <div>
+              <div className="font-bold text-gray-800">{stage.label}（{stage.sub}）</div>
+              <div className="text-xs text-gray-500">今日重點提醒</div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {[
+              { icon: '🍽️', text: FOOD_DATA[selectedAge][0] },
+              { icon: '🎮', text: PLAY_DATA[selectedAge][0] },
+              { icon: '⭐', text: MILESTONE_DATA[selectedAge][0] },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                <span>{item.icon}</span>
+                <span>{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {[
+            { emoji: '🍽️', label: '飲食建議', count: FOOD_DATA[selectedAge].length, color: '#FF9800' },
+            { emoji: '🎮', label: '互動遊戲', count: PLAY_DATA[selectedAge].length, color: '#4CAF50' },
+            { emoji: '⭐', label: '發展里程', count: MILESTONE_DATA[selectedAge].length, color: '#2196F3' },
+            { emoji: '🗺️', label: '親子景點', count: SPOTS_DATA[selectedAge].length, color: '#E91E63' },
+          ].map(item => (
+            <div key={item.label} className="card p-3 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center text-xl"
+                style={{ background: item.color + '22' }}>
+                {item.emoji}
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-gray-700">{item.label}</div>
+                <div className="text-xs text-gray-400">{item.count} 項內容</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="card p-4 mb-4">
+          <div className="text-sm font-semibold text-gray-700 mb-3">🔥 2026 熱門親子景點</div>
+          <div className="space-y-2">
+            {[
+              { name: '🚂 國家鐵道博物館', tag: '台北', hot: true },
+              { name: '🎪 星夢森林劇場', tag: '全台', hot: true },
+              { name: '🧱 公主樂糕殿', tag: '台北', hot: true },
+            ].map(item => (
+              <div key={item.name} className="flex items-center justify-between py-1">
+                <span className="text-sm text-gray-700">{item.name}</span>
+                <span className="tag text-white text-xs" style={{ background: '#FF5722' }}>🔥 熱門</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="card p-4">
+          <div className="text-sm font-semibold text-gray-700 mb-2">💡 今日育兒小知識</div>
+          <div className="text-sm text-gray-600 leading-relaxed">
+            {selectedAge === 'newborn' && '新生兒大部分時間都在睡覺（每天16-17小時），這是正常的！睡眠是大腦發育最重要的時候。'}
+            {selectedAge === 'infant' && '6個月起可以開始副食品，從單一食材開始，每次新食物觀察3天，確認無過敏反應。'}
+            {selectedAge === 'toddler' && '1-2歲的孩子愛說「不要！」是正常發展，這是建立自主意識的重要階段，給予合理選擇替代命令。'}
+            {selectedAge === 'preschool' && '3-5歲是語言爆炸期，大量親子共讀能顯著提升詞彙量與理解力，每天20分鐘就有效果！'}
+            {selectedAge === 'lower' && '6-8歲開始發展邏輯思維，讓孩子多問「為什麼」，家長的耐心回答是最好的思考啟蒙。'}
+            {selectedAge === 'upper' && '9-12歲孩子開始重視同儕，尊重他們的社交需要，同時維持家庭連結，是青春期前最重要的投資。'}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── 頁面：指南 ──────────────────────────────────────────
+
+function GuidePage({ selectedAge, setSelectedAge }) {
+  const [subTab, setSubTab] = useState('food');
+  const subTabs = [
+    { id: 'food', label: '飲食', emoji: '🍽️' },
+    { id: 'play', label: '活動', emoji: '🎮' },
+    { id: 'milestone', label: '里程碑', emoji: '⭐' },
+    { id: 'spots', label: '景點', emoji: '🗺️' },
+    { id: 'talent', label: '才藝班', emoji: '🎨' },
+  ];
+
+  return (
+    <div>
+      <Header title="育兒指南 📖" subtitle="依年齡精選內容" />
+      <div className="px-4 pt-3">
+        <AgeSelector selectedAge={selectedAge} onChange={setSelectedAge} />
+      </div>
+
+      <div className="scroll-x flex gap-2 px-4 py-2">
+        {subTabs.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            className="flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+            style={{
+              background: subTab === t.id ? '#FF7043' : 'white',
+              color: subTab === t.id ? 'white' : '#666',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+            }}
+          >
+            {t.emoji} {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="px-4 py-2">
+        {subTab === 'food' && (
+          <div className="card p-4">
+            <div className="text-base font-bold text-gray-800 mb-3">🍽️ 飲食建議</div>
+            <div className="space-y-3">
+              {FOOD_DATA[selectedAge].map((item, i) => (
+                <div key={i} className="flex items-start gap-3 p-3 rounded-xl" style={{ background: '#FFF3E0' }}>
+                  <span className="text-orange-500 font-bold text-sm w-5">{i + 1}</span>
+                  <span className="text-sm text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {subTab === 'play' && (
+          <div className="card p-4">
+            <div className="text-base font-bold text-gray-800 mb-3">🎮 推薦活動</div>
+            <div className="grid grid-cols-1 gap-3">
+              {PLAY_DATA[selectedAge].map((item, i) => (
+                <div key={i} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: '#E8F5E9' }}>
+                  <span className="text-2xl">{'🎯🏃🧩🎭🎪🌳'[i] || '✨'}</span>
+                  <span className="text-sm text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {subTab === 'milestone' && (
+          <div className="card p-4">
+            <div className="text-base font-bold text-gray-800 mb-3">⭐ 發展里程碑</div>
+            <div className="space-y-3">
+              {MILESTONE_DATA[selectedAge].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-white text-xs font-bold">✓</span>
+                  </div>
+                  <span className="text-sm text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 p-3 rounded-xl text-sm text-gray-500" style={{ background: '#FFF8E1' }}>
+              💛 每個孩子發展速度不同，以上為參考範圍，如有疑慮請諮詢兒科醫師。
+            </div>
+          </div>
+        )}
+
+        {subTab === 'spots' && (
+          <div className="space-y-3">
+            {SPOTS_DATA[selectedAge].map((spot, i) => (
+              <div key={i} className="card p-4">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <div className="font-semibold text-gray-800">{spot.name}</div>
+                    <div className="text-sm text-gray-500 mt-1">{spot.note}</div>
+                  </div>
+                  {spot.tag && (
+                    <span className="tag text-white flex-shrink-0 ml-2"
+                      style={{ background: spot.tag === '新開' ? '#4CAF50' : '#FF5722' }}>
+                      {spot.tag === '新開' ? '🆕 新開' : '🔥 熱門'}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {subTab === 'talent' && (
+          <div className="card p-4">
+            <div className="text-base font-bold text-gray-800 mb-3">🎨 才藝班推薦</div>
+            <div className="flex flex-wrap gap-2">
+              {TALENT_DATA[selectedAge].map((item, i) => (
+                <span key={i} className="tag text-sm py-1 px-3"
+                  style={{
+                    background: ['#FFE0B2','#FCE4EC','#E3F2FD','#E8F5E9','#EDE7F6','#FFF8E1'][i % 6],
+                    color: ['#E65100','#880E4F','#1565C0','#2E7D32','#4527A0','#F57F17'][i % 6],
+                  }}>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── 頁面：行程規劃 ──────────────────────────────────────
+
+function PlannerPage({ selectedAge, setSelectedAge }) {
+  const [plans, setPlans] = useLocalStorage('planner_plans', {});
+  const [showAdd, setShowAdd] = useState(false);
+  const [newTime, setNewTime] = useState('');
+  const [newActivity, setNewActivity] = useState('');
+
+  const currentPlan = plans[selectedAge] || DEFAULT_PLANS[selectedAge].map((p, i) => ({ ...p, id: i }));
+
+  function savePlan(updated) {
+    setPlans({ ...plans, [selectedAge]: updated });
+  }
+
+  function toggleDone(id) {
+    savePlan(currentPlan.map(p => p.id === id ? { ...p, done: !p.done } : p));
+  }
+
+  function removeItem(id) {
+    savePlan(currentPlan.filter(p => p.id !== id));
+  }
+
+  function addItem() {
+    if (!newTime || !newActivity) return;
+    const updated = [...currentPlan, { time: newTime, activity: newActivity, done: false, id: Date.now() }]
+      .sort((a, b) => a.time.localeCompare(b.time));
+    savePlan(updated);
+    setNewTime('');
+    setNewActivity('');
+    setShowAdd(false);
+  }
+
+  function resetToDefault() {
+    savePlan(DEFAULT_PLANS[selectedAge].map((p, i) => ({ ...p, id: i })));
+  }
+
+  const done = currentPlan.filter(p => p.done).length;
+  const pct = currentPlan.length ? Math.round(done / currentPlan.length * 100) : 0;
+
+  return (
+    <div>
+      <Header title="今日行程 📅" subtitle="規劃美好的親子時光" />
+      <div className="px-4 pt-3">
+        <AgeSelector selectedAge={selectedAge} onChange={setSelectedAge} />
+      </div>
+
+      <div className="px-4 py-2">
+        <div className="card p-4 mb-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-gray-700">今日完成進度</span>
+            <span className="text-sm font-bold" style={{ color: '#FF7043' }}>{done}/{currentPlan.length} ({pct}%)</span>
+          </div>
+          <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+            <div className="h-full rounded-full transition-all"
+              style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #FF7043, #FF4081)' }} />
+          </div>
+        </div>
+
+        <div className="space-y-2 mb-3">
+          {currentPlan.map(item => (
+            <div key={item.id} className="card p-3 flex items-center gap-3"
+              style={{ opacity: item.done ? 0.6 : 1 }}>
+              <button onClick={() => toggleDone(item.id)}
+                className="w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all"
+                style={{
+                  borderColor: item.done ? '#4CAF50' : '#ddd',
+                  background: item.done ? '#4CAF50' : 'white',
+                }}>
+                {item.done && <span className="text-white text-xs">✓</span>}
+              </button>
+              <span className="text-xs text-gray-400 w-12 flex-shrink-0">{item.time}</span>
+              <span className="text-sm text-gray-700 flex-1"
+                style={{ textDecoration: item.done ? 'line-through' : 'none' }}>
+                {item.activity}
+              </span>
+              <button onClick={() => removeItem(item.id)} className="text-gray-300 hover:text-red-400 text-lg flex-shrink-0">×</button>
+            </div>
+          ))}
+        </div>
+
+        {showAdd ? (
+          <div className="card p-4 mb-3">
+            <div className="text-sm font-semibold text-gray-700 mb-3">新增活動</div>
+            <div className="flex gap-2 mb-3">
+              <input type="time" value={newTime} onChange={e => setNewTime(e.target.value)}
+                className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-28" />
+              <input type="text" value={newActivity} onChange={e => setNewActivity(e.target.value)}
+                placeholder="輸入活動內容" className="border border-gray-200 rounded-xl px-3 py-2 text-sm flex-1" />
+            </div>
+            <div className="flex gap-2">
+              <button onClick={addItem}
+                className="flex-1 py-2 rounded-xl text-white text-sm font-semibold"
+                style={{ background: '#FF7043' }}>確認新增</button>
+              <button onClick={() => setShowAdd(false)}
+                className="flex-1 py-2 rounded-xl text-gray-500 text-sm border border-gray-200">取消</button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button onClick={() => setShowAdd(true)}
+              className="flex-1 py-3 rounded-xl text-white text-sm font-semibold"
+              style={{ background: '#FF7043' }}>＋ 新增活動</button>
+            <button onClick={resetToDefault}
+              className="px-4 py-3 rounded-xl text-gray-500 text-sm border border-gray-200 bg-white">重設預設</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── 頁面：SOS急救 ───────────────────────────────────────
+
+function SOSPage() {
+  const [selected, setSelected] = useState(null);
+
+  if (selected) {
+    const sos = SOS_DATA.find(s => s.id === selected);
+    return (
+      <div>
+        <div className="gradient-header text-white px-4 pt-10 pb-6">
+          <button onClick={() => setSelected(null)} className="text-sm opacity-80 mb-2">← 返回</button>
+          <div className="text-2xl">{sos.emoji}</div>
+          <div className="text-xl font-bold">{sos.title}</div>
+          <div className="text-sm opacity-80">{sos.subtitle}</div>
+        </div>
+        <div className="px-4 py-4">
+          <div className="text-sm font-semibold text-gray-700 mb-3">🚑 緊急處理步驟</div>
+          <div className="space-y-3 mb-4">
+            {sos.steps.map((step, i) => (
+              <div key={i} className="card p-4 flex gap-3">
+                <div className="flex flex-col items-center">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                    style={{ background: sos.color }}>
+                    {i + 1}
+                  </div>
+                  {i < sos.steps.length - 1 && <div className="w-0.5 flex-1 mt-1" style={{ background: sos.color + '44' }} />}
+                </div>
+                <div className="pt-1">
+                  <div className="font-semibold text-gray-800 text-sm">{step.icon} {step.title}</div>
+                  <div className="text-sm text-gray-600 mt-1 leading-relaxed">{step.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="card p-4" style={{ borderLeft: `4px solid ${sos.color}` }}>
+            <div className="text-sm font-semibold text-gray-700 mb-2">💡 重要提醒</div>
+            <div className="space-y-2">
+              {sos.tips.map((tip, i) => (
+                <div key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                  <span style={{ color: sos.color }}>●</span>
+                  <span>{tip}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="gradient-header text-white px-4 pt-10 pb-6">
+        <div className="text-2xl font-bold">🚨 育兒 SOS</div>
+        <div className="text-sm opacity-80 mt-1">緊急狀況快速指引</div>
+      </div>
+      <div className="px-4 py-4">
+        <div className="card p-3 mb-4" style={{ background: '#FFF3E0' }}>
+          <div className="text-sm text-orange-700">⚠️ 以下為一般育兒情境建議，若孩子有醫療緊急狀況，請立即撥打 <strong>119</strong></div>
+        </div>
+        <div className="space-y-3">
+          {SOS_DATA.map(sos => (
+            <button key={sos.id} onClick={() => setSelected(sos.id)}
+              className="card p-4 w-full text-left flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+                style={{ background: sos.color + '22' }}>
+                {sos.emoji}
+              </div>
+              <div className="flex-1">
+                <div className="font-bold text-gray-800">{sos.title}</div>
+                <div className="text-sm text-gray-500 mt-0.5">{sos.subtitle}</div>
+                <div className="text-xs mt-1" style={{ color: sos.color }}>{sos.steps.length} 個處理步驟 →</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── 頁面：成長紀錄 ──────────────────────────────────────
+
+const RECORD_TYPES = [
+  { id: 'milestone', label: '里程碑', emoji: '🌟', color: '#FF9800' },
+  { id: 'first', label: '第一次', emoji: '🎉', color: '#E91E63' },
+  { id: 'growth', label: '生長紀錄', emoji: '📏', color: '#4CAF50' },
+  { id: 'health', label: '健康紀錄', emoji: '💊', color: '#2196F3' },
+  { id: 'school', label: '學校大事', emoji: '🏫', color: '#9C27B0' },
+];
+
+function RecordPage() {
+  const [children, setChildren] = useLocalStorage('record_children', []);
+  const [records, setRecords] = useLocalStorage('record_entries', []);
+  const [selectedChild, setSelectedChild] = useState(null);
+  const [showAddChild, setShowAddChild] = useState(false);
+  const [showAddRecord, setShowAddRecord] = useState(false);
+  const [childName, setChildName] = useState('');
+  const [childBirth, setChildBirth] = useState('');
+  const [recType, setRecType] = useState('milestone');
+  const [recTitle, setRecTitle] = useState('');
+  const [recNote, setRecNote] = useState('');
+  const [recDate, setRecDate] = useState(new Date().toISOString().slice(0, 10));
+
+  useEffect(() => {
+    if (!selectedChild && children.length > 0) setSelectedChild(children[0].id);
+  }, [children]);
+
+  function addChild() {
+    if (!childName) return;
+    const child = { id: Date.now(), name: childName, birthdate: childBirth };
+    const updated = [...children, child];
+    setChildren(updated);
+    setSelectedChild(child.id);
+    setChildName('');
+    setChildBirth('');
+    setShowAddChild(false);
+  }
+
+  function removeChild(id) {
+    setChildren(children.filter(c => c.id !== id));
+    setRecords(records.filter(r => r.childId !== id));
+    if (selectedChild === id) setSelectedChild(children.find(c => c.id !== id)?.id || null);
+  }
+
+  function addRecord() {
+    if (!recTitle || !selectedChild) return;
+    const r = { id: Date.now(), childId: selectedChild, type: recType, title: recTitle, note: recNote, date: recDate };
+    setRecords([r, ...records]);
+    setRecTitle('');
+    setRecNote('');
+    setShowAddRecord(false);
+  }
+
+  const childRecords = records.filter(r => r.childId === selectedChild)
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  const currentChild = children.find(c => c.id === selectedChild);
+
+  return (
+    <div>
+      <Header title="成長紀錄 📔" subtitle="記錄每個珍貴時刻" />
+      <div className="px-4 py-3">
+
+        {/* 孩子選擇 */}
+        <div className="flex gap-2 mb-3 flex-wrap">
+          {children.map(c => (
+            <button key={c.id} onClick={() => setSelectedChild(c.id)}
+              className="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold transition-all"
+              style={{
+                background: selectedChild === c.id ? '#FF7043' : 'white',
+                color: selectedChild === c.id ? 'white' : '#666',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              }}>
+              <span>👶</span>
+              <span>{c.name}</span>
+              {c.birthdate && <span className="opacity-75 text-xs">{calcAge(c.birthdate)}</span>}
+            </button>
+          ))}
+          <button onClick={() => setShowAddChild(!showAddChild)}
+            className="px-3 py-2 rounded-full text-sm border-2 border-dashed text-gray-400 border-gray-300">
+            ＋ 新增小孩
+          </button>
+        </div>
+
+        {/* 新增小孩 */}
+        {showAddChild && (
+          <div className="card p-4 mb-3">
+            <div className="text-sm font-semibold text-gray-700 mb-3">新增小孩</div>
+            <input value={childName} onChange={e => setChildName(e.target.value)}
+              placeholder="孩子的名字" className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full mb-2" />
+            <div className="text-xs text-gray-400 mb-1">出生日期（選填）</div>
+            <input type="date" value={childBirth} onChange={e => setChildBirth(e.target.value)}
+              className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full mb-3" />
+            <div className="flex gap-2">
+              <button onClick={addChild}
+                className="flex-1 py-2 rounded-xl text-white text-sm font-semibold" style={{ background: '#FF7043' }}>
+                確認新增
+              </button>
+              <button onClick={() => setShowAddChild(false)}
+                className="flex-1 py-2 rounded-xl text-gray-500 text-sm border border-gray-200">取消</button>
+            </div>
+          </div>
+        )}
+
+        {currentChild && (
+          <>
+            <div className="card p-4 mb-3 flex items-center justify-between">
+              <div>
+                <div className="font-bold text-gray-800">👶 {currentChild.name}</div>
+                {currentChild.birthdate && (
+                  <div className="text-sm text-gray-500">{calcAge(currentChild.birthdate)} · 生日 {currentChild.birthdate}</div>
+                )}
+                <div className="text-xs text-gray-400 mt-1">{childRecords.length} 筆紀錄</div>
+              </div>
+              <button onClick={() => removeChild(currentChild.id)}
+                className="text-gray-300 text-sm hover:text-red-400">移除</button>
+            </div>
+
+            {/* 新增紀錄 */}
+            {showAddRecord ? (
+              <div className="card p-4 mb-3">
+                <div className="text-sm font-semibold text-gray-700 mb-3">新增紀錄</div>
+                <div className="flex gap-2 mb-3 flex-wrap">
+                  {RECORD_TYPES.map(t => (
+                    <button key={t.id} onClick={() => setRecType(t.id)}
+                      className="px-3 py-1 rounded-full text-xs font-semibold transition-all"
+                      style={{
+                        background: recType === t.id ? t.color : t.color + '22',
+                        color: recType === t.id ? 'white' : t.color,
+                      }}>
+                      {t.emoji} {t.label}
+                    </button>
+                  ))}
+                </div>
+                <input type="date" value={recDate} onChange={e => setRecDate(e.target.value)}
+                  className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full mb-2" />
+                <input value={recTitle} onChange={e => setRecTitle(e.target.value)}
+                  placeholder="紀錄標題（必填）" className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full mb-2" />
+                <textarea value={recNote} onChange={e => setRecNote(e.target.value)}
+                  placeholder="詳細描述（選填）"
+                  className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full mb-3 resize-none" rows={3} />
+                <div className="flex gap-2">
+                  <button onClick={addRecord}
+                    className="flex-1 py-2 rounded-xl text-white text-sm font-semibold" style={{ background: '#FF7043' }}>
+                    儲存紀錄
+                  </button>
+                  <button onClick={() => setShowAddRecord(false)}
+                    className="flex-1 py-2 rounded-xl text-gray-500 text-sm border border-gray-200">取消</button>
+                </div>
+              </div>
+            ) : (
+              <button onClick={() => setShowAddRecord(true)}
+                className="w-full py-3 rounded-xl text-white text-sm font-semibold mb-3"
+                style={{ background: '#FF7043' }}>
+                ＋ 新增成長紀錄
+              </button>
+            )}
+
+            {/* 紀錄列表 */}
+            {childRecords.length === 0 ? (
+              <div className="card p-8 text-center">
+                <div className="text-4xl mb-3">📝</div>
+                <div className="text-gray-400 text-sm">還沒有任何紀錄</div>
+                <div className="text-gray-300 text-xs mt-1">點擊上方按鈕開始記錄</div>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {childRecords.map(r => {
+                  const type = RECORD_TYPES.find(t => t.id === r.type) || RECORD_TYPES[0];
+                  return (
+                    <div key={r.id} className="card p-4 flex gap-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                        style={{ background: type.color + '22' }}>
+                        {type.emoji}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-gray-800 text-sm">{r.title}</span>
+                          <span className="tag text-xs py-0 px-2"
+                            style={{ background: type.color + '22', color: type.color }}>
+                            {type.label}
+                          </span>
+                        </div>
+                        {r.note && <div className="text-xs text-gray-500 mt-1">{r.note}</div>}
+                        <div className="text-xs text-gray-400 mt-1">📅 {r.date}</div>
+                      </div>
+                      <button onClick={() => setRecords(records.filter(x => x.id !== r.id))}
+                        className="text-gray-200 hover:text-red-400 text-lg flex-shrink-0">×</button>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
+
+        {children.length === 0 && !showAddChild && (
+          <div className="card p-10 text-center">
+            <div className="text-5xl mb-4">👶</div>
+            <div className="text-gray-600 font-semibold mb-2">開始記錄孩子的成長吧！</div>
+            <div className="text-gray-400 text-sm mb-4">點擊「新增小孩」建立第一個檔案</div>
+            <button onClick={() => setShowAddChild(true)}
+              className="px-6 py-3 rounded-xl text-white font-semibold" style={{ background: '#FF7043' }}>
+              ＋ 新增小孩
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── 主應用程式 ──────────────────────────────────────────
+
+function App() {
+  const [tab, setTab] = useState('home');
+  const [selectedAge, setSelectedAge] = useLocalStorage('selected_age', 'toddler');
+  const [children] = useLocalStorage('record_children', []);
+
+  const tabs = [
+    { id: 'home',    label: '首頁',  emoji: '🏠' },
+    { id: 'guide',   label: '指南',  emoji: '📖' },
+    { id: 'planner', label: '行程',  emoji: '📅' },
+    { id: 'sos',     label: '急救',  emoji: '🚨' },
+    { id: 'record',  label: '紀錄',  emoji: '📔' },
+  ];
+
+  return (
+    <div className="max-w-lg mx-auto relative" style={{ minHeight: '100vh' }}>
+      <div className="content-area">
+        {tab === 'home'    && <HomePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} children={children} />}
+        {tab === 'guide'   && <GuidePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} />}
+        {tab === 'planner' && <PlannerPage selectedAge={selectedAge} setSelectedAge={setSelectedAge} />}
+        {tab === 'sos'     && <SOSPage />}
+        {tab === 'record'  && <RecordPage />}
+      </div>
+
+      <div className="tab-bar">
+        <div className="flex">
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)}
+              className="flex-1 flex flex-col items-center justify-center py-2 transition-all"
+              style={{ color: tab === t.id ? '#FF7043' : '#999' }}>
+              <span className="text-xl">{t.emoji}</span>
+              <span className="text-xs mt-0.5 font-semibold">{t.label}</span>
+              {tab === t.id && (
+                <div className="w-1 h-1 rounded-full mt-0.5" style={{ background: '#FF7043' }} />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
 </body>
 </html>
