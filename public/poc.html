@@ -67,41 +67,53 @@ const MILESTONE_DATA = {
 
 const SPOTS_DATA = {
   newborn:   [
-    { name: '居家環境優先', note: '0-3月寶寶不宜外出過久' },
-    { name: '兒科診所親子等候區', note: '有安全設施' },
+    { name: '居家環境優先', note: '0-3月寶寶不宜外出過久', region: 'other', type: 'indoor', mosquito: false },
+    { name: '兒科診所親子等候區', note: '有安全設施', region: 'other', type: 'indoor', mosquito: false },
   ],
   infant:    [
-    { name: '🚂 國家鐵道博物館', note: '2026熱門！室內展區、親子友善', tag: '熱門' },
-    { name: '🌳 大安森林公園', note: '鋪草坪適合爬行', tag: '' },
-    { name: '🐟 台北市立動物園', note: '兒童動物區、推車友善', tag: '' },
+    { name: '🚂 國家鐵道博物館', note: '2026熱門！室內展區、親子友善', tag: '熱門', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🌳 大安森林公園', note: '鋪草坪適合爬行', region: 'north', type: 'outdoor', mosquito: true },
+    { name: '🐟 台北市立動物園', note: '兒童動物區、推車友善', region: 'north', type: 'both', mosquito: true },
+    { name: '📚 新北市立圖書館新總館', note: '兒童閱讀區、推車友善', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🎭 台中兒童美術館', note: '互動展覽、適合嬰幼兒', region: 'central', type: 'indoor', mosquito: false },
   ],
   toddler:   [
-    { name: '🚂 國家鐵道博物館', note: '小小火車迷必去！', tag: '熱門' },
-    { name: '🎪 星夢森林劇場', note: '2026新開！沉浸式親子劇場', tag: '新開' },
-    { name: '🌊 兒童新樂園', note: '台北最大兒童遊樂園', tag: '' },
-    { name: '🏖️ 福隆海水浴場', note: '沙灘玩水、親子同樂', tag: '' },
+    { name: '🚂 國家鐵道博物館', note: '小小火車迷必去！', tag: '熱門', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🎪 星夢森林劇場', note: '2026新開！沉浸式親子劇場', tag: '新開', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🌊 兒童新樂園', note: '台北最大兒童遊樂園', region: 'north', type: 'both', mosquito: true },
+    { name: '🏖️ 福隆海水浴場', note: '沙灘玩水、親子同樂', region: 'north', type: 'outdoor', mosquito: true },
+    { name: '🌳 台中都會公園', note: '大型草坪、兒童遊戲區', region: 'central', type: 'outdoor', mosquito: true },
+    { name: '🎠 義大遊樂世界', note: '南台灣大型主題樂園', region: 'south', type: 'both', mosquito: false },
   ],
   preschool: [
-    { name: '🎪 星夢森林劇場', note: '2026話題！互動式森林探險', tag: '熱門' },
-    { name: '🧱 公主樂糕殿', note: '樂高授權旗艦店，2026開幕', tag: '新開' },
-    { name: '🔬 國立台灣科學教育館', note: '動手做科學實驗', tag: '' },
-    { name: '🎨 奇美博物館', note: '台南必訪、仿歐宮廷建築', tag: '' },
+    { name: '🎪 星夢森林劇場', note: '2026話題！互動式森林探險', tag: '熱門', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🧱 公主樂糕殿', note: '樂高授權旗艦店，2026開幕', tag: '新開', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🔬 國立台灣科學教育館', note: '動手做科學實驗', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🎨 奇美博物館', note: '台南必訪、仿歐宮廷建築', region: 'south', type: 'both', mosquito: false },
+    { name: '🦁 頑皮世界野生動物園', note: '台南四草、近距離看動物', region: 'south', type: 'outdoor', mosquito: true },
+    { name: '🌸 花蓮理想大地', note: '親子農場體驗、田園生活', region: 'east', type: 'outdoor', mosquito: true },
   ],
   lower:     [
-    { name: '🧱 公主樂糕殿', note: '樂高主題樂園，超人氣！', tag: '熱門' },
-    { name: '🐠 屏東海生館', note: '海底隧道穿越珊瑚礁，生態教育絕佳場所', tag: '熱門' },
-    { name: '🚀 國立自然科學博物館', note: '台中、恐龍化石必看', tag: '' },
-    { name: '⚽ 運動中心', note: '游泳、球類一次滿足', tag: '' },
-    { name: '📚 各縣市圖書館兒童區', note: '說故事活動、閱讀空間', tag: '' },
+    { name: '🧱 公主樂糕殿', note: '樂高主題樂園，超人氣！', tag: '熱門', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🐠 屏東海生館', note: '海底隧道穿越珊瑚礁，生態教育絕佳場所', tag: '熱門', region: 'south', type: 'indoor', mosquito: false },
+    { name: '🚀 國立自然科學博物館', note: '台中、恐龍化石必看', region: 'central', type: 'indoor', mosquito: false },
+    { name: '⚽ 運動中心', note: '游泳、球類一次滿足', region: 'other', type: 'indoor', mosquito: false },
+    { name: '📚 各縣市圖書館兒童區', note: '說故事活動、閱讀空間', region: 'other', type: 'indoor', mosquito: false },
+    { name: '🌋 野柳地質公園', note: '奇特地貌、自然科學戶外教育', region: 'north', type: 'outdoor', mosquito: false },
+    { name: '🐬 澎湖水族館', note: '海洋生態展示、親子旅遊', region: 'other', type: 'indoor', mosquito: false },
   ],
   upper:     [
-    { name: '🐠 屏東海生館', note: '2026必訪！全台最大水族館，海底隧道超震撼', tag: '熱門' },
-    { name: '🏕️ 合歡山露營區', note: '高山體驗、觀星', tag: '' },
-    { name: '🧪 科技部科普活動', note: '實驗工作坊、程式營', tag: '' },
-    { name: '🎭 兩廳院兒童劇', note: '培養藝術欣賞能力', tag: '' },
-    { name: '🚲 自行車環島路線', note: '台灣好行親子單車遊', tag: '' },
+    { name: '🐠 屏東海生館', note: '2026必訪！全台最大水族館，海底隧道超震撼', tag: '熱門', region: 'south', type: 'indoor', mosquito: false },
+    { name: '🏕️ 合歡山露營區', note: '高山體驗、觀星', region: 'central', type: 'outdoor', mosquito: false },
+    { name: '🧪 科技部科普活動', note: '實驗工作坊、程式營', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🎭 兩廳院兒童劇', note: '培養藝術欣賞能力', region: 'north', type: 'indoor', mosquito: false },
+    { name: '🚲 自行車環島路線', note: '台灣好行親子單車遊', region: 'other', type: 'outdoor', mosquito: false },
+    { name: '🏄 墾丁水上活動', note: '衝浪、浮潛、海上遊樂', region: 'south', type: 'outdoor', mosquito: false },
+    { name: '🗻 阿里山森林鐵路', note: '雲海日出、神木林道', region: 'central', type: 'both', mosquito: true },
   ],
 };
+
+const TAIWAN_CITIES = ['台北市','新北市','基隆市','桃園市','新竹市','新竹縣','苗栗縣','台中市','彰化縣','南投縣','雲林縣','嘉義市','嘉義縣','台南市','高雄市','屏東縣','宜蘭縣','花蓮縣','台東縣','澎湖縣','金門縣','連江縣'];
 
 const TALENT_DATA = {
   newborn:   ['嬰兒游泳(水育課)','音樂律動感統課','親子瑜珈'],
@@ -328,14 +340,15 @@ function AgeSelector({ selectedAge, onChange }) {
 
 // ─── 頁面：首頁 ──────────────────────────────────────────
 
-function HomePage({ selectedAge, setSelectedAge, children }) {
+function HomePage({ selectedAge, setSelectedAge, children, profile }) {
   const stage = AGE_STAGES.find(s => s.id === selectedAge);
   const today = new Date().toLocaleDateString('zh-TW', { weekday: 'long', month: 'long', day: 'numeric' });
+  const title = profile && profile.babyName ? `${profile.babyName}的今日推薦 🌟` : '育兒智多星 🌟';
 
   return (
     <div>
       <div className="gradient-header text-white px-4 pt-10 pb-8">
-        <div className="text-xl font-bold">育兒智多星 🌟</div>
+        <div className="text-xl font-bold">{title}</div>
         <div className="text-sm opacity-75 mt-1">{today}</div>
         {children.length > 0 && (
           <div className="mt-3 flex gap-2 flex-wrap">
@@ -431,8 +444,10 @@ function HomePage({ selectedAge, setSelectedAge, children }) {
 
 // ─── 頁面：指南 ──────────────────────────────────────────
 
-function GuidePage({ selectedAge, setSelectedAge }) {
+function GuidePage({ selectedAge, setSelectedAge, profile }) {
   const [subTab, setSubTab] = useState('food');
+  const [regionFilter, setRegionFilter] = useState('all');
+  const [typeFilter, setTypeFilter] = useState('all');
   const subTabs = [
     { id: 'food', label: '飲食', emoji: '🍽️' },
     { id: 'play', label: '活動', emoji: '🎮' },
@@ -514,23 +529,66 @@ function GuidePage({ selectedAge, setSelectedAge }) {
         )}
 
         {subTab === 'spots' && (
-          <div className="space-y-3">
-            {SPOTS_DATA[selectedAge].map((spot, i) => (
-              <div key={i} className="card p-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="font-semibold text-gray-800">{spot.name}</div>
-                    <div className="text-sm text-gray-500 mt-1">{spot.note}</div>
-                  </div>
-                  {spot.tag && (
-                    <span className="tag text-white flex-shrink-0 ml-2"
-                      style={{ background: spot.tag === '新開' ? '#4CAF50' : '#FF5722' }}>
-                      {spot.tag === '新開' ? '🆕 新開' : '🔥 熱門'}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
+          <div>
+            <div className="flex gap-2 mb-2 flex-wrap">
+              {[['all','全部'],['north','北部'],['central','中部'],['south','南部'],['east','東部']].map(([r, label]) => (
+                <button key={r} onClick={() => setRegionFilter(r)}
+                  className="px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{ background: regionFilter === r ? '#FF7043' : 'white', color: regionFilter === r ? 'white' : '#666', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="flex gap-2 mb-3">
+              {[['all','全部'],['indoor','🏠 室內'],['outdoor','🌳 戶外']].map(([t, label]) => (
+                <button key={t} onClick={() => setTypeFilter(t)}
+                  className="px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{ background: typeFilter === t ? '#4CAF50' : 'white', color: typeFilter === t ? 'white' : '#666', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="space-y-3">
+              {(SPOTS_DATA[selectedAge] || [])
+                .filter(s => regionFilter === 'all' || s.region === regionFilter)
+                .filter(s => typeFilter === 'all' || s.type === typeFilter || s.type === 'both')
+                .map((spot, i) => {
+                  const hasMosquito = spot.mosquito && profile && profile.constitution && profile.constitution.includes('mosquito');
+                  return (
+                    <div key={i} className="card p-4">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="font-semibold text-gray-800">{spot.name}</div>
+                          <div className="text-sm text-gray-500 mt-1">{spot.note}</div>
+                          {hasMosquito && (
+                            <div className="text-xs text-red-500 mt-1">🦟 蚊蟲風險 — 建議攜帶防蚊液</div>
+                          )}
+                          <div className="flex gap-1 mt-2 flex-wrap">
+                            {spot.region && spot.region !== 'other' && (
+                              <span className="tag text-xs py-0 px-2" style={{ background: '#E3F2FD', color: '#1565C0' }}>
+                                {{'north':'北部','central':'中部','south':'南部','east':'東部'}[spot.region]}
+                              </span>
+                            )}
+                            {spot.type && (
+                              <span className="tag text-xs py-0 px-2"
+                                style={{ background: spot.type === 'indoor' ? '#E8F5E9' : spot.type === 'outdoor' ? '#FFF3E0' : '#EDE7F6', color: spot.type === 'indoor' ? '#2E7D32' : spot.type === 'outdoor' ? '#E65100' : '#4527A0' }}>
+                                {spot.type === 'indoor' ? '室內' : spot.type === 'outdoor' ? '戶外' : '室內外'}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        {spot.tag && (
+                          <span className="tag text-white flex-shrink-0 ml-2"
+                            style={{ background: spot.tag === '新開' ? '#4CAF50' : '#FF5722' }}>
+                            {spot.tag === '新開' ? '🆕 新開' : '🔥 熱門'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              }
+            </div>
           </div>
         )}
 
@@ -959,29 +1017,342 @@ function RecordPage() {
   );
 }
 
+// ─── 元件：Onboarding ────────────────────────────────────
+
+function OnboardingPage({ onComplete }) {
+  const [step, setStep] = React.useState(0);
+  const [babyName, setBabyName] = React.useState('');
+  const [birthdate, setBirthdate] = React.useState('');
+  const [city, setCity] = React.useState('');
+  const [constitution, setConstitution] = React.useState([]);
+
+  const constitutionOptions = [
+    { id: 'mosquito', label: '🦟 蚊蟲敏感', desc: '容易被蚊蟲叮咬或過敏' },
+    { id: 'food_allergy', label: '🥜 食物過敏', desc: '對特定食物過敏' },
+    { id: 'heat', label: '☀️ 日曬敏感', desc: '皮膚容易曬傷' },
+    { id: 'respiratory', label: '🫁 呼吸道敏感', desc: '容易咳嗽、氣喘' },
+    { id: 'eczema', label: '🌡️ 異位性皮膚炎', desc: '皮膚炎、濕疹' },
+  ];
+
+  function toggleC(id) {
+    setConstitution(p => p.includes(id) ? p.filter(x => x !== id) : [...p, id]);
+  }
+
+  function finish() {
+    onComplete({ babyName, birthdate, city, constitution });
+  }
+
+  const canNext = [true, babyName.trim().length > 0, true, true, true];
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg, #ff7043 0%, #e91e63 100%)', display: 'flex', flexDirection: 'column' }}>
+      {step > 0 && step < 5 && (
+        <div className="px-6 pt-10 pb-4">
+          <div className="flex gap-1">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="flex-1 h-1 rounded-full" style={{ background: i <= step ? 'white' : 'rgba(255,255,255,0.3)' }} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="flex-1 flex flex-col justify-center px-6 py-8">
+        {step === 0 && (
+          <div className="text-center text-white">
+            <div className="text-7xl mb-6">🌟</div>
+            <div className="text-3xl font-bold mb-3">育兒智多星</div>
+            <div className="text-lg opacity-90 mb-2">0–12歲全方位育兒指南</div>
+            <div className="text-sm opacity-75 mb-10 leading-relaxed">讓我們先認識你的寶貝<br/>提供個性化的育兒建議</div>
+            <button onClick={() => setStep(1)} className="bg-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl" style={{ color: '#e91e63' }}>
+              開始設定 →
+            </button>
+          </div>
+        )}
+
+        {step === 1 && (
+          <div>
+            <div className="text-white text-2xl font-bold mb-2">寶貝叫什麼名字？</div>
+            <div className="text-white text-sm mb-8" style={{ opacity: 0.75 }}>這將顯示在首頁歡迎詞</div>
+            <input
+              value={babyName} onChange={e => setBabyName(e.target.value)}
+              placeholder="輸入寶寶的名字或暱稱"
+              className="w-full px-4 py-4 rounded-2xl text-gray-800 text-lg font-semibold"
+              style={{ outline: 'none' }} autoFocus
+            />
+          </div>
+        )}
+
+        {step === 2 && (
+          <div>
+            <div className="text-white text-2xl font-bold mb-2">寶貝的生日？</div>
+            <div className="text-white text-sm mb-8" style={{ opacity: 0.75 }}>用於計算年齡和推薦內容（可跳過）</div>
+            <input type="date" value={birthdate} onChange={e => setBirthdate(e.target.value)}
+              className="w-full px-4 py-4 rounded-2xl text-gray-800 text-lg font-semibold" style={{ outline: 'none' }} />
+          </div>
+        )}
+
+        {step === 3 && (
+          <div>
+            <div className="text-white text-2xl font-bold mb-2">居住在哪個城市？</div>
+            <div className="text-white text-sm mb-6" style={{ opacity: 0.75 }}>用於推薦附近景點（可跳過）</div>
+            <div className="grid grid-cols-3 gap-2 max-h-80 overflow-y-auto">
+              {TAIWAN_CITIES.map(c => (
+                <button key={c} onClick={() => setCity(c)}
+                  className="py-3 px-2 rounded-xl text-sm font-semibold transition-all"
+                  style={{ background: city === c ? 'white' : 'rgba(255,255,255,0.2)', color: city === c ? '#e91e63' : 'white' }}>
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div>
+            <div className="text-white text-2xl font-bold mb-2">特殊體質？</div>
+            <div className="text-white text-sm mb-6" style={{ opacity: 0.75 }}>可多選，用於景點風險提示（可跳過）</div>
+            <div className="space-y-3">
+              {constitutionOptions.map(opt => (
+                <button key={opt.id} onClick={() => toggleC(opt.id)}
+                  className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
+                  style={{ background: constitution.includes(opt.id) ? 'white' : 'rgba(255,255,255,0.2)', color: constitution.includes(opt.id) ? '#e91e63' : 'white' }}>
+                  <span className="text-2xl">{opt.label.split(' ')[0]}</span>
+                  <div className="flex-1">
+                    <div className="font-semibold">{opt.label.split(' ').slice(1).join(' ')}</div>
+                    <div className="text-xs" style={{ opacity: 0.75 }}>{opt.desc}</div>
+                  </div>
+                  {constitution.includes(opt.id) && <span className="text-green-500 font-bold">✓</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 5 && (
+          <div className="text-center text-white">
+            <div className="text-7xl mb-6">🎉</div>
+            <div className="text-2xl font-bold mb-3">設定完成！</div>
+            <div className="text-lg mb-2" style={{ opacity: 0.9 }}>歡迎 {babyName} 的爸爸媽媽</div>
+            <div className="text-sm mb-10" style={{ opacity: 0.75 }}>一切就緒，開始你的育兒旅程吧！</div>
+            <button onClick={finish} className="bg-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl" style={{ color: '#e91e63' }}>
+              進入應用程式 →
+            </button>
+          </div>
+        )}
+      </div>
+
+      {step > 0 && step < 5 && (
+        <div className="px-6 pb-12 flex gap-3">
+          <button onClick={() => setStep(s => s - 1)}
+            className="px-6 py-3 rounded-xl font-semibold"
+            style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+            上一步
+          </button>
+          <button onClick={() => setStep(s => s + 1)} disabled={!canNext[step]}
+            className="flex-1 py-3 rounded-xl font-bold"
+            style={{ background: canNext[step] ? 'white' : 'rgba(255,255,255,0.3)', color: canNext[step] ? '#e91e63' : 'rgba(255,255,255,0.5)' }}>
+            {step === 4 ? '完成設定 ✓' : '下一步 →'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── 元件：生長追蹤 ────────────────────────────────────
+
+function GrowthTrackerPage({ profile }) {
+  const [growthData, setGrowthData] = useLocalStorage('ps_growth', []);
+  const [showAdd, setShowAdd] = useState(false);
+  const [inputHeight, setInputHeight] = useState('');
+  const [inputWeight, setInputWeight] = useState('');
+  const [inputDate, setInputDate] = useState(new Date().toISOString().slice(0, 10));
+
+  function addRecord() {
+    if (!inputHeight && !inputWeight) return;
+    const rec = { date: inputDate, height: parseFloat(inputHeight) || null, weight: parseFloat(inputWeight) || null, id: Date.now() };
+    const updated = [...growthData, rec].sort((a, b) => a.date.localeCompare(b.date));
+    setGrowthData(updated);
+    setInputHeight(''); setInputWeight(''); setShowAdd(false);
+  }
+
+  function GrowthChart() {
+    if (growthData.length < 2) return (
+      <div className="text-center text-gray-400 py-8 text-sm">至少需要2筆紀錄才顯示圖表</div>
+    );
+    const W = 320, H = 160, PAD = 32;
+    const innerW = W - PAD * 2, innerH = H - PAD * 2;
+    const hData = growthData.filter(d => d.height);
+    const wData = growthData.filter(d => d.weight);
+    const allTs = growthData.map(d => new Date(d.date).getTime());
+    const minT = Math.min(...allTs), maxT = Math.max(...allTs);
+    function toX(date) { return maxT === minT ? PAD + innerW / 2 : PAD + (new Date(date).getTime() - minT) / (maxT - minT) * innerW; }
+    function toYH(h) {
+      const vals = hData.map(d => d.height);
+      const minV = Math.min(...vals) - 2, maxV = Math.max(...vals) + 2;
+      return PAD + innerH - (h - minV) / (maxV - minV) * innerH;
+    }
+    function toYW(w) {
+      const vals = wData.map(d => d.weight);
+      const minV = Math.min(...vals) - 0.5, maxV = Math.max(...vals) + 0.5;
+      return PAD + innerH - (w - minV) / (maxV - minV) * innerH;
+    }
+    const hPath = hData.length >= 2 ? hData.map((d, i) => `${i === 0 ? 'M' : 'L'} ${toX(d.date)} ${toYH(d.height)}`).join(' ') : '';
+    const wPath = wData.length >= 2 ? wData.map((d, i) => `${i === 0 ? 'M' : 'L'} ${toX(d.date)} ${toYW(d.weight)}`).join(' ') : '';
+    return (
+      <div>
+        <div className="flex gap-4 mb-3 justify-center text-xs text-gray-500">
+          <span className="flex items-center gap-1">
+            <span style={{ display:'inline-block', width:16, height:3, background:'#FF7043', borderRadius:2 }} /> 身高 (cm)
+          </span>
+          <span className="flex items-center gap-1">
+            <span style={{ display:'inline-block', width:16, height:3, background:'#2196F3', borderRadius:2 }} /> 體重 (kg)
+          </span>
+        </div>
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ overflow: 'visible' }}>
+          {[0, 0.25, 0.5, 0.75, 1].map(t => (
+            <line key={t} x1={PAD} y1={PAD + t * innerH} x2={PAD + innerW} y2={PAD + t * innerH} stroke="#f0f0f0" strokeWidth={1} />
+          ))}
+          {hPath && <path d={hPath} fill="none" stroke="#FF7043" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />}
+          {wPath && <path d={wPath} fill="none" stroke="#2196F3" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" />}
+          {hData.map((d, i) => <circle key={i} cx={toX(d.date)} cy={toYH(d.height)} r={4} fill="#FF7043" />)}
+          {wData.map((d, i) => <circle key={i} cx={toX(d.date)} cy={toYW(d.weight)} r={4} fill="#2196F3" />)}
+        </svg>
+        {growthData.length >= 2 && (() => {
+          const last2 = [...growthData].slice(-2);
+          const labels = last2.map(d => d.date.slice(5));
+          return <div className="flex justify-between px-2 text-xs text-gray-400 mt-1"><span>{labels[0]}</span><span>{labels[labels.length-1]}</span></div>;
+        })()}
+      </div>
+    );
+  }
+
+  const latest = growthData[growthData.length - 1];
+  const prev = growthData[growthData.length - 2];
+  let advice = null;
+  if (latest && prev) {
+    const monthsDiff = Math.max(1, (new Date(latest.date) - new Date(prev.date)) / (1000 * 60 * 60 * 24 * 30));
+    if (latest.height && prev.height) {
+      const heightGain = (latest.height - prev.height) / monthsDiff;
+      if (heightGain < 0.5) advice = '近期身高增長較慢，建議增加優質蛋白質（雞蛋、魚、豆腐）和健康油脂（堅果、酪梨）的攝取，並確保每天充足睡眠（兒童9-11小時）。';
+    }
+    if (latest.weight && prev.weight) {
+      const weightGain = (latest.weight - prev.weight) / monthsDiff;
+      if (weightGain > 1.5) advice = (advice ? advice + ' ' : '') + '體重增長較快，建議減少精緻糖和高熱量零食，增加蔬菜和纖維攝取，維持每天30分鐘規律運動。';
+    }
+  }
+
+  return (
+    <div>
+      <Header title="生長追蹤 📏" subtitle="紀錄寶貝的成長曲線" />
+      <div className="px-4 py-3">
+        {profile && profile.babyName && (
+          <div className="text-sm text-gray-500 mb-3">👶 {profile.babyName} 的生長紀錄</div>
+        )}
+
+        <div className="card p-4 mb-4">
+          <div className="text-sm font-semibold text-gray-700 mb-3">📈 生長曲線</div>
+          <GrowthChart />
+        </div>
+
+        {advice && (
+          <div className="card p-4 mb-4" style={{ borderLeft: '4px solid #FF9800', background: '#FFF8E1' }}>
+            <div className="text-sm font-semibold text-orange-700 mb-1">🥗 營養建議</div>
+            <div className="text-sm text-gray-600 leading-relaxed">{advice}</div>
+          </div>
+        )}
+
+        {showAdd ? (
+          <div className="card p-4 mb-3">
+            <div className="text-sm font-semibold text-gray-700 mb-3">新增量測紀錄</div>
+            <div className="space-y-3">
+              <div>
+                <div className="text-xs text-gray-500 mb-1">日期</div>
+                <input type="date" value={inputDate} onChange={e => setInputDate(e.target.value)}
+                  className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full" />
+              </div>
+              <div className="flex gap-3">
+                <div className="flex-1">
+                  <div className="text-xs text-gray-500 mb-1">身高 (cm)</div>
+                  <input type="number" value={inputHeight} onChange={e => setInputHeight(e.target.value)}
+                    placeholder="例：85.5" className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs text-gray-500 mb-1">體重 (kg)</div>
+                  <input type="number" value={inputWeight} onChange={e => setInputWeight(e.target.value)}
+                    placeholder="例：12.3" className="border border-gray-200 rounded-xl px-3 py-2 text-sm w-full" />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={addRecord} className="flex-1 py-2 rounded-xl text-white text-sm font-semibold" style={{ background: '#FF7043' }}>儲存</button>
+                <button onClick={() => setShowAdd(false)} className="flex-1 py-2 rounded-xl text-gray-500 text-sm border border-gray-200">取消</button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <button onClick={() => setShowAdd(true)} className="w-full py-3 rounded-xl text-white text-sm font-semibold mb-4" style={{ background: '#FF7043' }}>
+            ＋ 新增量測紀錄
+          </button>
+        )}
+
+        {growthData.length > 0 && (
+          <div className="space-y-2">
+            <div className="text-sm font-semibold text-gray-700 mb-2">📋 歷史紀錄</div>
+            {[...growthData].reverse().map(d => (
+              <div key={d.id} className="card p-3 flex items-center justify-between">
+                <div>
+                  <div className="text-xs text-gray-400">{d.date}</div>
+                  <div className="text-sm font-semibold text-gray-700 mt-0.5">
+                    {d.height && <span className="mr-3">身高 <strong>{d.height}</strong> cm</span>}
+                    {d.weight && <span>體重 <strong>{d.weight}</strong> kg</span>}
+                  </div>
+                </div>
+                <button onClick={() => setGrowthData(growthData.filter(x => x.id !== d.id))} className="text-gray-300 hover:text-red-400 text-lg">×</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {growthData.length === 0 && !showAdd && (
+          <div className="card p-8 text-center">
+            <div className="text-4xl mb-3">📏</div>
+            <div className="text-gray-400 text-sm">還沒有量測紀錄</div>
+            <div className="text-gray-300 text-xs mt-1">點擊上方按鈕開始記錄</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── 主應用程式 ──────────────────────────────────────────
 
 function App() {
   const [tab, setTab] = useState('home');
   const [selectedAge, setSelectedAge] = useLocalStorage('selected_age', 'toddler');
   const [children] = useLocalStorage('record_children', []);
+  const [profile, setProfile] = useLocalStorage('ps_profile', null);
+
+  if (!profile) {
+    return <OnboardingPage onComplete={p => setProfile(p)} />;
+  }
 
   const tabs = [
     { id: 'home',    label: '首頁',  emoji: '🏠' },
     { id: 'guide',   label: '指南',  emoji: '📖' },
     { id: 'planner', label: '行程',  emoji: '📅' },
+    { id: 'growth',  label: '生長',  emoji: '📏' },
     { id: 'sos',     label: '急救',  emoji: '🚨' },
-    { id: 'record',  label: '紀錄',  emoji: '📔' },
   ];
 
   return (
     <div className="max-w-lg mx-auto relative" style={{ minHeight: '100vh' }}>
       <div className="content-area">
-        {tab === 'home'    && <HomePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} children={children} />}
-        {tab === 'guide'   && <GuidePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} />}
+        {tab === 'home'    && <HomePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} children={children} profile={profile} />}
+        {tab === 'guide'   && <GuidePage selectedAge={selectedAge} setSelectedAge={setSelectedAge} profile={profile} />}
         {tab === 'planner' && <PlannerPage selectedAge={selectedAge} setSelectedAge={setSelectedAge} />}
+        {tab === 'growth'  && <GrowthTrackerPage profile={profile} />}
         {tab === 'sos'     && <SOSPage />}
-        {tab === 'record'  && <RecordPage />}
       </div>
 
       <div className="tab-bar">
