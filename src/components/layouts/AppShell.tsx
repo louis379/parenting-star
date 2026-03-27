@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Home, TrendingUp, MapPin, School, AlertCircle } from 'lucide-react'
+import { Home, TrendingUp, Utensils, Star, Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', icon: Home, label: '首頁' },
   { href: '/growth', icon: TrendingUp, label: '生長' },
-  { href: '/places', icon: MapPin, label: '景點' },
-  { href: '/kindergartens', icon: School, label: '幼兒園' },
-  { href: '/sos', icon: AlertCircle, label: '急救' },
+  { href: '/meals', icon: Utensils, label: '飲食' },
+  { href: '/milestones', icon: Star, label: '里程碑' },
+  { href: '/parents', icon: Heart, label: '家長' },
 ]
 
 export function AppShell({ children }: { children: React.ReactNode }) {

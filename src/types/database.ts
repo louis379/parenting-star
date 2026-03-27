@@ -248,6 +248,61 @@ export interface Database {
         }
         Update: Partial<Database['public']['Tables']['kindergartens']['Insert']>
       }
+      meal_records: {
+        Row: {
+          id: string
+          child_id: string
+          recorded_by: string | null
+          meal_date: string
+          meal_type: string
+          description: string | null
+          photo_url: string | null
+          ai_analysis: Json | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          child_id: string
+          recorded_by?: string | null
+          meal_date: string
+          meal_type: string
+          description?: string | null
+          photo_url?: string | null
+          ai_analysis?: Json | null
+          created_at?: string
+        }
+        Update: {
+          meal_date?: string
+          meal_type?: string
+          description?: string | null
+          photo_url?: string | null
+          ai_analysis?: Json | null
+        }
+      }
+      milestones: {
+        Row: {
+          id: string
+          child_id: string
+          category: string
+          milestone_key: string
+          achieved_at: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          child_id: string
+          category: string
+          milestone_key: string
+          achieved_at?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          achieved_at?: string | null
+          notes?: string | null
+        }
+      }
     }
     Views: {}
     Functions: {}
@@ -261,3 +316,5 @@ export type Child = Database['public']['Tables']['children']['Row']
 export type GrowthRecord = Database['public']['Tables']['growth_records']['Row']
 export type Place = Database['public']['Tables']['places']['Row']
 export type Kindergarten = Database['public']['Tables']['kindergartens']['Row']
+export type MealRecord = Database['public']['Tables']['meal_records']['Row']
+export type Milestone = Database['public']['Tables']['milestones']['Row']
