@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
   Camera, FileVideo, Sparkles, CheckCircle2, ChevronRight,
-  Plus, X, Utensils, ChevronDown, Shield, Heart, AlertCircle, Syringe,
+  Plus, X, Utensils, ChevronDown, Shield, Heart,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
@@ -156,6 +156,51 @@ const AGE_DATA: Record<string, {
     storyNote: '10–12歲，青春期的門口。你可能會發現孩子開始尋求更多的私人空間，有時候會「不想說」，有時候對爸媽的意見很有主見（甚至抗議）。這不是叛逆，這是健康的個體化過程——孩子正在探索「我是誰」。最重要的事：保持溝通管道暢通，讓孩子知道你永遠在，不論他/她選擇分享什麼，你都不會評判。',
   },
 }
+
+// ===== 黃瑽寧醫師課程架構：靜態知識區塊 =====
+
+const NUTRITION_TOPICS = [
+  {
+    id: 'breastVsFormula',
+    title: '親餵 vs 瓶餵',
+    emoji: '🤱',
+    content: `親餵和瓶餵都是愛寶貝的方式，沒有哪個更好，只有哪個更適合你們家。\n\n親餵的優點：母乳含有活性免疫因子、益生菌、生長因子，能隨寶貝需求自動調整成分。研究顯示親餵可降低中耳炎、腸胃炎風險。\n\n瓶餵完全沒問題：現代配方奶營養完整，如果親餵讓媽媽非常痛苦或困難，換成配方奶寶貝也能健康長大。媽媽快樂，寶貝才快樂。\n\n混合哺育：白天瓶餵、晚上親餵，或依媽媽狀況靈活調整，完全OK。\n\n💙 黃瑽寧醫師說：「最好的餵食方式，就是讓媽媽和寶寶都舒服的方式。」`,
+  },
+  {
+    id: 'solidFood',
+    title: '副食品時機與方法',
+    emoji: '🥣',
+    content: `什麼時候開始？WHO建議6個月後，但觀察寶貝的發展信號更重要：能坐穩（不倒）、對食物有興趣、舌頭推出反射消失。大多數寶貝在4–6個月之間準備好。\n\n怎麼開始？\n• 從單一食材開始（鐵強化米糊、南瓜泥、地瓜泥）\n• 每次只加一種新食材，觀察3–7天\n• 份量：1茶匙開始，慢慢增加\n• 質地：稀泥狀→厚泥→軟塊→手指食物\n\n早點引入過敏原反而更好！最新研究顯示，花生、蛋、魚等在6個月左右早點引入，反而降低過敏風險。`,
+  },
+  {
+    id: 'pickyEater',
+    title: '偏挑食怎麼辦',
+    emoji: '🥕',
+    content: `偏挑食是2–6歲孩子最普遍的問題，90%以上的孩子都會有某種程度的偏食，你不孤單！\n\n為什麼孩子挑食？新食物恐懼症（Neophobia）是演化保護機制，2歲後大腦本能上對不熟悉的食物有防衛心。\n\n有效的方法：\n• 一種新食物需要嘗試8–15次才會接受，別在前5次就放棄\n• 不強迫吃完，但要求「嘗一小口」\n• 讓孩子參與備餐（洗菜、攪拌），增加接受度\n• 家人一起吃，示範比說教有效10倍\n\n不用擔心的情況：孩子活力好、體重在正常範圍、喜歡的食物還有10種以上，這就沒問題。\n\n小提醒：接受食物不到20種、質地敏感、完全拒絕某類食物，可以諮詢職能治療師。`,
+  },
+]
+
+const SLEEP_TOPICS = [
+  {
+    id: 'sleepRitual',
+    title: '睡前儀式建立',
+    emoji: '🌙',
+    content: `睡前儀式讓寶貝的大腦「知道睡覺要來了」，是讓入睡更順利的最有效方法。\n\n建議順序（20–30分鐘）：\n1. 洗澡（溫水放鬆）\n2. 按摩/換睡衣\n3. 親餵或瓶餵（3個月後移至睡前倒數第二步）\n4. 閱讀1–2本繪本\n5. 輕柔歌謠/說晚安\n6. 放入小床\n\n關鍵：一致性比內容更重要。每天同樣順序、同樣時間，讓孩子的生理時鐘穩定。\n\n環境準備：昏暗（使用小夜燈）、涼爽（22–25°C）、白噪音（可選）。`,
+  },
+  {
+    id: 'sleepTraining',
+    title: '安穩入睡訓練',
+    emoji: '😴',
+    content: `幫助寶貝學習自主入睡（self-soothing）是睡眠訓練的核心目標。\n\n適合開始的時機：4–6個月，且排除身體不適、成長痛、出牙等原因的夜醒。\n\n漸進式方法：\n• 放下寶貝時還有一點點醒著\n• 離開房間，若哭泣等5分鐘後進去安撫（不抱起，口語/輕拍）\n• 再次離開，間隔拉長至10分鐘、15分鐘\n• 大多數孩子3–7天內能學會\n\n睡眠回歸期（Sleep Regression）：4個月、8–10個月、18個月、2歲，都可能出現，是發展里程碑的副作用，通常2–4週後會恢復。`,
+  },
+  {
+    id: 'sleepProblems',
+    title: '夜驚、惡夢、打鼾、尿床',
+    emoji: '😰',
+    content: `夜驚 vs 惡夢：\n• 夜驚：深睡期，孩子大叫哭鬧但其實沒醒，事後完全不記得。不需要介入，保護安全即可。\n• 惡夢：淺睡期，孩子醒來害怕，需要安撫和陪伴。\n\n打鼾：偶爾打鼾（感冒時）正常。若每週3次以上、白天精神不好、呼吸有暫停感，需就醫排除睡眠呼吸中止症（常見原因：腺樣體肥大）。\n\n尿床（夜間遺尿）：\n• 5歲前尿床完全正常，不需擔心\n• 7歲後每週超過2次，可考慮就醫\n• 絕對不要因尿床責罵孩子——這不是孩子能控制的事`,
+  },
+]
+
 
 interface GrowthRecord {
   id: string
@@ -388,6 +433,11 @@ export default function GrowthClient() {
   const [showGrowthForm, setShowGrowthForm] = useState(false)
   const [showMealForm, setShowMealForm] = useState(false)
   const [showAI, setShowAI] = useState(false)
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+
+  function toggleAccordion(id: string) {
+    setOpenAccordion(prev => prev === id ? null : id)
+  }
   const [growthForm, setGrowthForm] = useState({ date: new Date().toISOString().split('T')[0], height: '', weight: '', note: '' })
   const [mealForm, setMealForm] = useState({ date: new Date().toISOString().split('T')[0], meal: '早餐', desc: '' })
 
@@ -593,6 +643,76 @@ export default function GrowthClient() {
                 ))}
               </div>
               <p className="text-xs mt-2" style={{ color: '#8E9EAD' }}>* 依據 Cochrane Review: 早期嬰兒營養、台灣衛福部每日飲食指南</p>
+            </section>
+
+            {/* 睡眠作息深度指南（手風琴） */}
+            <section>
+              <div className="flex items-center gap-2 mb-3">
+                <Moon size={16} style={{ color: '#7B9EBD' }} />
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>睡眠作息深度指南</h2>
+                <span className="evidence-badge">黃瑽寧醫師</span>
+              </div>
+              <div className="space-y-2">
+                {SLEEP_TOPICS.map(topic => (
+                  <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                    <button
+                      onClick={() => toggleAccordion('sleep_' + topic.id)}
+                      className="w-full flex items-center justify-between px-4 py-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                        <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                      </div>
+                      <ChevronDown
+                        size={16}
+                        style={{ color: '#7B9EBD', transform: openAccordion === 'sleep_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                      />
+                    </button>
+                    {openAccordion === 'sleep_' + topic.id && (
+                      <div className="px-4 pb-4">
+                        <div className="p-3 rounded-xl" style={{ background: '#F5F8FF' }}>
+                          <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 營養餵食深度指南（手風琴） */}
+            <section>
+              <div className="flex items-center gap-2 mb-3">
+                <Utensils size={16} style={{ color: '#7B9EBD' }} />
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>營養餵食深度指南</h2>
+                <span className="evidence-badge">黃瑽寧醫師</span>
+              </div>
+              <div className="space-y-2">
+                {NUTRITION_TOPICS.map(topic => (
+                  <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                    <button
+                      onClick={() => toggleAccordion('nutrition_' + topic.id)}
+                      className="w-full flex items-center justify-between px-4 py-3"
+                    >
+                      <div className="flex items-center gap-2">
+                        <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                        <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                      </div>
+                      <ChevronDown
+                        size={16}
+                        style={{ color: '#7B9EBD', transform: openAccordion === 'nutrition_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                      />
+                    </button>
+                    {openAccordion === 'nutrition_' + topic.id && (
+                      <div className="px-4 pb-4">
+                        <div className="p-3 rounded-xl" style={{ background: '#FFF8EC' }}>
+                          <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </section>
 
             {/* 來源說明 */}
