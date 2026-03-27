@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   BookOpen, ClipboardList, MessageSquare, Lightbulb, GraduationCap,
   Camera, FileText, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Star, ChevronDown,
+  Info, TrendingUp, Plus, X, Star, ChevronDown, Shield,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
@@ -282,6 +282,105 @@ const EXAM_ANALYSIS: {
   cheer: '孩子遇到挫折願意繼續嘗試，是最難能可貴的品格。成績是過程，韌性才是一輩子的資產 💙',
 }
 
+const EDU_HUANG_TOPICS = [
+  {
+    id: 'intelligence',
+    emoji: '🧠',
+    title: '智力發展',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F0F4FF',
+    borderColor: '#B8C5E8',
+    headerColor: '#3A5AA0',
+    sections: [
+      {
+        title: '如何科學提升智力？',
+        content: '好消息：智力不是固定的，是可以培養的！\n\n三歲前最有效的三件事：\n① 多說話：鼓勵比責備多7倍（7:1原則），每月針對一個溝通主題深入互動\n② 擁抱、溫暖：有愛的環境讓大腦發育更好\n③ 一起玩：非結構性遊戲，讓孩子主導，你跟著玩\n\n💡 親子共讀效益極高：每天15分鐘的繪本時間，對語言和認知發展的影響超過大多數學習課程。',
+      },
+      {
+        title: '成長型思維的培養',
+        content: '成長型思維（Growth Mindset）是孩子面對挫折的最好武器。\n\n大腦真的像肌肉，是訓練出來的！\n\n怎麼稱讚？\n❌ 「你好聰明！」（固定型思維）\n✅ 「你這次很努力！」「你有這種特質，很棒！」（成長型思維）\n\n同時：\n• 告訴孩子誠實的好結果（獎勵誠實本身）\n• 父母間也要誠實（身教環境）\n• 養邏輯思維：多做創造性活動，不限制做法和說法',
+      },
+      {
+        title: '支持型父母 vs 控制型父母',
+        content: '支持型父母培養出有內在動機的孩子！\n\n關鍵公式：\n• 7成事情讓孩子與父母討論決定\n• 3成事情由父母決定\n\n讓孩子有參與感和自主感，內在動機就會自然生長。\n\n「自己參與決定的事，就會想要完成它。」\n\n💡 每天花時間做一件孩子喜歡、你也一起的事，親子關係好了，什麼事都好溝通。',
+      },
+    ],
+  },
+  {
+    id: 'language',
+    emoji: '🗣️',
+    title: '語言力',
+    badge: '黃瑽寧醫師',
+    bgColor: '#FFF8F0',
+    borderColor: '#F5D5A8',
+    headerColor: '#B07548',
+    sections: [
+      {
+        title: '語言發展時間軸',
+        content: '每個孩子都有自己的語言節奏，這個時間軸幫你了解大方向：\n\n• 7個月：發出聲音（咿咿呀呀）\n• 9個月：模仿大人說話的音調\n• 11個月：理解「不要」、「88」\n• 1歲：叫爸媽\n• 1.3歲：說單字\n• 1.5歲：說5個詞、可以指身體部位\n• 2歲：說短句子\n• 3歲：跟音、可仿說句型\n• 4歲：發出ㄈ、ㄆ、ㄘ等氣音\n• 5歲：捲舌音、出入（對、錯）概念清楚',
+      },
+      {
+        title: '語言遲緩怎麼判斷？',
+        content: '先放鬆！語言發展個體差異很大，男孩普遍比女孩慢一點。\n\n需要評估的指標（這是建議不是警告）：\n• 1歲還沒有任何有意義的詞（爸爸、媽媽、不要）\n• 2歲說的詞少於50個，或還不會說兩個字的組合\n• 3歲陌生人聽不懂他說的話\n\n3-4歲結巴是正常的！大腦轉得比嘴巴快，幫他把話接上就好，不要幫他說完，讓他自己慢慢說出來。\n\n4-5歲大舌頭（說話不清楚）可以觀察，大多數會自然改善。',
+      },
+      {
+        title: '雙語三大原則',
+        content: '10歲前學英文，可以達到母語者95%的程度——不用焦慮，慢慢來！\n\n重要：要不要讓孩子學第二語言，先看孩子的個性和喜好，喜歡就加，不喜歡不要勉強。\n\n三大原則：\n① 先建立母語的穩固基礎（中文好，英文學更快）\n② 語言學習要在有意義的情境中（看英文卡通、英文繪本、跟外師玩）\n③ 不要讓孩子有壓力（語言是工具，不是成績）\n\n💡 親子共讀是最有效的語言投資：每天15分鐘，長期效益驚人！',
+      },
+    ],
+  },
+  {
+    id: 'focus',
+    emoji: '🎯',
+    title: '專注力',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F5FFF5',
+    borderColor: '#A8D5A8',
+    headerColor: '#2E7B2E',
+    sections: [
+      {
+        title: '孩子的正常專注時間',
+        content: '孩子「坐不住」有時候只是因為要求太高了！\n\n正常的專注時間參考：\n年齡 × 2~5 分鐘 = 合理專注時長\n\n例如：4歲的孩子專注8-20分鐘是正常的\n\n💡 專注力是一個光譜，不是有沒有，而是多少。如果擔心孩子有ADHD傾向，建議給專業評估，不要自行診斷。',
+      },
+      {
+        title: '大腦運作良好，專注力才好',
+        content: '這四件事是專注力的基礎，比任何訓練都重要：\n\n① 充足睡眠（睡眠時數）：\n0-3月14hr、4-11月12hr、1-2歲11hr\n3-5歲10hr、6-13歲9hr、14-17歲8hr\n\n② 積極運動：每天至少60分鐘身體活動\n\n③ 健康飲食：避免過多化學添加物（色素、防腐劑、人工甜味劑）\n\n④ 控制疾病：過敏、慢性鼻炎、睡眠呼吸問題都會影響專注力',
+      },
+      {
+        title: '排除學習障礙',
+        content: '孩子學習效果差，先檢查有沒有這些狀況：\n\n生理面：\n• 視力問題（近視？斜弱視？）\n• 聽力問題（慢性中耳炎？聽損？）\n• 睡眠問題（睡不夠、睡眠呼吸中止）\n• 過敏引起的慢性不舒服\n\n心理面：\n• 學習焦慮（怕錯、怕被笑）\n• 家庭壓力或關係問題\n• 閱讀/書寫障礙（dyslexia）\n\n💡 在幫孩子加課前，先確認沒有這些障礙——排除障礙的效果遠大於補習！',
+      },
+      {
+        title: '建立自信心，產生內在動機',
+        content: '習得無助感（Learned Helplessness）是學習最大的敵人。\n\n破除習得無助感四步驟：\n① 建立歸屬感（孩子感受到被接受和被愛）\n② 任務由淺入深（先讓他有成功經驗）\n③ 建立自信心（稱讚努力和過程）\n④ 產生內在動機（因為有趣、有意義，而不是為了獎勵）\n\n幼兒園選擇小提醒：\n好的幼兒園培養抽象技能（專注力、工作記憶、合作、解決問題），傾聽多於教導，有自由活動時間和運動機會。',
+      },
+      {
+        title: '3C 管理原則',
+        content: 'WHO建議：2歲以下不看螢幕，2-5歲每天不超過1小時，6歲以上有限度使用。\n\n但比時間更重要的是：\n• 一起看（有陪伴的3C體驗比獨自使用效益高很多）\n• 看完討論（「剛剛那個好玩嗎？學到什麼？」）\n• 睡前1小時停用所有螢幕（藍光影響睡眠）\n\n💡 與其禁止，不如建立家庭3C使用規則（家人一起制定，孩子更願意遵守）。',
+      },
+    ],
+  },
+  {
+    id: 'school-choice',
+    emoji: '🏫',
+    title: '幼兒園選擇指南',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F5F0FF',
+    borderColor: '#C5B8E8',
+    headerColor: '#6B4FA0',
+    sections: [
+      {
+        title: '學前教育的正確期待',
+        content: '好的學前教育培養的是這些，而不是提早學注音、算術：\n\n🎯 最重要的五件事：\n① 培養抽象技能：專注力、工作記憶、合作、解決問題\n② 鼓勵正向行為\n③ 更多自由活動（非結構性遊戲）\n④ 更多運動機會\n⑤ 傾聽多於教導\n\n「玩就是學習」——這是有大量科學研究支持的。',
+      },
+      {
+        title: '蒙特梭利 vs 華德福',
+        content: '兩種都是以孩子需求出發的全人教育，各有特色：\n\n共同點：關注孩子需求出發，全人教育\n\n🔵 蒙特梭利：\n• 混齡班（大帶小，互相學習）\n• 精心設計的教具環境\n• 手的操作 × 實際面\n• 培養獨立思考、為自己負責，在世界中找到定位\n\n🟢 華德福：\n• 到小學就不混齡\n• 自己畫課本（沒有標準課本）\n• 藝術面 × 感官（每堂課都有畫畫、音樂）\n• 良善純美、與自然土地連結\n\n💡 選擇前，多去實際參觀，看孩子喜不喜歡那個氛圍！',
+      },
+    ],
+  },
+]
+
 export default function EducationClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeSection, setKnowledgeSection] = useState<KnowledgeSection>('language')
@@ -298,6 +397,8 @@ export default function EducationClient() {
   }
   const [showBookAI, setShowBookAI] = useState(false)
   const [showExamAI, setShowExamAI] = useState(false)
+  const [openEduTopic, setOpenEduTopic] = useState<string | null>(null)
+  const [openEduItem, setOpenEduItem] = useState<string | null>(null)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], type: 'milestone' as 'book' | 'exam' | 'milestone', desc: '' })
 
   const langData = LANGUAGE_DATA[selectedAge]
@@ -609,6 +710,61 @@ export default function EducationClient() {
               </div>
             </div>
           )}
+
+          {/* 黃瑽寧醫師課程：教育發展 */}
+          <div className="px-5 py-5 space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield size={16} style={{ color: '#7B9EBD' }} />
+              <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+              <span className="evidence-badge">教育發展</span>
+            </div>
+            <div className="space-y-3">
+              {EDU_HUANG_TOPICS.map((topic) => (
+                <div key={topic.id} className="rounded-2xl overflow-hidden border" style={{ borderColor: topic.borderColor }}>
+                  <button
+                    onClick={() => setOpenEduTopic(openEduTopic === topic.id ? null : topic.id)}
+                    className="w-full flex items-center justify-between p-4"
+                    style={{ background: topic.bgColor }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span style={{ fontSize: 20 }}>{topic.emoji}</span>
+                      <div className="text-left">
+                        <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
+                        <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
+                      </div>
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      style={{ color: topic.headerColor, transform: openEduTopic === topic.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                    />
+                  </button>
+                  {openEduTopic === topic.id && (
+                    <div className="border-t" style={{ borderColor: topic.borderColor, background: 'white' }}>
+                      {topic.sections.map((section, si) => (
+                        <div key={si} className="border-b last:border-b-0" style={{ borderColor: '#F0EDE8' }}>
+                          <button
+                            onClick={() => setOpenEduItem(openEduItem === `${topic.id}-${si}` ? null : `${topic.id}-${si}`)}
+                            className="w-full flex items-center justify-between px-4 py-3"
+                          >
+                            <span className="text-sm font-semibold text-left" style={{ color: '#2D3436' }}>{section.title}</span>
+                            <ChevronDown
+                              size={14}
+                              style={{ color: '#8E9EAD', flexShrink: 0, marginLeft: 8, transform: openEduItem === `${topic.id}-${si}` ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                            />
+                          </button>
+                          {openEduItem === `${topic.id}-${si}` && (
+                            <div className="px-4 pb-4">
+                              <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#4A5568' }}>{section.content}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
