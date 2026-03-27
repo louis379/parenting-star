@@ -4,8 +4,65 @@ import { useState } from 'react'
 import {
   Brain, BookOpen, ClipboardList, Heart, Users, Focus, Target,
   Camera, FileVideo, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Clock, ChevronDown,
+  Info, TrendingUp, Plus, X, Clock, ChevronDown, Shield,
 } from 'lucide-react'
+
+const PSYCH_HUANG_TOPICS = [
+  {
+    id: 'emotion-power',
+    emoji: '💛',
+    title: '情緒力',
+    badge: '黃瑽寧醫師',
+    bgColor: '#FFF8E8',
+    borderColor: '#F5D880',
+    headerColor: '#B08820',
+    sections: [
+      {
+        title: '情緒發展進程',
+        content: '孩子的情緒能力是慢慢長出來的，了解時間表就不會那麼焦慮！\n\n寶寶為什麼哭的發展時間線：\n• 1個月：身體不舒服（冷/熱/痛）\n• 4個月：環境刺激太多\n• 6個月：出現陌生人焦慮\n• 1歲：佔有慾不滿、愛要爸媽抱\n• 1.5歲：分離焦慮高峰\n• 2歲：理想與現實有差距（想要就要得到）\n• 3歲：更在意自我形象（「我不對」會很受傷）',
+      },
+      {
+        title: '應對哭鬧發脾氣',
+        content: '孩子哭鬧發脾氣時，五步驟幫你沉著應對：\n\n① 抱：先抱住孩子、陪伴（身體接觸傳達安全感）\n② 問：同理問句和猜測（「你很傷心對不對？是因為…嗎？」）\n③ 離開現場：帶到安靜地方，轉移注意力\n④ 受不了了：換手（讓另一個照顧者接手，不丟臉）\n⑤ 謝謝你：等他開始溝通了，給予正面回饋（「謝謝你告訴我」）\n\n💡 同理三層次：\n🔷 認知同理 → 關心（「我知道你發生什麼事了」）\n🔶 情緒同理 → 感受+陪伴\n🔹 閱讀同理 → 幫他解決問題',
+      },
+      {
+        title: '建立良好依附關係',
+        content: '依附關係是孩子一生的心理安全感基礎，你的每個回應都在建立它！\n\n五個可以今天就開始的方式：\n① 正向思考：他不是故意的，我生氣是有原因的，找到根本問題解決\n② 抓大放小：7次正面回應：1次負面提醒（7:1原則）\n③ 甜蜜語言：每月針對最難接受的行為設定主題，溫柔但一致\n④ 擁抱：隨時給，不需要理由\n⑤ 回應談話：幫助孩子表達恐懼和擔心（不要代替他說，引導他說出來）',
+      },
+      {
+        title: '高敏感孩子怎麼陪伴',
+        content: '高敏感不是問題，是特質！他們感受更豐富，需要多一點理解。\n\n三個陪伴原則：\n① 規律生活：可預測的時間表讓高敏感孩子安心\n② 減少刺激：少3C、不過度刺激的故事、情緒不要太大聲\n③ 聆聽接納：說出他內心的恐懼，給他同理 + 時間\n\n同時，執行一致的家規，溫柔但清楚：\n• Leave：離開讓人生氣的現場\n• Ask：詢問他的感受和原因\n• Time Out：執行家規（1歲=1分鐘，剝奪最愛的東西且與違規行為有關）\n• Embrace：擁抱，肯定下次可以做更好\n• Review：討論怎麼做得更好（為自己行為負責）',
+      },
+      {
+        title: '爸媽的情緒控制',
+        content: '照顧好自己的情緒，才能照顧好孩子的情緒——這不是自私，這是必要的！\n\n當你快要爆發時，記得：\n• 孩子的行為不是針對你個人的\n• 你生氣是有原因的，找出來解決更重要\n• 可以說「我現在需要冷靜一下」然後短暫離開\n\n💡 如果常常覺得快要控制不住，可以：\n• 和伴侶輪流照顧（換手不是失敗）\n• 找媽媽群互相支持\n• 必要時尋求諮商協助——這是勇氣，不是軟弱',
+      },
+    ],
+  },
+  {
+    id: 'social-power',
+    emoji: '🤝',
+    title: '社交力',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F0FDF4',
+    borderColor: '#A7D7B8',
+    headerColor: '#2D7A4F',
+    sections: [
+      {
+        title: '適應團體生活',
+        content: '進入幼兒園或學校，對孩子來說是巨大的轉變，需要時間適應。\n\n學前最重要的培養：\n① 抽象技能：專注力、工作記憶、合作、解決問題\n② 鼓勵正向行為（不只在意結果，也在意方式）\n③ 更多自由活動（非結構性遊戲）\n④ 更多運動機會\n⑤ 傾聽多於教導\n\n💡 選幼兒園不用過度焦慮：蒙特梭利和華德福都從孩子需求出發（全人教育），看哪種適合你們家的節奏和孩子個性。',
+      },
+      {
+        title: '霸凌：預防與應對',
+        content: '讓孩子知道：有些事情一定要告訴爸爸媽媽，說出來不是打小報告。\n\n預防面：\n• 幫孩子建立自信（被肯定的孩子不容易成為霸凌目標）\n• 練習清楚說「不行」「我不喜歡這樣」\n• 教導同理心（不欺負弱小）\n\n應對面：\n• 相信孩子說的話，不要第一反應是「你有沒有先惹他」\n• 和老師溝通，了解全貌\n• 讓孩子知道：逃離危險的情境是聰明的選擇，不是懦弱\n\n💛 最重要的：家是最安全的避風港，孩子願意告訴你才最重要。',
+      },
+      {
+        title: '手足紛爭與公平感',
+        content: '有兩個以上孩子的家長必看！手足之爭其實是孩子在爭「我被愛嗎？」\n\n關於公平：\n• 孩子追求的是「被公平對待」，不是「絕對一樣」\n• 每個孩子的需求不同，解釋給他們聽（「哥哥現在需要...，所以...」）\n• 讓孩子說出內心的嫉妒和委屈，這是正常的\n\n實際做法：\n① 固定每個孩子的「特別時間」（哪怕只有10分鐘）\n② 讓較大的孩子有「長幼有別」的特權感\n③ 不強迫分享，引導協商\n④ 手足之間有摩擦是正常的，讓他們練習自己解決（你觀察就好）',
+      },
+    ],
+  },
+]
 
 type MainTab = 'knowledge' | 'records'
 type KnowledgeSection = 'emotion' | 'attachment' | 'focus' | 'social'
@@ -266,6 +323,8 @@ export default function PsychologyClient() {
   }
   const [showAI, setShowAI] = useState(false)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], situation: 'crying' as SituationType, desc: '' })
+  const [openHuangTopic, setOpenHuangTopic] = useState<string | null>(null)
+  const [openHuangItem, setOpenHuangItem] = useState<string | null>(null)
 
   const emotionData = EMOTION_DATA[selectedAge]
 
@@ -581,6 +640,61 @@ export default function PsychologyClient() {
               </div>
             </div>
           )}
+
+          {/* 黃瑽寧醫師課程：心理培養 */}
+          <div className="px-5 py-5 space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield size={16} style={{ color: '#7B9EBD' }} />
+              <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+              <span className="evidence-badge">心理培養</span>
+            </div>
+            <div className="space-y-3">
+              {PSYCH_HUANG_TOPICS.map((topic) => (
+                <div key={topic.id} className="rounded-2xl overflow-hidden border" style={{ borderColor: topic.borderColor }}>
+                  <button
+                    onClick={() => setOpenHuangTopic(openHuangTopic === topic.id ? null : topic.id)}
+                    className="w-full flex items-center justify-between p-4"
+                    style={{ background: topic.bgColor }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span style={{ fontSize: 20 }}>{topic.emoji}</span>
+                      <div className="text-left">
+                        <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
+                        <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
+                      </div>
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      style={{ color: topic.headerColor, transform: openHuangTopic === topic.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                    />
+                  </button>
+                  {openHuangTopic === topic.id && (
+                    <div className="border-t" style={{ borderColor: topic.borderColor, background: 'white' }}>
+                      {topic.sections.map((section, si) => (
+                        <div key={si} className="border-b last:border-b-0" style={{ borderColor: '#F0EDE8' }}>
+                          <button
+                            onClick={() => setOpenHuangItem(openHuangItem === `${topic.id}-${si}` ? null : `${topic.id}-${si}`)}
+                            className="w-full flex items-center justify-between px-4 py-3"
+                          >
+                            <span className="text-sm font-semibold text-left" style={{ color: '#2D3436' }}>{section.title}</span>
+                            <ChevronDown
+                              size={14}
+                              style={{ color: '#8E9EAD', flexShrink: 0, marginLeft: 8, transform: openHuangItem === `${topic.id}-${si}` ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                            />
+                          </button>
+                          {openHuangItem === `${topic.id}-${si}` && (
+                            <div className="px-4 pb-4">
+                              <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#4A5568' }}>{section.content}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
