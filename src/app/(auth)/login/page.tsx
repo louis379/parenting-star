@@ -42,19 +42,19 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#fffbf5' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF5' }}>
       {/* Header */}
       <div className="gradient-hero text-white px-6 pt-14 pb-12 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-3xl mb-4 backdrop-blur-sm">
           <Baby size={32} className="text-white" />
         </div>
         <h1 className="text-2xl font-black">歡迎回來</h1>
-        <p className="text-orange-100 text-sm mt-1">登入繼續使用育兒智多星</p>
+        <p className="text-white/75 text-sm mt-1">登入繼續使用育兒智多星</p>
       </div>
 
       <div className="relative -mt-5 z-10">
         <svg viewBox="0 0 390 24" className="w-full" preserveAspectRatio="none">
-          <path d="M0,12 C130,24 260,0 390,12 L390,24 L0,24 Z" fill="#fffbf5" />
+          <path d="M0,12 C130,24 260,0 390,12 L390,24 L0,24 Z" fill="#FAFAF5" />
         </svg>
       </div>
 
@@ -97,7 +97,7 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           還沒有帳號？{' '}
-          <Link href="/register" className="text-orange-500 font-semibold">
+          <Link href="/register" className="text-[#7B9EBD] font-semibold">
             免費註冊
           </Link>
         </p>

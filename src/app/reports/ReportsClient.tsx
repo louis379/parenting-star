@@ -149,7 +149,7 @@ function generateRecommendations(
 
 const PRIORITY_COLORS = {
   high: 'bg-red-50 text-red-700 border-red-100',
-  medium: 'bg-orange-50 text-orange-700 border-orange-100',
+  medium: 'bg-[#EBF4FF] text-[#5E85A3] border-[#C5D8E8]',
   low: 'bg-green-50 text-green-700 border-green-100',
 }
 const PRIORITY_LABELS = { high: '需注意', medium: '建議', low: '良好' }
@@ -178,7 +178,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
 
   if (!child) {
     return (
-      <div style={{ background: '#fffbf5' }} className="min-h-screen flex flex-col items-center justify-center px-8 text-center">
+      <div style={{ background: '#FAFAF5' }} className="min-h-screen flex flex-col items-center justify-center px-8 text-center">
         <p className="text-5xl mb-4">📊</p>
         <p className="font-bold text-gray-700 mb-2">尚無孩子資料</p>
         <p className="text-sm text-gray-500">請先完成 onboarding 建立孩子資料</p>
@@ -189,7 +189,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
   const toggle = (key: string) => setExpandSection(prev => prev === key ? null : key)
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
         <div className="flex items-center gap-2 mb-2">
@@ -227,7 +227,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
             className="w-full p-4 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <TrendingUp size={18} className="text-orange-500" />
+              <TrendingUp size={18} className="text-[#7B9EBD]" />
               <span className="font-bold text-gray-800">成長報告</span>
             </div>
             {expandSection === 'growth' ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
@@ -242,13 +242,13 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
                       { label: '體重', value: growth.latest.weight_kg ? `${growth.latest.weight_kg} kg` : '-', status: growth.weightStatus },
                       { label: '頭圍', value: growth.latest.head_circumference_cm ? `${growth.latest.head_circumference_cm} cm` : '-', status: '正常' },
                     ].map(({ label, value, status }) => (
-                      <div key={label} className="bg-orange-50 rounded-xl p-3 text-center">
+                      <div key={label} className="bg-[#EBF4FF] rounded-xl p-3 text-center">
                         <p className="text-xs text-gray-500">{label}</p>
                         <p className="font-black text-gray-800 text-sm">{value}</p>
                         <span className={cn(
                           'text-xs px-1.5 py-0.5 rounded-full',
                           status === '正常' ? 'bg-green-100 text-green-700' :
-                          status === '偏重' ? 'bg-orange-100 text-orange-700' : 'bg-red-100 text-red-700'
+                          status === '偏重' ? 'bg-[#EBF4FF] text-[#5E85A3]' : 'bg-red-100 text-red-700'
                         )}>{status}</span>
                       </div>
                     ))}
@@ -274,7 +274,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
             className="w-full p-4 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <Utensils size={18} className="text-orange-500" />
+              <Utensils size={18} className="text-[#7B9EBD]" />
               <span className="font-bold text-gray-800">營養缺口分析</span>
             </div>
             {expandSection === 'nutrition' ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
@@ -305,11 +305,11 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
                 })}
               </div>
               {nutrition.missing.length > 0 && (
-                <div className="bg-orange-50 rounded-xl p-3">
-                  <p className="text-xs font-semibold text-orange-700 mb-1">
+                <div className="bg-[#EBF4FF] rounded-xl p-3">
+                  <p className="text-xs font-semibold text-[#5E85A3] mb-1">
                     ⚠️ 近期缺乏：{nutrition.missing.join('、')}
                   </p>
-                  <p className="text-xs text-orange-600">根據您記錄的飲食內容分析，建議增加相關食物</p>
+                  <p className="text-xs text-[#5E85A3]">根據您記錄的飲食內容分析，建議增加相關食物</p>
                 </div>
               )}
               {nutrition.totalMeals === 0 && (
@@ -326,10 +326,10 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
             className="w-full p-4 flex items-center justify-between"
           >
             <div className="flex items-center gap-2">
-              <Star size={18} className="text-orange-500" />
+              <Star size={18} className="text-[#7B9EBD]" />
               <span className="font-bold text-gray-800">本月里程碑</span>
               {milestones.length > 0 && (
-                <span className="bg-orange-500 text-white text-xs px-1.5 py-0.5 rounded-full">{milestones.length}</span>
+                <span className="bg-[#7B9EBD] text-white text-xs px-1.5 py-0.5 rounded-full">{milestones.length}</span>
               )}
             </div>
             {expandSection === 'milestones' ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
@@ -363,7 +363,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
         {/* Recommendations */}
         <div>
           <h3 className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-1.5">
-            <AlertCircle size={15} className="text-orange-500" />
+            <AlertCircle size={15} className="text-[#7B9EBD]" />
             本月建議清單
           </h3>
           <div className="space-y-2">
@@ -375,7 +375,7 @@ export default function ReportsClient({ child, allChildren, growthRecords, mealR
                     <div className="flex items-center gap-1.5 mb-1">
                       <span className={cn('text-xs font-bold px-1.5 py-0.5 rounded-full',
                         rec.priority === 'high' ? 'bg-red-100 text-red-700' :
-                        rec.priority === 'medium' ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'
+                        rec.priority === 'medium' ? 'bg-[#EBF4FF] text-[#5E85A3]' : 'bg-green-100 text-green-700'
                       )}>{PRIORITY_LABELS[rec.priority]}</span>
                     </div>
                     <p className="text-sm leading-relaxed">{rec.text}</p>

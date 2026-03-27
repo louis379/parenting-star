@@ -101,8 +101,8 @@ const TOPICS = [
     id: 'couple',
     emoji: '💑',
     title: '伴侶溝通技巧',
-    color: 'bg-pink-50 border-pink-100',
-    titleColor: 'text-pink-800',
+    color: 'bg-[#F0EBF8] border-[#C5D8E8]',
+    titleColor: 'text-[#6B4E8A]',
     articles: [
       {
         title: '孩子出生後，你們的關係改變了嗎？',
@@ -287,14 +287,14 @@ function ArticleItem({ article }: { article: { title: string; content: string } 
 export default function ParentsPage() {
   return (
     <AppShell>
-      <div style={{ background: '#fffbf5' }} className="min-h-screen">
+      <div style={{ background: '#FAFAF5' }} className="min-h-screen">
         {/* Header */}
         <div className="gradient-hero text-white px-5 pt-12 pb-8">
           <div className="flex items-center gap-2 mb-2">
             <Heart size={22} />
             <h1 className="text-xl font-black">家長心態專區</h1>
           </div>
-          <p className="text-orange-100 text-sm">照顧好自己，才能更好地照顧孩子</p>
+          <p className="text-white/75 text-sm">照顧好自己，才能更好地照顧孩子</p>
         </div>
 
         <div className="px-5 py-4 space-y-4">
@@ -315,11 +315,11 @@ export default function ParentsPage() {
           ))}
 
           {/* 底部勵志語 */}
-          <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-100">
+          <Card className="bg-gradient-to-br from-[#EBF4FF] to-[#F5E6C8] border-[#C5D8E8]">
             <div className="p-4 text-center">
               <p className="text-3xl mb-2">🌟</p>
-              <p className="text-orange-800 font-bold mb-1">你已經做得很好了</p>
-              <p className="text-sm text-orange-700 leading-relaxed">
+              <p className="text-[#3D6A8A] font-bold mb-1">你已經做得很好了</p>
+              <p className="text-sm text-[#5E85A3] leading-relaxed">
                 育兒沒有標準答案，只有適合你們家的答案。每一天你選擇繼續愛孩子，就是最好的育兒。
               </p>
             </div>

@@ -53,7 +53,7 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#fffbf5' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FAFAF5' }}>
         <div className="text-center">
           <div className="text-5xl mb-4">🎉</div>
           <h2 className="text-xl font-bold text-gray-800 mb-2">註冊成功！</h2>
@@ -64,18 +64,18 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#fffbf5' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF5' }}>
       <div className="gradient-hero text-white px-6 pt-14 pb-12 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-3xl mb-4 backdrop-blur-sm">
           <Baby size={32} className="text-white" />
         </div>
         <h1 className="text-2xl font-black">建立你的帳號</h1>
-        <p className="text-orange-100 text-sm mt-1">開始你的個性化育兒之旅</p>
+        <p className="text-white/75 text-sm mt-1">開始你的個性化育兒之旅</p>
       </div>
 
       <div className="relative -mt-5 z-10">
         <svg viewBox="0 0 390 24" className="w-full" preserveAspectRatio="none">
-          <path d="M0,12 C130,24 260,0 390,12 L390,24 L0,24 Z" fill="#fffbf5" />
+          <path d="M0,12 C130,24 260,0 390,12 L390,24 L0,24 Z" fill="#FAFAF5" />
         </svg>
       </div>
 
@@ -122,7 +122,7 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           已有帳號？{' '}
-          <Link href="/login" className="text-orange-500 font-semibold">
+          <Link href="/login" className="text-[#7B9EBD] font-semibold">
             立即登入
           </Link>
         </p>

@@ -76,7 +76,7 @@ const CATEGORY_CONFIG: Record<Category, { emoji: string; color: string; bg: stri
   '大動作': { emoji: '🏃', color: 'text-blue-600', bg: 'bg-blue-50' },
   '小動作': { emoji: '✋', color: 'text-purple-600', bg: 'bg-purple-50' },
   '語言': { emoji: '💬', color: 'text-green-600', bg: 'bg-green-50' },
-  '社交': { emoji: '👥', color: 'text-pink-600', bg: 'bg-pink-50' },
+  '社交': { emoji: '👥', color: 'text-[#9B8BB4]', bg: 'bg-[#F0EBF8]' },
   '認知': { emoji: '🧠', color: 'text-amber-600', bg: 'bg-amber-50' },
 }
 
@@ -154,7 +154,7 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
   const progressPct = progress.total > 0 ? Math.round((progress.achieved / progress.total) * 100) : 0
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
         <div className="flex items-center gap-2 mb-4">
@@ -169,7 +169,7 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
                 key={child.id}
                 onClick={() => setActiveChildIdx(i)}
                 className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                  i === activeChildIdx ? 'bg-white text-orange-600' : 'bg-white/20 text-white'
+                  i === activeChildIdx ? 'bg-white text-[#5E85A3]' : 'bg-white/20 text-white'
                 }`}
               >
                 {child.nickname}
@@ -186,11 +186,11 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
             <Card className="p-4">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="font-bold text-gray-800">整體達成進度</h2>
-                <span className="text-lg font-black text-orange-500">{progressPct}%</span>
+                <span className="text-lg font-black text-[#7B9EBD]">{progressPct}%</span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-3 mb-2">
                 <div
-                  className="bg-gradient-to-r from-orange-400 to-amber-400 h-3 rounded-full transition-all duration-500"
+                  className="bg-gradient-to-r from-[#7B9EBD] to-[#A8C5DA] h-3 rounded-full transition-all duration-500"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
@@ -264,7 +264,7 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
                                   ? 'bg-green-50'
                                   : isDelayed
                                   ? 'bg-red-50'
-                                  : 'bg-gray-50 hover:bg-orange-50'
+                                  : 'bg-gray-50 hover:bg-[#EBF4FF]'
                               }`}
                             >
                               {isAchieved ? (
@@ -325,7 +325,7 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
             <p className="text-gray-500 mb-4">還沒有孩子資料</p>
             <button
               onClick={() => window.location.href = '/onboarding'}
-              className="px-6 py-3 bg-orange-500 text-white rounded-2xl font-semibold"
+              className="px-6 py-3 bg-[#7B9EBD] text-white rounded-2xl font-semibold"
             >
               新增孩子資料
             </button>

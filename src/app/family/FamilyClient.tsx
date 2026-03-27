@@ -46,7 +46,7 @@ const ROLE_LABELS: Record<string, string> = {
 }
 
 const ROLE_COLORS: Record<string, string> = {
-  primary: 'bg-orange-100 text-orange-700',
+  primary: 'bg-[#EBF4FF] text-[#5E85A3]',
   co_caregiver: 'bg-blue-100 text-blue-700',
   viewer: 'bg-gray-100 text-gray-600',
 }
@@ -111,7 +111,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
   }, {})
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-6">
         <div className="flex items-center gap-2 mb-1">
@@ -137,14 +137,14 @@ export default function FamilyClient({ family, members, children, myRole, userId
       </div>
 
       {/* Tabs */}
-      <div className="flex bg-white border-b border-orange-100 sticky top-0 z-30">
+      <div className="flex bg-white border-b border-[#C5D8E8] sticky top-0 z-30">
         {(['members', 'tasks'] as const).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={cn(
               'flex-1 py-3 text-sm font-semibold transition-all',
-              activeTab === tab ? 'text-orange-500 border-b-2 border-orange-500' : 'text-gray-400'
+              activeTab === tab ? 'text-[#7B9EBD] border-b-2 border-[#7B9EBD]' : 'text-gray-400'
             )}
           >
             {tab === 'members' ? '👥 成員管理' : '📋 育兒計畫'}
@@ -161,7 +161,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
               <div className="flex items-center gap-2">
                 {(() => {
                   const Icon = ROLE_ICONS[myRole] ?? User
-                  return <Icon size={18} className="text-orange-500" />
+                  return <Icon size={18} className="text-[#7B9EBD]" />
                 })()}
                 <span className="font-bold text-gray-800">{ROLE_LABELS[myRole] ?? myRole}</span>
                 <span className={cn('text-xs px-2 py-0.5 rounded-full ml-auto', ROLE_COLORS[myRole] ?? 'bg-gray-100 text-gray-600')}>
@@ -186,7 +186,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
                           <p className="font-bold text-gray-800 text-sm truncate">
                             {m.display_name ?? '未設定暱稱'}
                           </p>
-                          {m.isMe && <span className="text-xs bg-orange-50 text-orange-500 px-1.5 py-0.5 rounded-full shrink-0">我</span>}
+                          {m.isMe && <span className="text-xs bg-[#EBF4FF] text-[#7B9EBD] px-1.5 py-0.5 rounded-full shrink-0">我</span>}
                         </div>
                         <div className="flex items-center gap-1 mt-0.5">
                           <Icon size={11} className="text-gray-400" />
@@ -196,7 +196,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
                       {isPrimary && !m.isMe && (
                         <button
                           onClick={() => setShowRoleSheet(m)}
-                          className="text-xs text-gray-400 hover:text-orange-500 shrink-0"
+                          className="text-xs text-gray-400 hover:text-[#7B9EBD] shrink-0"
                         >
                           <ChevronRight size={16} />
                         </button>
@@ -210,19 +210,19 @@ export default function FamilyClient({ family, members, children, myRole, userId
             {/* Invite */}
             <div className="card-warm p-4">
               <div className="flex items-center gap-2 mb-3">
-                <UserPlus size={16} className="text-orange-500" />
+                <UserPlus size={16} className="text-[#7B9EBD]" />
                 <p className="font-bold text-gray-800 text-sm">邀請家人加入</p>
               </div>
               <p className="text-xs text-gray-500 mb-3">
                 分享以下連結給家人，他們可以加入並協助育兒紀錄。
               </p>
-              <div className="bg-orange-50 rounded-2xl p-3 flex items-center gap-2">
+              <div className="bg-[#EBF4FF] rounded-2xl p-3 flex items-center gap-2">
                 <p className="flex-1 text-xs text-gray-600 truncate font-mono">{inviteLink}</p>
                 <button
                   onClick={copyInvite}
                   className={cn(
                     'shrink-0 flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all',
-                    copiedInvite ? 'bg-green-500 text-white' : 'bg-orange-500 text-white'
+                    copiedInvite ? 'bg-green-500 text-white' : 'bg-[#7B9EBD] text-white'
                   )}
                 >
                   {copiedInvite ? <><Check size={12} /> 已複製</> : <><Copy size={12} /> 複製</>}
@@ -261,11 +261,11 @@ export default function FamilyClient({ family, members, children, myRole, userId
             <div className="card-warm p-4">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-sm font-bold text-gray-700">今日進度</p>
-                <p className="text-sm font-bold text-orange-500">{doneCount}/{tasks.length}</p>
+                <p className="text-sm font-bold text-[#7B9EBD]">{doneCount}/{tasks.length}</p>
               </div>
-              <div className="h-2.5 bg-orange-50 rounded-full overflow-hidden">
+              <div className="h-2.5 bg-[#EBF4FF] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-orange-400 rounded-full transition-all duration-500"
+                  className="h-full bg-[#7B9EBD] rounded-full transition-all duration-500"
                   style={{ width: `${(doneCount / tasks.length) * 100}%` }}
                 />
               </div>
@@ -291,7 +291,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
                       )}>
                         <div className={cn(
                           'w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all',
-                          task.done ? 'bg-orange-500 border-orange-500' : 'border-gray-300'
+                          task.done ? 'bg-[#7B9EBD] border-[#7B9EBD]' : 'border-gray-300'
                         )}>
                           {task.done && <Check size={13} className="text-white" />}
                         </div>
@@ -341,7 +341,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
                     onClick={() => setShowRoleSheet(null)}
                     className={cn(
                       'w-full flex items-center gap-3 p-3.5 rounded-2xl border-2 transition-all',
-                      isCurrentRole ? 'border-orange-400 bg-orange-50' : 'border-gray-100 bg-white'
+                      isCurrentRole ? 'border-[#7B9EBD] bg-[#EBF4FF]' : 'border-gray-100 bg-white'
                     )}
                   >
                     <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center', ROLE_COLORS[role])}>
@@ -353,7 +353,7 @@ export default function FamilyClient({ family, members, children, myRole, userId
                         {role === 'co_caregiver' ? '可新增/編輯育兒紀錄' : '只能查看，不能編輯'}
                       </p>
                     </div>
-                    {isCurrentRole && <Check size={16} className="text-orange-500 ml-auto" />}
+                    {isCurrentRole && <Check size={16} className="text-[#7B9EBD] ml-auto" />}
                   </button>
                 )
               })}

@@ -20,7 +20,7 @@ const CRISIS_CARDS = [
     icon: Heart,
     title: '你已經很棒了',
     subtitle: '育兒正念提醒',
-    color: 'from-rose-100 to-pink-50',
+    color: 'from-[#EBF4FF] to-[#F0EBF8]',
     iconColor: 'text-rose-500',
     content: '帶孩子真的很辛苦，疲憊不代表你不愛孩子，崩潰也不代表你是壞父母。你願意尋求幫助，本身就是很勇敢的事。',
     steps: [
@@ -35,7 +35,7 @@ const CRISIS_CARDS = [
     icon: Coffee,
     title: '爸媽充電站',
     subtitle: '5分鐘自我照顧',
-    color: 'from-amber-100 to-yellow-50',
+    color: 'from-[#F5E6C8] to-yellow-50',
     iconColor: 'text-amber-500',
     content: '短暫離開是合理的。把孩子放在安全的地方，給自己 5 分鐘喝杯水、深呼吸、做幾個拉伸動作。',
     steps: ['確認孩子在安全環境', '走到另一個房間', '喝一杯水（慢慢喝）', '做 3 個深呼吸後再回去'],
@@ -105,9 +105,9 @@ export default function SOSClient() {
   const PHASE_COLORS = { inhale: 'bg-blue-500', hold: 'bg-purple-500', exhale: 'bg-sky-400' }
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
-      <div className="bg-gradient-to-br from-rose-500 to-red-600 text-white px-5 pt-12 pb-8">
+      <div className="bg-gradient-to-br from-[#EBF4FF]0 to-red-600 text-white px-5 pt-12 pb-8">
         <div className="flex items-center gap-2 mb-2">
           <AlertCircle size={22} />
           <h1 className="text-xl font-black">崩潰急救站</h1>
@@ -117,7 +117,7 @@ export default function SOSClient() {
 
       <div className="px-5 py-5 space-y-4">
         {/* Affirmation card */}
-        <div className="bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-100 rounded-2xl p-5">
+        <div className="bg-gradient-to-br from-[#EBF4FF] to-[#F0EBF8] border border-[#C5D8E8] rounded-2xl p-5">
           <p className="text-sm font-semibold text-rose-800 mb-2">給你的話</p>
           <p className="text-gray-700 leading-relaxed font-medium mb-4">
             "{AFFIRMATIONS[affirmIdx]}"
@@ -163,7 +163,7 @@ export default function SOSClient() {
             const Icon = card.icon
             const isOpen = expanded === card.id
             return (
-              <div key={card.id} className="overflow-hidden rounded-2xl border border-orange-100 bg-white">
+              <div key={card.id} className="overflow-hidden rounded-2xl border border-[#C5D8E8] bg-white">
                 <button
                   onClick={() => setExpanded(isOpen ? null : card.id)}
                   className={cn('w-full p-4 text-left flex items-center gap-3', isOpen && `bg-gradient-to-r ${card.color}`)}
@@ -199,7 +199,7 @@ export default function SOSClient() {
         </div>
 
         {/* Support message */}
-        <div className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-5 text-center">
+        <div className="bg-gradient-to-br from-[#EBF4FF] to-[#F5E6C8] border border-[#C5D8E8] rounded-2xl p-5 text-center">
           <p className="text-2xl mb-2">💛</p>
           <p className="text-sm text-amber-800 font-medium leading-relaxed">
             育兒是世界上最難的工作之一。<br />

@@ -48,13 +48,13 @@ function getMilestones(ageMonths: number): string[] {
 }
 
 const quickActions = [
-  { href: '/growth', icon: TrendingUp, label: '記錄生長', color: 'bg-green-100 text-green-600' },
-  { href: '/meals', icon: Utensils, label: '飲食日記', color: 'bg-orange-100 text-orange-600' },
-  { href: '/milestones', icon: Star, label: '里程碑', color: 'bg-yellow-100 text-yellow-600' },
-  { href: '/places', icon: MapPin, label: '找景點', color: 'bg-blue-100 text-blue-600' },
-  { href: '/kindergartens', icon: School, label: '幼兒園', color: 'bg-purple-100 text-purple-600' },
-  { href: '/parents', icon: Heart, label: '家長心態', color: 'bg-pink-100 text-pink-600' },
-  { href: '/sos', icon: AlertCircle, label: '崩潰急救', color: 'bg-red-100 text-red-600' },
+  { href: '/growth', icon: TrendingUp, label: '記錄生長', color: 'bg-[#EBF4FF] text-[#7B9EBD]' },
+  { href: '/meals', icon: Utensils, label: '飲食日記', color: 'bg-[#F5E6C8] text-[#B89A78]' },
+  { href: '/milestones', icon: Star, label: '里程碑', color: 'bg-[#EBF4EB] text-[#7BA87B]' },
+  { href: '/places', icon: MapPin, label: '找景點', color: 'bg-[#EBF6F2] text-[#7BB8A8]' },
+  { href: '/kindergartens', icon: School, label: '幼兒園', color: 'bg-[#F0EBF8] text-[#9B8BB4]' },
+  { href: '/parents', icon: Heart, label: '家長心態', color: 'bg-[#FDF0E8] text-[#D4956A]' },
+  { href: '/sos', icon: AlertCircle, label: '崩潰急救', color: 'bg-red-50 text-red-400' },
 ]
 
 export default function DashboardClient({ profile, children, recentMeal, latestGrowth, achievedMilestones }: Props) {
@@ -77,13 +77,13 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
   const dietTip = getDietTip(ageMonths)
 
   return (
-    <div className="min-h-screen" style={{ background: '#fffbf5' }}>
+    <div className="min-h-screen" style={{ background: '#FAFAF5' }}>
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-20 relative overflow-hidden">
         <div className="absolute -top-8 -right-8 w-36 h-36 bg-white/10 rounded-full" />
         <div className="flex items-center justify-between mb-4 relative z-10">
           <div>
-            <p className="text-orange-100 text-sm">{greeting}，</p>
+            <p className="text-white/70 text-sm">{greeting}，</p>
             <h1 className="text-2xl font-black">{displayName} 👋</h1>
           </div>
           <div className="flex gap-2">
@@ -105,7 +105,7 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                 onClick={() => setActiveChildIdx(i)}
                 className={`shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
                   i === activeChildIdx
-                    ? 'bg-white text-orange-600 shadow-sm'
+                    ? 'bg-white text-[#5E85A3] shadow-sm'
                     : 'bg-white/20 text-white'
                 }`}
               >
@@ -125,13 +125,13 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
       {/* Wave + Content */}
       <div className="relative -mt-12">
         <svg viewBox="0 0 390 50" className="w-full" preserveAspectRatio="none">
-          <path d="M0,25 C130,50 260,0 390,25 L390,50 L0,50 Z" fill="#fffbf5" />
+          <path d="M0,25 C130,50 260,0 390,25 L390,50 L0,50 Z" fill="#FAFAF5" />
         </svg>
 
         <div className="px-5 -mt-6 space-y-4 pb-6">
           {/* Active child card */}
           {activeChild && (
-            <Card className="p-4 border-orange-100">
+            <Card className="p-4">
               <div className="flex items-center gap-3">
                 <div className="w-14 h-14 rounded-2xl gradient-hero flex items-center justify-center text-2xl">
                   {activeChild.gender === '男生' ? '👦' : activeChild.gender === '女生' ? '👧' : '🧒'}
@@ -139,9 +139,9 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                 <div className="flex-1">
                   <h2 className="font-black text-gray-800 text-lg">{activeChild.nickname}</h2>
                   <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-sm text-orange-500 font-semibold">{formatAge(activeChild.birth_date)}</span>
+                    <span className="text-sm text-[#7B9EBD] font-semibold">{formatAge(activeChild.birth_date)}</span>
                     <span className="text-xs text-gray-400">·</span>
-                    <span className="text-xs text-gray-500 bg-orange-50 px-2 py-0.5 rounded-full">
+                    <span className="text-xs text-gray-500 bg-[#EBF4FF] px-2 py-0.5 rounded-full">
                       {getAgeStage(ageMonths)}
                     </span>
                   </div>
@@ -155,7 +155,7 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                     </div>
                   )}
                 </div>
-                <Link href="/growth" className="text-orange-400">
+                <Link href="/growth" className="text-[#7B9EBD]">
                   <ChevronRight size={20} />
                 </Link>
               </div>
@@ -211,16 +211,16 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
           {/* 今日飲食建議 */}
           {activeChild && (
             <Link href="/meals">
-              <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-100">
+              <Card style={{ background: 'linear-gradient(135deg, #FAFAF5 0%, #F5E6C8 100%)', borderColor: '#E8D5B7' }}>
                 <div className="p-4">
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">🍽️</span>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-amber-800 mb-1">今日飲食建議</h3>
-                        <ChevronRight size={16} className="text-amber-500" />
+                        <h3 className="font-bold text-[#8B6A3E] mb-1">今日飲食建議</h3>
+                        <ChevronRight size={16} className="text-[#D4B896]" />
                       </div>
-                      <p className="text-sm text-amber-700 leading-relaxed">{dietTip}</p>
+                      <p className="text-sm text-[#6B5030] leading-relaxed">{dietTip}</p>
                     </div>
                   </div>
                 </div>
@@ -236,15 +236,15 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                   <div className="flex items-center justify-between mb-3">
                     <h2 className="font-bold text-gray-800">本月發展里程碑</h2>
                     <div className="flex items-center gap-1">
-                      <span className="text-xs text-orange-500 font-medium">{ageMonths} 個月</span>
-                      <ChevronRight size={14} className="text-orange-400" />
+                      <span className="text-xs text-[#7B9EBD] font-medium">{ageMonths} 個月</span>
+                      <ChevronRight size={14} className="text-[#7B9EBD]" />
                     </div>
                   </div>
                   {achievedMilestones !== undefined && (
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex-1 bg-gray-100 rounded-full h-2">
                         <div
-                          className="bg-orange-400 h-2 rounded-full"
+                          className="bg-[#7B9EBD] h-2 rounded-full"
                           style={{ width: `${milestones.length > 0 ? Math.min((achievedMilestones / milestones.length) * 100, 100) : 0}%` }}
                         />
                       </div>
@@ -254,12 +254,12 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                   <div className="space-y-2">
                     {milestones.slice(0, 3).map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#7B9EBD] shrink-0" />
                         <span className="text-sm text-gray-600">{item}</span>
                       </div>
                     ))}
                     {milestones.length > 3 && (
-                      <p className="text-xs text-orange-500 text-center pt-1">查看全部 {milestones.length} 項</p>
+                      <p className="text-xs text-[#7B9EBD] text-center pt-1">查看全部 {milestones.length} 項</p>
                     )}
                   </div>
                 </div>
@@ -292,7 +292,7 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
           <div>
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-bold text-gray-700">熱門親子景點</h2>
-              <Link href="/places" className="text-orange-500 text-sm font-medium">看全部</Link>
+              <Link href="/places" className="text-[#7B9EBD] text-sm font-medium">看全部</Link>
             </div>
             <div className="flex gap-3 overflow-x-auto pb-2">
               {[
@@ -302,7 +302,7 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
                 { name: '日月潭', city: '南投', emoji: '🌊' },
               ].map(place => (
                 <Link key={place.name} href="/places" className="shrink-0 w-32">
-                  <div className="h-20 rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 flex items-center justify-center text-3xl mb-1.5">
+                  <div className="h-20 rounded-2xl bg-gradient-to-br from-[#EBF4FF] to-[#F5E6C8] flex items-center justify-center text-3xl mb-1.5">
                     {place.emoji}
                   </div>
                   <p className="text-xs font-medium text-gray-700 line-clamp-1">{place.name}</p>

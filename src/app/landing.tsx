@@ -148,16 +148,23 @@ export default function LandingPage() {
         {/* CTA */}
         <div className="space-y-3">
           <Link
-            href="/register"
+            href="/onboarding"
             className="block w-full text-center py-4 rounded-2xl font-bold text-white text-base transition-opacity active:opacity-80"
             style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}
           >
-            免費開始使用
+            開始使用（免費）
+          </Link>
+          <Link
+            href="/register"
+            className="block w-full text-center py-4 rounded-2xl font-semibold text-base border transition-opacity active:opacity-80"
+            style={{ color: '#7B9EBD', borderColor: '#C5D8E8', background: 'white' }}
+          >
+            建立帳號以儲存資料
           </Link>
           <Link
             href="/login"
-            className="block w-full text-center py-4 rounded-2xl font-semibold text-base border transition-opacity active:opacity-80"
-            style={{ color: '#7B9EBD', borderColor: '#C5D8E8', background: 'white' }}
+            className="block w-full text-center py-3 rounded-2xl font-medium text-sm transition-opacity active:opacity-80"
+            style={{ color: '#8E9EAD' }}
           >
             已有帳號？登入
           </Link>

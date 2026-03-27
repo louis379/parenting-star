@@ -133,7 +133,7 @@ export default function KindergartensClient({ initialData }: Props) {
   const matchScore = (k: Kindergarten) => prefs.enabled ? calcMatchScore(k, prefs) : null
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
         <div className="flex items-center justify-between mb-4">
@@ -154,7 +154,7 @@ export default function KindergartensClient({ initialData }: Props) {
               onClick={() => { setTempPrefs(prefs); setShowPrefSheet(true) }}
               className={cn(
                 'px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1',
-                prefs.enabled ? 'bg-white text-orange-500' : 'bg-white/20 text-white'
+                prefs.enabled ? 'bg-white text-[#7B9EBD]' : 'bg-white/20 text-white'
               )}
             >
               <SlidersHorizontal size={12} /> 偏好設定
@@ -182,7 +182,7 @@ export default function KindergartensClient({ initialData }: Props) {
               onClick={() => setCityFilter(city)}
               className={cn(
                 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all',
-                cityFilter === city ? 'bg-orange-500 text-white' : 'bg-white text-gray-600 border border-orange-100'
+                cityFilter === city ? 'bg-[#7B9EBD] text-white' : 'bg-white text-gray-600 border border-[#C5D8E8]'
               )}
             >
               {city}
@@ -198,7 +198,7 @@ export default function KindergartensClient({ initialData }: Props) {
               onClick={() => setTypeFilter(key)}
               className={cn(
                 'shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all',
-                typeFilter === key ? 'bg-orange-500 text-white' : 'bg-white text-gray-600 border border-orange-100'
+                typeFilter === key ? 'bg-[#7B9EBD] text-white' : 'bg-white text-gray-600 border border-[#C5D8E8]'
               )}
             >
               {label}
@@ -214,7 +214,7 @@ export default function KindergartensClient({ initialData }: Props) {
           {compareList.length > 0 && (
             <button
               onClick={() => setShowCompare(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 text-white rounded-xl text-xs font-semibold"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#7B9EBD] text-white rounded-xl text-xs font-semibold"
             >
               <Scale size={13} /> 比較 {compareList.length} 間
             </button>
@@ -229,7 +229,7 @@ export default function KindergartensClient({ initialData }: Props) {
             return (
               <div key={k.id} className="relative">
                 <button onClick={() => setSelected(k)} className="w-full text-left">
-                  <div className={cn('card-warm p-4 hover:shadow-md transition-shadow', inCompare && 'ring-2 ring-orange-400')}>
+                  <div className={cn('card-warm p-4 hover:shadow-md transition-shadow', inCompare && 'ring-2 ring-[#7B9EBD]')}>
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
@@ -238,7 +238,7 @@ export default function KindergartensClient({ initialData }: Props) {
                             <span className={cn(
                               'shrink-0 text-xs px-1.5 py-0.5 rounded-lg font-bold',
                               score >= 80 ? 'bg-green-100 text-green-700' :
-                              score >= 60 ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-500'
+                              score >= 60 ? 'bg-[#EBF4FF] text-[#5E85A3]' : 'bg-gray-100 text-gray-500'
                             )}>
                               {score}分
                             </span>
@@ -259,13 +259,13 @@ export default function KindergartensClient({ initialData }: Props) {
                     <div className="flex items-center gap-4 text-xs text-gray-500">
                       {k.monthly_fee && (
                         <div className="flex items-center gap-1">
-                          <DollarSign size={12} className="text-orange-400" />
+                          <DollarSign size={12} className="text-[#7B9EBD]" />
                           <span>月費 {formatFee(k.monthly_fee)}元</span>
                         </div>
                       )}
                       {k.student_teacher_ratio && (
                         <div className="flex items-center gap-1">
-                          <Users size={12} className="text-orange-400" />
+                          <Users size={12} className="text-[#7B9EBD]" />
                           <span>師生比 1:{k.student_teacher_ratio}</span>
                         </div>
                       )}
@@ -274,7 +274,7 @@ export default function KindergartensClient({ initialData }: Props) {
                     {k.teaching_method && k.teaching_method.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {k.teaching_method.slice(0, 3).map(m => (
-                          <span key={m} className="text-xs bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full">{m}</span>
+                          <span key={m} className="text-xs bg-[#EBF4FF] text-[#5E85A3] px-2 py-0.5 rounded-full">{m}</span>
                         ))}
                       </div>
                     )}
@@ -286,7 +286,7 @@ export default function KindergartensClient({ initialData }: Props) {
                   onClick={e => { e.stopPropagation(); toggleCompare(k) }}
                   className={cn(
                     'absolute top-3 right-3 w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all z-10',
-                    inCompare ? 'bg-orange-500 border-orange-500 text-white' : 'bg-white border-gray-200 text-gray-400'
+                    inCompare ? 'bg-[#7B9EBD] border-[#7B9EBD] text-white' : 'bg-white border-gray-200 text-gray-400'
                   )}
                 >
                   <Scale size={12} />
@@ -337,7 +337,7 @@ export default function KindergartensClient({ initialData }: Props) {
                 { label: '延托費', value: selected.extended_care_fee },
                 { label: '教材費', value: selected.material_fee },
               ].map(({ label, value }) => (
-                <div key={label} className="bg-orange-50 rounded-xl p-3">
+                <div key={label} className="bg-[#EBF4FF] rounded-xl p-3">
                   <p className="text-xs text-gray-500">{label}</p>
                   <p className="font-bold text-gray-800 text-sm">{value ? `${value.toLocaleString()} 元` : '洽詢'}</p>
                 </div>
@@ -348,20 +348,20 @@ export default function KindergartensClient({ initialData }: Props) {
             <div className="space-y-2 mb-4">
               {selected.student_teacher_ratio && (
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <Users size={15} className="text-orange-400" />
+                  <Users size={15} className="text-[#7B9EBD]" />
                   師生比：1:{selected.student_teacher_ratio}
                 </div>
               )}
               {selected.capacity && (
                 <div className="flex items-center gap-2 text-sm text-gray-700">
-                  <School size={15} className="text-orange-400" />
+                  <School size={15} className="text-[#7B9EBD]" />
                   核定人數：{selected.capacity} 人
                 </div>
               )}
               {selected.phone && (
                 <div className="flex items-center gap-2 text-sm text-gray-700">
                   <span>📞</span>
-                  <a href={`tel:${selected.phone}`} className="text-orange-500">{selected.phone}</a>
+                  <a href={`tel:${selected.phone}`} className="text-[#7B9EBD]">{selected.phone}</a>
                 </div>
               )}
             </div>
@@ -371,7 +371,7 @@ export default function KindergartensClient({ initialData }: Props) {
                 <p className="text-xs font-semibold text-gray-500 mb-2">教學方法</p>
                 <div className="flex flex-wrap gap-1.5">
                   {selected.teaching_method.map(m => (
-                    <span key={m} className="text-xs bg-orange-50 text-orange-700 px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span key={m} className="text-xs bg-[#EBF4FF] text-[#5E85A3] px-2.5 py-1 rounded-full flex items-center gap-1">
                       <CheckCircle size={10} /> {m}
                     </span>
                   ))}
@@ -388,8 +388,8 @@ export default function KindergartensClient({ initialData }: Props) {
               className={cn(
                 'w-full py-3 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2',
                 compareList.find(x => x.id === selected.id)
-                  ? 'bg-orange-100 text-orange-600'
-                  : 'bg-orange-500 text-white'
+                  ? 'bg-[#EBF4FF] text-[#5E85A3]'
+                  : 'bg-[#7B9EBD] text-white'
               )}
             >
               <Scale size={16} />
@@ -411,13 +411,13 @@ export default function KindergartensClient({ initialData }: Props) {
             {/* Budget slider */}
             <div className="mb-5">
               <label className="text-sm font-semibold text-gray-700 mb-2 block">
-                月費預算上限：<span className="text-orange-500">{tempPrefs.budgetMax.toLocaleString()} 元</span>
+                月費預算上限：<span className="text-[#7B9EBD]">{tempPrefs.budgetMax.toLocaleString()} 元</span>
               </label>
               <input
                 type="range" min={5000} max={40000} step={1000}
                 value={tempPrefs.budgetMax}
                 onChange={e => setTempPrefs(p => ({ ...p, budgetMax: Number(e.target.value) }))}
-                className="w-full accent-orange-500"
+                className="w-full accent-[#7B9EBD]"
               />
               <div className="flex justify-between text-xs text-gray-400 mt-1">
                 <span>5K</span><span>20K</span><span>40K</span>
@@ -441,7 +441,7 @@ export default function KindergartensClient({ initialData }: Props) {
                       }))}
                       className={cn(
                         'px-3 py-1.5 rounded-xl text-sm font-semibold transition-all',
-                        isSelected ? 'bg-orange-500 text-white' : 'bg-orange-50 text-gray-600'
+                        isSelected ? 'bg-[#7B9EBD] text-white' : 'bg-[#EBF4FF] text-gray-600'
                       )}
                     >
                       {m}
@@ -468,7 +468,7 @@ export default function KindergartensClient({ initialData }: Props) {
                       }))}
                       className={cn(
                         'flex items-center gap-2 p-3 rounded-2xl border-2 text-sm font-semibold transition-all',
-                        isSelected ? 'border-orange-400 bg-orange-50 text-orange-700' : 'border-gray-100 bg-white text-gray-600'
+                        isSelected ? 'border-[#7B9EBD] bg-[#EBF4FF] text-[#5E85A3]' : 'border-gray-100 bg-white text-gray-600'
                       )}
                     >
                       <span>{emoji}</span> {label}
@@ -480,7 +480,7 @@ export default function KindergartensClient({ initialData }: Props) {
 
             <button
               onClick={applyPrefs}
-              className="w-full py-3.5 bg-orange-500 text-white rounded-2xl font-bold text-base"
+              className="w-full py-3.5 bg-[#7B9EBD] text-white rounded-2xl font-bold text-base"
             >
               套用偏好・開始配對
             </button>
@@ -540,7 +540,7 @@ export default function KindergartensClient({ initialData }: Props) {
                             <span className={cn(
                               'text-xs font-bold px-2 py-1 rounded-lg',
                               s >= 80 ? 'bg-green-100 text-green-700' :
-                              s >= 60 ? 'bg-orange-100 text-orange-700' : 'bg-gray-100 text-gray-500'
+                              s >= 60 ? 'bg-[#EBF4FF] text-[#5E85A3]' : 'bg-gray-100 text-gray-500'
                             )}>{s}分</span>
                           </td>
                         )
@@ -560,7 +560,7 @@ export default function KindergartensClient({ initialData }: Props) {
               </button>
               <button
                 onClick={() => setShowCompare(false)}
-                className="flex-1 py-3 bg-orange-500 text-white rounded-2xl text-sm font-bold"
+                className="flex-1 py-3 bg-[#7B9EBD] text-white rounded-2xl text-sm font-bold"
               >
                 繼續瀏覽
               </button>

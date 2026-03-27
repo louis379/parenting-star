@@ -16,7 +16,7 @@ interface Props {
 
 const MEAL_TYPES = [
   { value: '早餐', emoji: '🌅', color: 'bg-yellow-100 text-yellow-700' },
-  { value: '午餐', emoji: '☀️', color: 'bg-orange-100 text-orange-700' },
+  { value: '午餐', emoji: '☀️', color: 'bg-[#EBF4FF] text-[#5E85A3]' },
   { value: '晚餐', emoji: '🌙', color: 'bg-indigo-100 text-indigo-700' },
   { value: '點心', emoji: '🍎', color: 'bg-green-100 text-green-700' },
 ]
@@ -181,7 +181,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
   }
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
         <div className="flex items-center justify-between mb-4">
@@ -205,7 +205,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
                 key={child.id}
                 onClick={() => setActiveChildIdx(i)}
                 className={`shrink-0 px-3 py-1.5 rounded-xl text-sm font-medium transition-all ${
-                  i === activeChildIdx ? 'bg-white text-orange-600' : 'bg-white/20 text-white'
+                  i === activeChildIdx ? 'bg-white text-[#5E85A3]' : 'bg-white/20 text-white'
                 }`}
               >
                 {child.nickname}
@@ -217,7 +217,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
 
       <div className="px-5 py-4 space-y-4">
         {/* Tab */}
-        <div className="flex bg-orange-50 rounded-2xl p-1 gap-1">
+        <div className="flex bg-[#EBF4FF] rounded-2xl p-1 gap-1">
           {[
             { key: 'diary', label: '飲食日記' },
             { key: 'suggestions', label: '副食品建議' },
@@ -226,7 +226,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
               key={tab.key}
               onClick={() => setActiveTab(tab.key as 'diary' | 'suggestions')}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
-                activeTab === tab.key ? 'bg-orange-500 text-white shadow-sm' : 'text-gray-500'
+                activeTab === tab.key ? 'bg-[#7B9EBD] text-white shadow-sm' : 'text-gray-500'
               }`}
             >
               {tab.label}
@@ -283,11 +283,11 @@ export default function MealsClient({ children, initialRecords }: Props) {
         {activeTab === 'suggestions' && activeChild && (
           <div className="space-y-4">
             {/* 月齡提示 */}
-            <Card className="bg-gradient-to-br from-orange-50 to-amber-50 border-orange-100">
+            <Card className="bg-gradient-to-br from-[#EBF4FF] to-[#F5E6C8] border-[#C5D8E8]">
               <div className="p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h2 className="font-bold text-orange-800">{suggestion.title}</h2>
-                  <span className="text-xs bg-orange-200 text-orange-700 px-2 py-0.5 rounded-full">{ageMonths} 個月</span>
+                  <h2 className="font-bold text-[#3D6A8A]">{suggestion.title}</h2>
+                  <span className="text-xs bg-[#C5D8E8] text-[#5E85A3] px-2 py-0.5 rounded-full">{ageMonths} 個月</span>
                 </div>
               </div>
             </Card>
@@ -316,7 +316,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
                 <div className="space-y-2">
                   {suggestion.tips.map((tip, i) => (
                     <div key={i} className="flex items-start gap-2">
-                      <span className="text-orange-400 font-bold shrink-0">{i + 1}.</span>
+                      <span className="text-[#7B9EBD] font-bold shrink-0">{i + 1}.</span>
                       <span className="text-sm text-gray-600">{tip}</span>
                     </div>
                   ))}
@@ -366,7 +366,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
                       if (!a) return null
                       return (
                         <div key={day} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                          <span className="text-xs font-bold text-orange-500 w-8">{day}</span>
+                          <span className="text-xs font-bold text-[#7B9EBD] w-8">{day}</span>
                           <span className="text-sm text-gray-600">
                             {a.emoji} {a.name}{b ? `、${b.emoji} ${b.name}` : ''}
                           </span>
@@ -414,7 +414,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
                     onClick={() => setForm(f => ({ ...f, mealType: meal.value }))}
                     className={`flex flex-col items-center gap-1 p-2 rounded-xl border-2 transition-all ${
                       form.mealType === meal.value
-                        ? 'border-orange-400 bg-orange-50'
+                        ? 'border-[#7B9EBD] bg-[#EBF4FF]'
                         : 'border-gray-100 bg-gray-50'
                     }`}
                   >
@@ -432,7 +432,7 @@ export default function MealsClient({ children, initialRecords }: Props) {
                 placeholder={`例：${ageMonths < 6 ? '十倍粥 3 湯匙、地瓜泥 1 湯匙' : ageMonths < 12 ? '五倍粥加蛋黃、胡蘿蔔泥' : '米飯、蒸魚、炒青菜'}`}
                 value={form.description}
                 onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-300 resize-none"
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#A8C5DA] resize-none"
               />
             </div>
 

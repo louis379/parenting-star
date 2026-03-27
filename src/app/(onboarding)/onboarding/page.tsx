@@ -57,7 +57,6 @@ export default function OnboardingPage() {
   }
 
   function handleFinish() {
-    // 儲存到 localStorage，待用戶註冊後再同步到 Supabase
     const onboardingData = {
       child: {
         nickname: child.nickname,
@@ -92,28 +91,28 @@ export default function OnboardingPage() {
   const StepIcon = STEPS[step].icon
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#fffbf5' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF5' }}>
       {/* Header */}
-      <div className="bg-white border-b border-orange-100 px-5 pt-12 pb-4">
+      <div className="gradient-hero text-white px-5 pt-12 pb-6">
         <div className="flex items-center gap-3 mb-4">
           {step > 0 && step < 3 && (
-            <button onClick={() => setStep(s => s - 1)} className="text-gray-500 hover:text-gray-700">
+            <button onClick={() => setStep(s => s - 1)} className="text-white/80 hover:text-white">
               <ChevronLeft size={24} />
             </button>
           )}
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-0.5">
-              <StepIcon size={18} className="text-orange-500" />
-              <span className="font-bold text-gray-800">{STEPS[step].title}</span>
+              <StepIcon size={18} className="text-white" />
+              <span className="font-bold text-white">{STEPS[step].title}</span>
             </div>
-            <p className="text-xs text-gray-500">{STEPS[step].subtitle}</p>
+            <p className="text-xs text-white/70">{STEPS[step].subtitle}</p>
           </div>
-          <span className="text-xs text-gray-400">{step + 1} / {STEPS.length}</span>
+          <span className="text-xs text-white/60">{step + 1} / {STEPS.length}</span>
         </div>
         {/* Progress bar */}
-        <div className="h-1.5 bg-orange-100 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-white/20 rounded-full overflow-hidden">
           <div
-            className="h-full bg-orange-500 rounded-full transition-all duration-300"
+            className="h-full bg-white rounded-full transition-all duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -147,8 +146,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'h-11 rounded-2xl text-sm font-medium border-2 transition-all',
                       child.gender === g
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200 hover:border-orange-300'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8] hover:border-[#7B9EBD]'
                     )}
                   >
                     {g}
@@ -205,8 +204,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-sm border-2 transition-all',
                       child.allergies.includes(a)
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8]'
                     )}
                   >
                     {a}
@@ -226,8 +225,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-sm border-2 transition-all',
                       child.healthConditions.includes(h)
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8]'
                     )}
                   >
                     {h}
@@ -247,8 +246,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-sm border-2 transition-all',
                       child.specialTraits.includes(t)
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8]'
                     )}
                   >
                     {t}
@@ -284,8 +283,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-sm border-2 transition-all',
                       family.city === c
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8]'
                     )}
                   >
                     {c}
@@ -312,8 +311,8 @@ export default function OnboardingPage() {
                     className={cn(
                       'px-3 py-1.5 rounded-xl text-sm border-2 transition-all',
                       family.parentingStyle.includes(s)
-                        ? 'bg-orange-500 text-white border-orange-500'
-                        : 'bg-white text-gray-600 border-orange-200'
+                        ? 'bg-[#7B9EBD] text-white border-[#7B9EBD]'
+                        : 'bg-white text-gray-600 border-[#C5D8E8]'
                     )}
                   >
                     {s}
@@ -345,13 +344,13 @@ export default function OnboardingPage() {
             </p>
             <div className="space-y-3">
               {['生長曲線追蹤已啟用', '個性化景點推薦已啟用', '幼兒園智慧配對已啟用'].map(item => (
-                <div key={item} className="flex items-center gap-2 bg-orange-50 rounded-xl p-3">
-                  <CheckCircle size={16} className="text-orange-500 shrink-0" />
+                <div key={item} className="flex items-center gap-2 bg-[#EBF4FF] rounded-xl p-3">
+                  <CheckCircle size={16} className="text-[#7B9EBD] shrink-0" />
                   <span className="text-sm text-gray-700">{item}</span>
                 </div>
               ))}
             </div>
-            <Button size="lg" className="w-full mt-6" onClick={() => router.push('/dashboard')}>
+            <Button size="lg" className="w-full mt-6" onClick={() => router.push('/growth')}>
               開始使用
             </Button>
             <button

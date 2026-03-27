@@ -12,10 +12,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const base = 'inline-flex items-center justify-center font-semibold rounded-2xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed'
 
     const variants = {
-      primary: 'bg-orange-500 text-white hover:bg-orange-600 shadow-sm shadow-orange-200',
-      secondary: 'bg-amber-400 text-white hover:bg-amber-500 shadow-sm shadow-amber-200',
-      outline: 'border-2 border-orange-300 text-orange-600 hover:bg-orange-50',
-      ghost: 'text-orange-600 hover:bg-orange-50',
+      primary: 'bg-[#7B9EBD] text-white hover:bg-[#5E85A3] shadow-sm shadow-[#7B9EBD]/20',
+      secondary: 'bg-[#D4B896] text-white hover:bg-[#B89A78] shadow-sm shadow-[#D4B896]/20',
+      outline: 'border-2 border-[#7B9EBD] text-[#7B9EBD] hover:bg-[#EBF4FF]',
+      ghost: 'text-[#7B9EBD] hover:bg-[#EBF4FF]',
       danger: 'bg-red-500 text-white hover:bg-red-600',
     }
 

@@ -4,14 +4,14 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Settings, User, LogOut, ChevronRight, Baby, Bell,
-  Shield, Users, Info, Edit2, Check, X, Heart
+  Shield, Users, Info, Edit2, Check, Heart
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/utils'
 import type { Profile, Child } from '@/types/database'
-import { differenceInMonths, differenceInYears, parseISO, format } from 'date-fns'
+import { differenceInMonths, differenceInYears, parseISO } from 'date-fns'
 
 interface Props {
   profile: Profile | null
@@ -50,7 +50,6 @@ export default function SettingsClient({ profile, email, children, family, myRol
     weekly_report: false,
   })
 
-  // Editable child state
   const [editingChild, setEditingChild] = useState<Child | null>(null)
   const [editNickname, setEditNickname] = useState('')
   const [childSaving, setChildSaving] = useState(false)
@@ -95,7 +94,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
   ]
 
   return (
-    <div style={{ background: '#fffbf5' }} className="min-h-screen">
+    <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
         <div className="flex items-center gap-2 mb-4">
@@ -119,22 +118,22 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
       <div className="px-5 py-4 space-y-3">
         {/* Settings menu */}
-        <div className="card-warm overflow-hidden divide-y divide-orange-50">
+        <div className="card-blue overflow-hidden divide-y divide-[#E8E0D5]">
           {sections.map(({ key, icon: Icon, label, desc, badge }) => (
             <button
               key={key}
               onClick={() => setActiveSection(activeSection === key ? null : key)}
-              className="w-full flex items-center gap-3 p-4 hover:bg-orange-50 transition-colors text-left"
+              className="w-full flex items-center gap-3 p-4 hover:bg-[#EBF4FF] transition-colors text-left"
             >
-              <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
-                <Icon size={18} className="text-orange-500" />
+              <div className="w-10 h-10 bg-[#EBF4FF] rounded-xl flex items-center justify-center shrink-0">
+                <Icon size={18} className="text-[#7B9EBD]" />
               </div>
               <div className="flex-1">
                 <p className="font-semibold text-gray-800 text-sm">{label}</p>
                 <p className="text-xs text-gray-500">{desc}</p>
               </div>
               {badge !== undefined && (
-                <span className="bg-orange-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center shrink-0">{badge}</span>
+                <span className="bg-[#7B9EBD] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center shrink-0">{badge}</span>
               )}
               <ChevronRight size={16} className={cn('text-gray-400 transition-transform', activeSection === key && 'rotate-90')} />
             </button>
@@ -143,7 +142,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
         {/* Profile section */}
         {activeSection === 'profile' && (
-          <div className="card-warm p-4 space-y-3">
+          <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">個人資料</p>
             <Input
               label="顯示名稱"
@@ -160,7 +159,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
         {/* Children section */}
         {activeSection === 'children' && (
-          <div className="card-warm p-4 space-y-3">
+          <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">孩子資料管理</p>
             {children.length === 0 ? (
               <p className="text-sm text-gray-400 text-center py-3">尚未新增孩子資料</p>
@@ -169,18 +168,18 @@ export default function SettingsClient({ profile, email, children, family, myRol
                 {children.map(child => (
                   <div key={child.id}>
                     {editingChild?.id === child.id ? (
-                      <div className="bg-orange-50 rounded-2xl p-3 space-y-2">
+                      <div className="bg-[#EBF4FF] rounded-2xl p-3 space-y-2">
                         <input
                           value={editNickname}
                           onChange={e => setEditNickname(e.target.value)}
-                          className="w-full px-3 py-2 rounded-xl border border-orange-200 text-sm outline-none bg-white"
+                          className="w-full px-3 py-2 rounded-xl border border-[#C5D8E8] text-sm outline-none bg-white"
                           placeholder="孩子暱稱"
                         />
                         <div className="flex gap-2">
                           <button
                             onClick={handleSaveChild}
                             disabled={childSaving}
-                            className="flex-1 py-2 bg-orange-500 text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-1"
+                            className="flex-1 py-2 bg-[#7B9EBD] text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-1"
                           >
                             {childSaved ? <><Check size={14} /> 已儲存</> : '儲存'}
                           </button>
@@ -193,7 +192,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
                         </div>
                       </div>
                     ) : (
-                      <div className="flex items-center gap-3 p-3 bg-orange-50 rounded-2xl">
+                      <div className="flex items-center gap-3 p-3 bg-[#EBF4FF] rounded-2xl">
                         <span className="text-2xl">{child.gender === 'male' ? '👦' : child.gender === 'female' ? '👧' : '🧒'}</span>
                         <div className="flex-1">
                           <p className="font-bold text-gray-800 text-sm">{child.nickname}</p>
@@ -201,7 +200,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
                         </div>
                         <button
                           onClick={() => { setEditingChild(child); setEditNickname(child.nickname) }}
-                          className="p-1.5 text-orange-500"
+                          className="p-1.5 text-[#7B9EBD]"
                         >
                           <Edit2 size={15} />
                         </button>
@@ -213,7 +212,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
             )}
             <a
               href="/onboarding"
-              className="block w-full py-2.5 border-2 border-dashed border-orange-200 text-orange-500 rounded-2xl text-sm font-semibold text-center"
+              className="block w-full py-2.5 border-2 border-dashed border-[#C5D8E8] text-[#7B9EBD] rounded-2xl text-sm font-semibold text-center"
             >
               + 新增孩子
             </a>
@@ -222,18 +221,18 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
         {/* Family section */}
         {activeSection === 'family' && (
-          <div className="card-warm p-4 space-y-3">
+          <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">家庭設定</p>
-            <div className="bg-orange-50 rounded-2xl p-3">
+            <div className="bg-[#EBF4FF] rounded-2xl p-3">
               <p className="text-xs text-gray-500 mb-1">家庭名稱</p>
               <p className="font-bold text-gray-800">{family?.name ?? '未命名家庭'}</p>
             </div>
             <a
               href="/family"
-              className="flex items-center justify-between p-3 bg-orange-50 rounded-2xl"
+              className="flex items-center justify-between p-3 bg-[#EBF4FF] rounded-2xl"
             >
               <div className="flex items-center gap-2">
-                <Users size={15} className="text-orange-500" />
+                <Users size={15} className="text-[#7B9EBD]" />
                 <p className="text-sm font-semibold text-gray-700">管理家庭成員</p>
               </div>
               <ChevronRight size={15} className="text-gray-400" />
@@ -243,11 +242,11 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
         {/* Notifications section */}
         {activeSection === 'notifications' && (
-          <div className="card-warm p-4 space-y-3">
+          <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">通知偏好</p>
             <div className="space-y-2">
               {NOTIFICATION_OPTIONS.map(({ key, label, desc, emoji }) => (
-                <div key={key} className="flex items-center gap-3 p-3 bg-orange-50 rounded-2xl">
+                <div key={key} className="flex items-center gap-3 p-3 bg-[#EBF4FF] rounded-2xl">
                   <span className="text-xl">{emoji}</span>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-gray-700">{label}</p>
@@ -257,7 +256,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
                     onClick={() => setNotifications(prev => ({ ...prev, [key]: !prev[key] }))}
                     className={cn(
                       'w-12 h-6 rounded-full transition-all relative shrink-0',
-                      notifications[key] ? 'bg-orange-500' : 'bg-gray-200'
+                      notifications[key] ? 'bg-[#7B9EBD]' : 'bg-gray-200'
                     )}
                   >
                     <span className={cn(
@@ -274,14 +273,14 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
         {/* Privacy section */}
         {activeSection === 'privacy' && (
-          <div className="card-warm p-4 space-y-3">
+          <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">隱私與安全</p>
             {[
               { label: '資料加密保護', desc: '所有個人資料均經過加密儲存', ok: true },
               { label: '不分享給第三方', desc: '您的資料不會分享給任何第三方', ok: true },
               { label: '可申請刪除帳號', desc: '隨時可申請完全刪除所有資料', ok: true },
-            ].map(({ label, desc, ok }) => (
-              <div key={label} className="flex items-start gap-3 p-3 bg-orange-50 rounded-2xl">
+            ].map(({ label, desc }) => (
+              <div key={label} className="flex items-start gap-3 p-3 bg-[#EBF4FF] rounded-2xl">
                 <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center shrink-0 mt-0.5">
                   <Check size={13} className="text-green-600" />
                 </div>
@@ -291,15 +290,15 @@ export default function SettingsClient({ profile, email, children, family, myRol
                 </div>
               </div>
             ))}
-            <div className="bg-blue-50 rounded-2xl p-3">
-              <p className="text-xs text-blue-600">如需申請刪除帳號或有隱私相關問題，請聯絡 support@parenting-star.app</p>
+            <div className="bg-[#EBF4FF] rounded-2xl p-3">
+              <p className="text-xs text-[#5E85A3]">如需申請刪除帳號或有隱私相關問題，請聯絡 support@parenting-star.app</p>
             </div>
           </div>
         )}
 
         {/* About section */}
         {activeSection === 'about' && (
-          <div className="card-warm p-5 text-center space-y-3">
+          <div className="card-blue p-5 text-center space-y-3">
             <div className="w-16 h-16 gradient-hero rounded-2xl flex items-center justify-center text-3xl mx-auto">⭐</div>
             <div>
               <p className="font-black text-gray-800 text-lg">育兒智多星</p>
@@ -308,8 +307,8 @@ export default function SettingsClient({ profile, email, children, family, myRol
             <p className="text-sm text-gray-500 leading-relaxed">
               專為台灣家庭設計的智慧育兒助手，整合成長追蹤、飲食日記、景點推薦、幼兒園查詢等功能，陪伴每個家庭育兒旅程。
             </p>
-            <div className="flex items-center justify-center gap-1 text-sm text-orange-500">
-              <Heart size={14} className="fill-orange-500" />
+            <div className="flex items-center justify-center gap-1 text-sm text-[#7B9EBD]">
+              <Heart size={14} className="fill-[#7B9EBD]" />
               <span>以愛打造，為每個台灣家庭</span>
             </div>
             <div className="text-xs text-gray-400 space-y-1">
