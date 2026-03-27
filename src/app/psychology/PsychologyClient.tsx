@@ -29,7 +29,7 @@ const EMOTION_DATA: Record<string, {
   rightGuide: string[]
   wrongGuide: string[]
   scriptExample: string
-  warnings: string[]
+  reminders: string[]
   evidence: string
 }> = {
   '0-6m': {
@@ -40,7 +40,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['及時回應哭聲（建立信任基礎，不用擔心「寵壞」）', '做誇張表情逗笑，等待嬰兒「回應」後再繼續（輪流模式）', '和嬰兒說話時語調誇張放慢（親子語）', '維持固定照顧者，一致性建立安全感'],
     wrongGuide: ['讓嬰兒長時間哭泣不回應（損害依附安全感）', '讓太多不同陌生人照顧，照顧者不穩定', '說「哭什麼哭，不哭了」否定哭泣行為'],
     scriptExample: '當寶寶哭泣：「媽媽來了，你餓了嗎？媽媽在這裡，沒事的。」（溫柔、確定語氣，抱起後輕拍後背，配合安撫聲「嘘嘘嘘」）',
-    warnings: ['6週後仍無任何社交微笑', '對照顧者聲音無特別反應', '持續缺乏眼神接觸', '哭泣超過3小時/天（腸絞痛需就醫）'],
+    reminders: ['6週後仍無任何社交微笑，可以跟兒科醫師聊聊', '持續觀察到對照顧者聲音無特別反應', '持續缺乏眼神接觸，可以多留意', '如果哭泣超過3小時/天持續出現，可以諮詢醫師了解是否腸絞痛'],
     evidence: 'Cochrane A',
   },
   '6-12m': {
@@ -51,7 +51,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['建立固定告別儀式（「媽媽去工作，3點回來接你」）', '照顧者離開時要說再見，不要偷偷走，建立可預測性', '讓孩子接觸不同的人（在安全範圍內，減少日後過度焦慮）', '玩藏貓貓幫助理解「消失後還會回來」，Cochrane證實有效'],
     wrongGuide: ['趁孩子不注意偷溜走（短期有效，長期損害信任感）', '嘲笑分離焦慮「這麼大了還哭」', '強迫孩子跟陌生人互動（「快叫阿姨！」）'],
     scriptExample: '「媽媽要去工作了，阿公會陪你玩。下午3點媽媽會回來，我們拍拍手說拜拜。」（平靜自信語氣，快速告別，不要猶豫徘徊，回頭越多孩子越焦慮）',
-    warnings: ['完全無分離焦慮（可能有依附建立問題）', '18月後仍無指物動作', '對所有人反應完全相同（照顧者與陌生人無區別）', '缺乏共同注意力（不會看你再看物品）'],
+    reminders: ['如果持續觀察到完全無分離焦慮，可以跟醫師聊聊依附發展', '18月後仍無指物動作，可以多留意', '如果持續觀察到對所有人反應完全相同，可以諮詢兒科醫師', '持續缺乏共同注意力，可以多留意'],
     evidence: 'Cochrane A',
   },
   '1-2y': {
@@ -62,7 +62,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['提供受限選擇（「要喝水還是牛奶？」而非「要喝什麼？」）', '用語言命名孩子的情緒（「你現在很生氣，因為積木倒了」）', '允許孩子近距離觀察其他孩子玩，不強迫互動', '設定溫和但堅定的界限，態度平靜不動搖'],
     wrongGuide: ['強迫分享（此年齡大腦無法真正理解分享，只會製造衝突）', '在情緒爆發高峰時講道理（無法吸收，等平靜後再說）', '體罰或長時間隔離懲罰'],
     scriptExample: '孩子搶玩具後哭鬧：「我看到你很想要那個玩具，你很不開心。現在玩具是小明的，等他玩完換你。我們去找另一個車子，你要這輛嗎？」（承認情緒→解釋規則→立刻轉移注意）',
-    warnings: ['18月後仍無任何有意義的詞彙', '對他人痛苦完全無反應（無同理心萌芽）', '重複刻板行為影響日常', '眼神接觸持續缺乏'],
+    reminders: ['如果18月後仍無任何有意義的詞彙，可以跟語言治療師聊聊', '持續觀察到對他人痛苦完全無反應，可以多留意', '如果重複刻板行為影響日常，可以跟醫師聊聊', '持續缺乏眼神接觸，可以多留意'],
     evidence: 'Cochrane A',
   },
   '2-3y': {
@@ -73,7 +73,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['提前5分鐘預告轉換（「再5分鐘就要吃飯了，你要再玩一次還是把玩具收好？」）', '幫孩子命名情緒，不要求立刻停止哭泣', '等情緒完全平息後再溝通（前額葉重新上線需時）', '建立固定作息減少不確定感，降低挫折機會'],
     wrongGuide: ['在情緒爆發時要求「馬上停止哭泣！」', '說「再哭就不要你了」（威脅依附安全感）', '用食物/螢幕轉移情緒（長期養成情緒調節不良模式）', '情緒爆發後立刻給孩子想要的東西（強化爆發行為）'],
     scriptExample: '孩子不想離開遊樂場：「我知道你玩得很開心，你不想走。再5分鐘，你要再溜一次滑梯還是盪一次鞦韆？」→時間到後：「時間到了，我們說拜拜給溜滑梯聽。下次再來。」（給予最後選擇，平靜執行，不討價還價）',
-    warnings: ['語言理解明顯落後同齡', '對他人痛苦完全無同理反應', '重複刻板行為嚴重影響日常', '攻擊行為頻繁（每天多次，超過年齡應有程度）'],
+    reminders: ['如果持續觀察到語言理解明顯落後同齡，可以跟語言治療師聊聊', '持續觀察到對他人痛苦完全無同理反應，可以多留意', '如果重複刻板行為嚴重影響日常，可以跟醫師聊聊', '如果攻擊行為頻繁持續出現，可以諮詢兒童心理師'],
     evidence: 'Cochrane A',
   },
   '3-5y': {
@@ -84,7 +84,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['承認並命名恐懼（「怪獸讓你很害怕，那很真實的感覺」）', '不嘲笑或否認恐懼，用實際方法「解決」（小夜燈、「趕怪獸噴霧」）', '合作遊戲建立友誼（一起完成任務比競爭更有效）', '用繪本討論情緒和恐懼（《媽媽不見了》《怕黑的小豬》）'],
     wrongGuide: ['「不要怕，怪獸不存在」（否認感受，徒增焦慮）', '強迫參與社交（「去跟那個小朋友玩！」）', '用競爭激勵（「你看哥哥比你厲害多了」）', '對說謊大發雷霆（此年齡部分謊言是正常發展）'],
     scriptExample: '孩子怕黑不敢睡：「你感覺到黑暗裡有什麼，那讓你很害怕，我相信你的感覺。我們一起讓房間更安心好嗎？你要小夜燈還是讓門開一點縫？」（先確認感受，再共同解決）',
-    warnings: ['持續攻擊行為（每天，針對特定對象）', '極度恐懼嚴重干擾日常生活（無法上學/睡覺）', '完全無法理解或遵守任何規則', '3歲後完全無友誼形成傾向'],
+    reminders: ['如果持續觀察到攻擊行為每天針對特定對象，可以跟心理師聊聊', '如果極度恐懼嚴重干擾日常生活，可以多留意並諮詢醫師', '持續觀察到完全無法理解任何規則，可以多留意', '如果3歲後完全無友誼形成傾向，可以跟兒科醫師聊聊'],
     evidence: 'Cochrane A',
   },
   '6-8y': {
@@ -95,7 +95,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['先傾聽再分析，不要急著解決人際問題', '幫助孩子自己思考（「那你覺得可以怎麼做？」）', '維持家庭規則一致性，即使孩子說「別人家可以！」', '限制螢幕時間，引導面對面社交技巧', '稱讚努力過程，不只稱讚結果（成長型思維）'],
     wrongGuide: ['幫孩子解決所有人際問題（剝奪學習機會）', '在乎成績多於學習過程', '說「不要管他們」否定同儕關係的重要性', '和其他孩子比較（「你看xxx多厲害」）'],
     scriptExample: '孩子說「我沒有好朋友，沒人喜歡我」：「我聽到了，你現在覺得很孤單，這很讓人難過。能告訴我今天發生什麼事嗎？」（先傾聽，不急著說「你有朋友的啊」或立刻解決，讓孩子先被理解）',
-    warnings: ['持續退縮不願上學超過2週', '頻繁身體不適（頭痛/胃痛）無生理原因', '明顯情緒低落超過2週', '被欺凌的徵象（衣物損壞、不願說學校的事）'],
+    reminders: ['如果持續觀察到退縮不願上學超過2週，可以跟老師和醫師聊聊', '如果頻繁身體不適但無生理原因持續出現，可以多留意', '持續觀察到情緒低落超過2週，可以跟醫師聊聊', '如果持續觀察到被欺凌的跡象，可以溫和詢問並尋求學校支持'],
     evidence: 'Cochrane A',
   },
   '9-12y': {
@@ -106,7 +106,7 @@ const EMOTION_DATA: Record<string, {
     rightGuide: ['尊重私人空間，不翻看日記/手機', '保持溝通管道開放但不逼問（「我在這裡，隨時可以說」）', '多問開放式問題（「你覺得呢？」「那怎麼了？」）', '保持穩定的連結關係，每週至少一次只有你們的時間', '一起制定手機使用規則（讓孩子參與，更願意遵守）'],
     wrongGuide: ['偷看日記/手機（發現後信任永久損壞）', '嘲笑青春期的身體變化或情緒', '在孩子的朋友面前批評孩子', '說「你現在這樣都是青春期作怪」一概而論', '與兄弟姊妹比較'],
     scriptExample: '孩子拒絕說學校的事：「你不想說的話我不勉強，我不會追問。不管發生什麼，我都在這裡支持你。如果你什麼時候想說，我會認真聽。」（給空間，清楚表達支持，不是沉默的放棄）',
-    warnings: ['明顯抑鬱或焦慮徵象持續超過2週', '自傷行為或言語', '學業表現急劇下滑', '完全與父母切斷所有連結', '危險行為（攻擊/逃跑/物質使用跡象）'],
+    reminders: ['如果持續觀察到抑鬱或焦慮徵象超過2週，可以跟兒童心理師聊聊', '如果觀察到自傷行為或言語，請盡快尋求專業支持', '持續觀察到學業表現急劇下滑，可以多留意並了解原因', '如果完全切斷所有連結持續出現，可以諮詢家族治療師', '持續觀察到危險行為跡象，可以跟醫師或心理師聊聊'],
     evidence: 'Cochrane B',
   },
 }
@@ -163,41 +163,41 @@ const SITUATION_TYPES = [
   { key: 'separation', label: '💔 分離焦慮', color: '#B07548', bg: '#FDF0E8' },
 ]
 
-const AI_ANALYSIS: Record<string, { results: Array<{ type: 'warning' | 'ok'; title: string; detail: string; suggestion: string }> }> = {
+const AI_ANALYSIS: Record<string, {
+  great: string[]
+  suggestions: string[]
+  weekGoal: string
+  cheer: string
+}> = {
   crying: {
-    results: [
-      { type: 'warning', title: '分析：需求未被語言識別', detail: '3歲幼兒哭鬧常因語言表達不足，無法清楚說明需求（餓/累/疼痛/受挫/過度刺激）。哭泣是孩子唯一有效的求救信號。', suggestion: '用「猜猜我的需求」：「你是餓了嗎？還是累了？還是玩具壞了讓你不開心？」幫助孩子識別自身狀態。先安撫身體（抱起、降低刺激），再尋找原因。' },
-      { type: 'warning', title: '錯誤話術警示', detail: '常見的「不要哭」「哭什麼哭」「再哭就走了」會讓孩子壓抑情緒或製造焦慮，長期影響情緒調節能力。', suggestion: '替換話術示範：「媽媽看到你很難過，我在這裡陪你。深呼吸，先吸氣……呼氣……好了，告訴媽媽發生什麼事？」（先給情緒空間，再問原因）' },
-      { type: 'ok', title: '正確回應流程', detail: 'Cochrane 研究顯示：情緒接納→命名情緒→解決問題，比直接制止效果顯著更好且持久。', suggestion: '步驟①承認：「你現在很生氣/很難過。」→ 步驟②陪伴：「我在這裡，你可以哭。」→ 步驟③平靜後問：「現在好一點了嗎？告訴我你要什麼。」' },
-    ],
+    great: ['記錄下寶貝哭鬧的情況，這本身就很了不起——很多爸媽會選擇逃避，你選擇了正視 💙', '你意識到需要了解背後的原因，這是情緒引導的第一步 ✨'],
+    suggestions: ['試試看先蹲下來到孩子的高度，輕聲說「我知道你很難過」，讓孩子感受到你在', '等孩子情緒稍微平緩後（不用完全停止哭），再輕輕問「發生什麼事了？」', '避免「不要哭了」「哭什麼哭」——改用「媽媽在這裡，你可以哭」'],
+    weekGoal: '這週練習一次：下次孩子哭鬧時，先深呼吸3秒，再說「我看到你很不開心，我在這裡陪你」🤗',
+    cheer: '引導孩子情緒需要時間和練習，你願意學習就是最棒的爸媽。慢慢來，你做得到 💙',
   },
   social: {
-    results: [
-      { type: 'warning', title: '分析：可能是缺乏技巧而非不想互動', detail: '從描述看，孩子在群體活動中退縮，通常原因是缺乏社交進入技巧，而非不想與人互動。強迫加入只會增加焦慮。', suggestion: '先從一對一玩伴開始，選擇孩子有共同興趣的同伴。在家中先練習：分享、輪流、如何加入遊戲的語言（「我可以一起玩嗎？」）' },
-      { type: 'ok', title: '結構化遊戲優於自由遊戲', detail: '有規則的活動（桌遊、拼圖、積木任務）比自由遊戲更容易讓社交困難的孩子融入，因為規則提供清楚的行為框架。', suggestion: '設計簡單合作任務：「你們兩個一起把積木搭到這麼高。」合作→共同成就感→友誼萌發。避免競爭性遊戲（輸贏製造壓力）。' },
-      { type: 'ok', title: '家長示範話術', detail: '孩子需要學習如何開始社交互動。直接教他們具體的語句比說「去和他玩」更有效。', suggestion: '在家練習：「你要說：『我叫XXX，你在玩什麼？我可以看嗎？』」先在安全環境演練，再帶到真實場景。' },
-    ],
+    great: ['你注意到孩子的社交情況，說明你是一個非常細心的家長 ✨', '願意尋求方法幫助孩子，這份愛心是孩子最大的資產 💙'],
+    suggestions: ['先從一對一玩伴開始，找孩子感興趣的同伴，降低群體壓力', '合作型活動（一起搭積木、拼拼圖）比自由遊戲更容易讓孩子融入', '在家先「演練」：教孩子說「我可以一起玩嗎？」再帶到真實場景'],
+    weekGoal: '這週安排一次一對一玩伴時光，讓孩子在輕鬆的環境練習社交 🧩',
+    cheer: '每個孩子的社交節奏都不同，內向不是問題，只是風格。你陪在他身邊，就是最好的後盾 💙',
   },
   focus: {
-    results: [
-      { type: 'warning', title: '專注力評估：先排除環境因素', detail: '5歲孩子正常專注時間約10–15分鐘。若低於5分鐘且伴隨衝動/多話/靜不下來，需在排除環境因素後才考慮評估ADHD。', suggestion: '先調整2–4週：①減少桌面雜物，②電子螢幕下午3點後完全關閉，③作息規律，④每天至少1小時戶外活動（消耗精力）。觀察是否改善。' },
-      { type: 'ok', title: '漸進式專注訓練法', detail: 'Cochrane 研究支持：漸進延長比強迫長時間坐著更有效，且孩子自我效能感更強。', suggestion: '每天固定時間：①設定計時器5分鐘，②孩子選活動（積木/拼圖/畫畫），③完成給予明確口頭讚美（「你剛才專注了整整5分鐘！做到了！」），④每週增加1分鐘。' },
-      { type: 'ok', title: '環境優化建議', detail: '學習環境對專注力影響達40%。座位安排、雜物、聲音控制是關鍵。', suggestion: '理想學習環境：面向白牆（不面向窗戶或電視），桌面只有當前活動物品，背景白噪音（雨聲/海浪聲），自然光充足。' },
-    ],
+    great: ['你留意到孩子專注力的狀況，很多家長會直接責備孩子「不認真」，你沒有 ✨', '記錄下來尋求幫助，說明你選擇了理解而不是批評 💙'],
+    suggestions: ['先試試環境調整：桌面清空只留當前活動，減少背景聲音', '用計時器（可視化時鐘）讓孩子看到時間，5分鐘先開始', '每天至少1小時戶外活動——能量消耗是提升室內專注力的最自然方法'],
+    weekGoal: '這週試試：每天固定時間（如下午4點）進行10分鐘的安靜活動，連做5天看看效果 ⏰',
+    cheer: '專注力是可以培養的，不是天生固定的。你願意幫孩子找方法，這份耐心就是最好的示範 💙',
   },
   sleep: {
-    results: [
-      { type: 'warning', title: '睡眠抗拒：找出根本原因', detail: '2–5歲是睡眠抗拒高峰。常見原因按頻率：①分離焦慮（最常見）②過度疲勞（反而難入睡）③就寢前過度刺激（螢幕/激烈遊戲）④作息不規律。', suggestion: '觀察孩子的睡眠抗拒模式：是哭著要你、一直出來找你，還是躺著睡不著？不同原因有不同策略。' },
-      { type: 'ok', title: '固定儀式法（最有Cochrane實證）', detail: '固定睡前儀式可縮短入睡時間平均37%。順序重複比每個步驟本身更重要。', suggestion: '設計專屬儀式：洗澡（10分鐘）→穿睡衣→刷牙→一本繪本（不超過20分鐘）→關燈說晚安。每天順序完全一樣，持續執行2週。話術：「我們要開始睡前儀式了，先去洗澡。」' },
-      { type: 'ok', title: '漸進分離法（分離焦慮型）', detail: '若孩子需要陪伴入睡且是因分離焦慮，可用系統性漸進法，避免突然CIO（讓哭）。', suggestion: '第1週：坐在床邊直到入睡。第2週：坐在房間門口。第3週：在門口說晚安後離開。給孩子過渡客體（你的舊T恤/安撫布），說：「這是媽媽的味道，媽媽雖然不在，但愛一直在。」' },
-    ],
+    great: ['能注意到孩子睡眠的問題並尋求解決，這份用心很珍貴 ✨', '你沒有選擇「硬撐」，而是尋求更好的方式，很聰明 💙'],
+    suggestions: ['建立固定睡前儀式（洗澡→繪本→道晚安），每晚順序完全一樣，持續2週', '把睡前螢幕關閉時間提早到入睡前1小時，藍光真的影響褪黑激素', '給孩子「過渡客體」（你的舊T恤/安撫玩具），讓你的氣味陪伴他入睡'],
+    weekGoal: '這週開始執行睡前儀式：洗澡→故事→道晚安，每晚同樣的順序，給自己2週時間觀察 🌙',
+    cheer: '睡眠建立是一場長跑，不是短跑。每一個進步，哪怕只是早睡5分鐘，都值得慶祝 💙',
   },
   separation: {
-    results: [
-      { type: 'warning', title: '分離焦慮嚴重度評估', detail: '3歲後的分離焦慮若影響正常入學/日常生活超過4週，且程度越來越嚴重，需進一步評估是否為分離焦慮症。', suggestion: '觀察三個維度：①持續時間（每次哭多久）②功能影響（是否影響進食/睡眠）③觸發範圍（是否越來越廣）。三個都嚴重則建議兒童心理評估。' },
-      { type: 'ok', title: '固定告別儀式（最重要！）', detail: '研究顯示：有固定告別儀式的孩子，照顧者離開後平均快40%停止哭泣。偷偷走反而讓孩子更焦慮。', suggestion: '建立儀式：①提前告知（「媽媽3分鐘後要去工作了」）→②固定動作（擊掌/擁抱/吻額頭）→③清楚承諾（「3點媽媽來接你」）→④平靜快速離開。話術：「媽媽去工作，下午3點接你。我說到做到。拜拜！」（不猶豫，快速離開）' },
-      { type: 'ok', title: '漸進分離練習', detail: '讓孩子體驗「你離開了，但你會回來」，反覆練習鞏固信任。', suggestion: '居家練習：「媽媽去廁所2分鐘，你數到10我就回來。」→成功後延長：「媽媽出去買牛奶，15分鐘回來。」每次說到做到，累積信任感。給孩子「象徵物」：你的舊圍巾/你的照片，說：「這代表媽媽在陪你。」' },
-    ],
+    great: ['你注意到孩子的分離焦慮並認真對待，這說明你們的依附關係是真實且有意義的 ✨', '選擇用理解而不是強迫的方式，已經走在正確的方向上 💙'],
+    suggestions: ['每次分離前建立固定告別儀式（擁抱→說拜拜→承諾幾點回來）', '說到做到是關鍵：「3點回來」就一定3點，這樣孩子才會相信你會回來', '離開時平靜快速，不要猶豫——你越猶豫，孩子越焦慮'],
+    weekGoal: '這週嘗試建立你們的「告別儀式」：擊掌+親親+說「X點見」，連做5天 👋',
+    cheer: '分離焦慮是愛的證明——孩子愛你所以捨不得你走。隨著信任建立，這會慢慢改善。你是孩子的安全基地 💙',
   },
 }
 
@@ -231,8 +231,6 @@ export default function PsychologyClient() {
     setRecordForm({ date: new Date().toISOString().split('T')[0], situation: 'crying', desc: '' })
   }
 
-  const aiResults = AI_ANALYSIS[situationType]?.results ?? []
-
   return (
     <div className="min-h-screen" style={{ background: '#FAFAF5' }}>
       {/* Header */}
@@ -241,6 +239,7 @@ export default function PsychologyClient() {
           <Brain size={22} strokeWidth={2.5} />
           <h1 className="text-xl font-black">心理培養</h1>
         </div>
+        <p className="text-sm text-white opacity-80 mt-0.5">理解寶貝的心，做最好的陪伴</p>
         <div className="flex rounded-2xl p-1" style={{ background: 'rgba(255,255,255,0.15)' }}>
           <button
             onClick={() => setMainTab('knowledge')}
@@ -339,8 +338,8 @@ export default function PsychologyClient() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl border" style={{ background: '#FFF8F0', borderColor: '#F5D5A5' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#B07548' }}>❌ 常見錯誤做法（請避免）</p>
+                <div className="p-4 rounded-2xl border" style={{ background: '#F5F8FF', borderColor: '#C5D8E8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#5E85A3' }}>💭 比較好避免的做法</p>
                   <div className="space-y-1.5">
                     {emotionData.wrongGuide.map((g, i) => (
                       <div key={i} className="flex items-start gap-2">
@@ -359,12 +358,12 @@ export default function PsychologyClient() {
                   <p className="text-sm leading-relaxed italic" style={{ color: '#2D3436' }}>{emotionData.scriptExample}</p>
                 </div>
 
-                <div className="p-4 rounded-2xl border" style={{ background: '#FFF8F8', borderColor: '#F5C5C5' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#C45A5A' }}>⚠️ 需留意的警訊（建議諮詢專業）</p>
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#5E85A3' }}>🔔 可以多留意的地方</p>
                   <div className="space-y-1.5">
-                    {emotionData.warnings.map((w, i) => (
+                    {emotionData.reminders.map((w, i) => (
                       <div key={i} className="flex items-start gap-2">
-                        <AlertTriangle size={13} className="shrink-0 mt-0.5" style={{ color: '#C45A5A' }} />
+                        <AlertTriangle size={13} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
                         <p className="text-sm" style={{ color: '#2D3436' }}>{w}</p>
                       </div>
                     ))}
@@ -473,6 +472,26 @@ export default function PsychologyClient() {
       {/* === 家長紀錄 Tab === */}
       {mainTab === 'records' && (
         <div className="px-5 py-5 space-y-5">
+          <section>
+            <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #A8C5DA, #7B9EBD)' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span style={{ fontSize: 20 }}>💙</span>
+                <h2 className="font-black text-white text-base">你的陪伴記錄</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                  <p className="text-white font-black text-lg">5次</p>
+                  <p className="text-white text-xs opacity-80">已記錄情況</p>
+                </div>
+                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                  <p className="text-white font-black text-lg">2項</p>
+                  <p className="text-white text-xs opacity-80">已解析情況</p>
+                </div>
+              </div>
+              <p className="text-white text-xs opacity-90 text-center">每一次記錄都是理解孩子的珍貴積累 💙</p>
+            </div>
+          </section>
+
           {/* 上傳媒體 */}
           <section>
             <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>上傳情境記錄</h2>
@@ -544,30 +563,55 @@ export default function PsychologyClient() {
 
           {/* AI 分析結果 */}
           {showAI && (
-            <section>
-              <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>
-                AI 分析結果 — {SITUATION_TYPES.find(s => s.key === situationType)?.label}
-              </h2>
-              <div className="space-y-3">
-                {aiResults.map((r, i) => (
-                  <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: r.type === 'warning' ? '#F5C5C5' : '#B8D8B8' }}>
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: r.type === 'warning' ? '#FFF0F0' : '#EBF4EB' }}>
-                        {r.type === 'warning' ? <AlertTriangle size={16} style={{ color: '#C45A5A' }} /> : <CheckCircle2 size={16} style={{ color: '#5A8A5A' }} />}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-bold text-sm mb-1" style={{ color: '#2D3436' }}>{r.title}</p>
-                        <p className="text-xs leading-relaxed mb-2" style={{ color: '#6B7B8D' }}>{r.detail}</p>
-                        <div className="p-2.5 rounded-xl flex items-start gap-1.5" style={{ background: r.type === 'warning' ? '#FFF8F0' : '#EBF4EB' }}>
-                          <ChevronRight size={13} className="shrink-0 mt-0.5" style={{ color: r.type === 'warning' ? '#B07548' : '#5A8A5A' }} />
-                          <p className="text-xs" style={{ color: r.type === 'warning' ? '#B07548' : '#3A6A3A' }}>{r.suggestion}</p>
-                        </div>
-                      </div>
+            <section className="space-y-3">
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>成長秘書的分析</h2>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>🌟</span>
+                  <p className="font-bold text-sm" style={{ color: '#3A7A3A' }}>你做得很棒的地方</p>
+                </div>
+                <div className="space-y-2">
+                  {AI_ANALYSIS[situationType]?.great.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle2 size={14} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-              <p className="text-xs text-center mt-3" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#FFF8EC', borderColor: '#F5D8A0' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>💡</span>
+                  <p className="font-bold text-sm" style={{ color: '#8A6020' }}>可以一起試試看</p>
+                </div>
+                <div className="space-y-2">
+                  {AI_ANALYSIS[situationType]?.suggestions.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <ChevronRight size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>🎯</span>
+                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>這週的小目標</p>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{AI_ANALYSIS[situationType]?.weekGoal}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>💪</span>
+                  <p className="font-bold text-sm text-white">給你的加油打氣</p>
+                </div>
+                <p className="text-sm leading-relaxed text-white opacity-95">{AI_ANALYSIS[situationType]?.cheer}</p>
+              </div>
+              <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
             </section>
           )}
 

@@ -173,18 +173,43 @@ interface LearningRecord {
   analyzed: boolean
 }
 
-const BOOK_ANALYSIS = [
-  { type: 'ok', title: '閱讀流暢度良好', detail: '孩子能順暢閱讀句子，斷句自然，未出現逐字閱讀的跡象。句間停頓和語調有起伏，顯示理解力同步發展。', suggestion: '下一步：選詞彙稍難的繪本（如有說明文字的科普繪本），讓孩子遇到不懂的詞立刻查字典，培養主動學習習慣。' },
-  { type: 'warning', title: '捲舌音發音不準確', detail: '「zh/ch/sh/r」等捲舌音發音明顯不準（如「吃」說成「七」），在6歲後仍有此狀況需關注。語音不準確可能影響拼音學習。', suggestion: '每天練習5分鐘：①繞口令「吃葡萄不吐葡萄皮」；②對著鏡子練習舌頭位置（捲舌音：舌尖翹起）；③錄音比較自己和標準音的差異。若6週無改善，建議語言治療評估。' },
-  { type: 'warning', title: '閱讀理解深度待加強', detail: '孩子能正確讀出文字，但回答「故事講什麼」時描述表面細節，未能掌握主旨。顯示解碼能力（讀出字）和理解能力（懂意思）發展不同步。', suggestion: '讀完後問3層次問題：①「剛才讀了什麼？」（記憶）→②「為什麼主角要這樣做？」（理解）→③「如果你是主角，你會怎麼做？」（應用）。每次只問其中一個，不要全問。' },
-]
+const BOOK_ANALYSIS: {
+  great: string[]
+  suggestions: string[]
+  weekGoal: string
+  cheer: string
+} = {
+  great: [
+    '孩子能順暢閱讀句子，斷句自然，語調有起伏，顯示理解力很好 🎉',
+    '肯坐下來唸書這件事本身就很棒，閱讀習慣的建立是最珍貴的禮物 ✨',
+  ],
+  suggestions: [
+    '捲舌音可以用有趣的方式練習：一起對著鏡子比賽誰的舌頭捲得更高，遊戲中練習更輕鬆',
+    '讀完後可以聊聊「你最喜歡哪一段？為什麼？」培養理解深度而不只是「讀出來」',
+    '試試讓孩子「讀給玩具聽」，消除讀書的壓力感',
+  ],
+  weekGoal: '這週試試每天10分鐘親子共讀：孩子讀，你聽，讀完後聊一聊 📖',
+  cheer: '喜歡閱讀的孩子，世界永遠不會無聊。你給孩子的這份習慣，比任何補習班都值錢 💙',
+}
 
-const EXAM_ANALYSIS = [
-  { type: 'warning', title: '應用題失分：閱讀→數學轉換弱', detail: '計算題正確率85%，但應用題正確率僅50%，差距大。問題不在計算，在「把文字情境轉換為數學式」的能力。', suggestion: '練習方法：①先讀題2遍；②圈出關鍵詞（「共有」「還剩」「多幾個」）；③畫圖/畫線段輔助；④再列式計算。每天練習2題應用題，而非大量計算題。' },
-  { type: 'warning', title: '分數概念有系統性錯誤', detail: '分數比較（1/3 vs 1/4 哪個大）和分數加法（1/2+1/3）均有錯誤，且犯同類型錯誤，顯示基本分數概念未建立，不是粗心。', suggestion: '回到具體操作：①切蘋果/披薩驗證1/2 vs 1/4大小；②用折紙理解分數加法；③確認概念後才回到符號計算。切勿只做計算練習，概念錯誤需先修正。' },
-  { type: 'ok', title: '書寫習慣優秀', detail: '書寫工整，計算步驟清楚，每一步都有寫出，未跳步。這個習慣在高年級複雜題目時非常重要，值得繼續保持。', suggestion: '進階挑戰：加入「解釋你的思路」題（口頭或書面），如「為什麼你用這個方法？有沒有其他方法？」培養數學邏輯表達能力。' },
-  { type: 'ok', title: '學習態度積極', detail: '從紀錄看，孩子能主動完成作業並記錄學習里程碑，學習動機良好。', suggestion: '維持學習動機的關鍵：讓孩子看到自己的進步（保存舊試卷/作業，每月比較一次）。避免只關注分數，稱讚「這次你用了新方法」或「你比上次多做了20分鐘」。' },
-]
+const EXAM_ANALYSIS: {
+  great: string[]
+  suggestions: string[]
+  weekGoal: string
+  cheer: string
+} = {
+  great: [
+    '書寫工整、計算步驟清楚，這個學習習慣非常棒，高年級會越來越有優勢 ✨',
+    '願意嘗試所有題目，沒有放棄，這個態度比答對更重要 💙',
+  ],
+  suggestions: [
+    '應用題可以練習「先讀、再圈關鍵詞、再列式」三步驟，不是孩子不會，是需要找到方法',
+    '分數概念先用切水果/披薩操作建立直覺，比直接做算式題有效得多',
+    '每次練習後稱讚孩子「你今天比昨天多堅持了5分鐘」，而不只是看分數',
+  ],
+  weekGoal: '這週練習2題應用題：拿出紙筆一起讀、圈出關鍵詞、一起列式，享受解謎的過程 🧮',
+  cheer: '孩子遇到挫折願意繼續嘗試，是最難能可貴的品格。成績是過程，韌性才是一輩子的資產 💙',
+}
 
 export default function EducationClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
@@ -216,6 +241,7 @@ export default function EducationClient() {
           <BookOpen size={22} strokeWidth={2.5} />
           <h1 className="text-xl font-black">教育發展</h1>
         </div>
+        <p className="text-sm text-white opacity-80 mt-0.5">激發寶貝天生的學習熱情</p>
         <div className="flex rounded-2xl p-1" style={{ background: 'rgba(255,255,255,0.15)' }}>
           <button
             onClick={() => setMainTab('knowledge')}
@@ -302,11 +328,11 @@ export default function EducationClient() {
                   <p className="text-xs font-bold mb-1" style={{ color: '#7A4A9A' }}>雙語環境建議</p>
                   <p className="text-xs leading-relaxed" style={{ color: '#5A3A7A' }}>{langData.bilingual}</p>
                 </div>
-                <div className="p-3 rounded-xl flex items-start gap-2" style={{ background: '#FFF8F0', borderColor: '#F5D5A8', border: '1px solid #F5D5A8' }}>
-                  <AlertTriangle size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
+                <div className="p-3 rounded-xl flex items-start gap-2" style={{ background: '#EBF4FF', borderColor: '#C5D8E8', border: '1px solid #C5D8E8' }}>
+                  <AlertTriangle size={14} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
                   <div>
-                    <p className="text-xs font-bold mb-0.5" style={{ color: '#B07548' }}>需評估的警訊</p>
-                    <p className="text-xs leading-relaxed" style={{ color: '#8A5A28' }}>{langData.warning}</p>
+                    <p className="text-xs font-bold mb-0.5" style={{ color: '#5E85A3' }}>可以多留意的地方</p>
+                    <p className="text-xs leading-relaxed" style={{ color: '#4A6A83' }}>{langData.warning}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2 p-3 rounded-xl" style={{ background: '#EBF4FF', borderColor: '#C5D8E8', border: '1px solid #C5D8E8' }}>
@@ -408,6 +434,26 @@ export default function EducationClient() {
       {/* === 家長紀錄 Tab === */}
       {mainTab === 'records' && (
         <div className="px-5 py-5 space-y-5">
+          <section>
+            <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #A8C5DA, #7B9EBD)' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span style={{ fontSize: 20 }}>📚</span>
+                <h2 className="font-black text-white text-base">學習成長記錄</h2>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                  <p className="text-white font-black text-lg">3筆</p>
+                  <p className="text-white text-xs opacity-80">學習里程碑</p>
+                </div>
+                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                  <p className="text-white font-black text-lg">本月</p>
+                  <p className="text-white text-xs opacity-80">持續記錄中</p>
+                </div>
+              </div>
+              <p className="text-white text-xs opacity-90 text-center">記錄學習的每一步，見證孩子的成長 💙</p>
+            </div>
+          </section>
+
           {/* AI 分析工具 */}
           <section>
             <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>AI 學習分析</h2>
@@ -462,54 +508,109 @@ export default function EducationClient() {
 
           {/* 繪本分析結果 */}
           {showBookAI && (
-            <section>
-              <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>繪本閱讀 AI 分析</h2>
-              <div className="space-y-3">
-                {BOOK_ANALYSIS.map((r, i) => (
-                  <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: r.type === 'warning' ? '#F5C5C5' : '#B8D8B8' }}>
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: r.type === 'warning' ? '#FFF0F0' : '#EBF4EB' }}>
-                        {r.type === 'warning' ? <AlertTriangle size={16} style={{ color: '#C45A5A' }} /> : <CheckCircle2 size={16} style={{ color: '#5A8A5A' }} />}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-bold text-sm mb-1" style={{ color: '#2D3436' }}>{r.title}</p>
-                        <p className="text-xs leading-relaxed mb-2" style={{ color: '#6B7B8D' }}>{r.detail}</p>
-                        <div className="p-2.5 rounded-xl flex items-start gap-1.5" style={{ background: r.type === 'warning' ? '#FFF8F0' : '#EBF4EB' }}>
-                          <ChevronRight size={13} className="shrink-0 mt-0.5" style={{ color: r.type === 'warning' ? '#B07548' : '#5A8A5A' }} />
-                          <p className="text-xs" style={{ color: r.type === 'warning' ? '#B07548' : '#3A6A3A' }}>{r.suggestion}</p>
-                        </div>
-                      </div>
+            <section className="space-y-3">
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>成長秘書的分析</h2>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>🌟</span>
+                  <p className="font-bold text-sm" style={{ color: '#3A7A3A' }}>你做得很棒的地方</p>
+                </div>
+                <div className="space-y-2">
+                  {BOOK_ANALYSIS.great.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle2 size={14} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#FFF8EC', borderColor: '#F5D8A0' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>💡</span>
+                  <p className="font-bold text-sm" style={{ color: '#8A6020' }}>可以一起試試看</p>
+                </div>
+                <div className="space-y-2">
+                  {BOOK_ANALYSIS.suggestions.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <ChevronRight size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>🎯</span>
+                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>這週的小目標</p>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{BOOK_ANALYSIS.weekGoal}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>💪</span>
+                  <p className="font-bold text-sm text-white">給你的加油打氣</p>
+                </div>
+                <p className="text-sm leading-relaxed text-white opacity-95">{BOOK_ANALYSIS.cheer}</p>
+              </div>
+              <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
             </section>
           )}
 
           {/* 考卷分析結果 */}
           {showExamAI && (
-            <section>
-              <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>考卷 AI 分析</h2>
-              <div className="space-y-3">
-                {EXAM_ANALYSIS.map((r, i) => (
-                  <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: r.type === 'warning' ? '#F5C5C5' : '#B8D8B8' }}>
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: r.type === 'warning' ? '#FFF0F0' : '#EBF4EB' }}>
-                        {r.type === 'warning' ? <AlertTriangle size={16} style={{ color: '#C45A5A' }} /> : <CheckCircle2 size={16} style={{ color: '#5A8A5A' }} />}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-bold text-sm mb-1" style={{ color: '#2D3436' }}>{r.title}</p>
-                        <p className="text-xs leading-relaxed mb-2" style={{ color: '#6B7B8D' }}>{r.detail}</p>
-                        <div className="p-2.5 rounded-xl flex items-start gap-1.5" style={{ background: r.type === 'warning' ? '#FFF8F0' : '#EBF4EB' }}>
-                          <ChevronRight size={13} className="shrink-0 mt-0.5" style={{ color: r.type === 'warning' ? '#B07548' : '#5A8A5A' }} />
-                          <p className="text-xs" style={{ color: r.type === 'warning' ? '#B07548' : '#3A6A3A' }}>{r.suggestion}</p>
-                        </div>
-                      </div>
+            <section className="space-y-3">
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>成長秘書的分析</h2>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>🌟</span>
+                  <p className="font-bold text-sm" style={{ color: '#3A7A3A' }}>你做得很棒的地方</p>
+                </div>
+                <div className="space-y-2">
+                  {EXAM_ANALYSIS.great.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <CheckCircle2 size={14} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-              <p className="text-xs text-center mt-2" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#FFF8EC', borderColor: '#F5D8A0' }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <span style={{ fontSize: 18 }}>💡</span>
+                  <p className="font-bold text-sm" style={{ color: '#8A6020' }}>可以一起試試看</p>
+                </div>
+                <div className="space-y-2">
+                  {EXAM_ANALYSIS.suggestions.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <ChevronRight size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>🎯</span>
+                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>這週的小目標</p>
+                </div>
+                <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{EXAM_ANALYSIS.weekGoal}</p>
+              </div>
+
+              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span style={{ fontSize: 18 }}>💪</span>
+                  <p className="font-bold text-sm text-white">給你的加油打氣</p>
+                </div>
+                <p className="text-sm leading-relaxed text-white opacity-95">{EXAM_ANALYSIS.cheer}</p>
+              </div>
+              <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
             </section>
           )}
 
