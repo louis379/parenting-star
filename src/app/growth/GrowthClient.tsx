@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
-  Camera, Sparkles, CheckCircle2, ChevronRight,
+  Camera, Sparkles, CheckCircle2, ChevronRight, AlertTriangle,
   Plus, X, Utensils, ChevronDown, Shield, Heart,
 } from 'lucide-react'
 
@@ -202,8 +202,6 @@ const HUANG_TOPICS = [
 const SLEEP_TOPICS = [
   {
     id: 'sleepRitual',
-    title: '睡前儀式建立',
-    emoji: '🌙',
     title: '睡眠作息',
     badge: '黃瑽寧醫師',
     bgColor: '#EBF4FF',
@@ -511,20 +509,26 @@ const WHY_VACCINE = [
   { q: '發燒時可以打疫苗嗎？', a: '38°C以上發燒需暫緩。輕微鼻水/咳嗽、發燒已退，可以正常接種。打疫苗後發燒（通常低燒）是免疫反應，不是生病，可給退燒藥讓孩子舒服。' },
 ]
 
-const MOCK_AI_RESULTS: AIResult = {
-  great: [
-    '寶貝的大動作發展非常棒！雙腳跳躍動作清楚有力，完全符合這個年齡段的里程碑，太厲害了 🎉',
-    '精細動作協調良好，拇指食指捏取準確，這表示小肌肉群發展得很健康，書寫前的準備已經打好基礎 ✨',
-    '你持續記錄飲食和生長數據，這份用心對寶貝來說是最珍貴的禮物 💙',
-  ],
-  suggestions: [
-    '蛋白質可以再補充一點點 — 每天多加一顆蒸蛋或一塊嫩豆腐就好，不用大改飲食，小小調整就有效果',
-    '大腿肌力可以用有趣的方式練習 — 一起走樓梯、踩石頭過河遊戲、上下小斜坡，讓寶貝在玩耍中自然強壯',
-    '鈣質補充很輕鬆 — 每天一杯奶加一片起司就能達標，可以做成寶貝喜歡的起司蛋餅或牛奶燕麥粥',
-  ],
-  weekGoal: '這週一起試試看：每天散步回家時，讓寶貝自己走樓梯上樓（至少2層），大腿肌肉在遊戲中自然強壯 🪜',
-  cheer: '你記錄了這麼多珍貴的成長瞬間，每一筆紀錄都會成為寶貝長大後最寶貴的回憶。你真的很用心，繼續加油！💙',
-}
+const MOCK_AI_RESULTS: AIResult[] = [
+  {
+    type: 'ok',
+    title: '大動作發展非常棒！',
+    detail: '雙腳跳躍動作清楚有力，完全符合這個年齡段的里程碑，太厲害了 🎉 精細動作協調良好，拇指食指捏取準確，書寫前的準備已經打好基礎。',
+    suggestion: '繼續保持目前的運動習慣，可以增加戶外探索時間讓寶貝多爬、多跑、多跳。',
+  },
+  {
+    type: 'warning',
+    title: '蛋白質與鈣質可以加強',
+    detail: '從記錄來看，蛋白質和鈣質的攝取可以再增加一點，對成長很有幫助。',
+    suggestion: '每天多加一顆蒸蛋或一塊嫩豆腐，再搭配一杯奶，小小調整就有效果。',
+  },
+  {
+    type: 'ok',
+    title: '持續記錄非常用心！',
+    detail: '你持續記錄飲食和生長數據，這份用心對寶貝來說是最珍貴的禮物 💙',
+    suggestion: '這週試試看：每天散步回家時，讓寶貝自己走樓梯上樓（至少2層），大腿肌肉在遊戲中自然強壯 🪜',
+  },
+]
 
 const PHOTO_AI_RESULT = {
   stage: '寶貝目前階段評估',
@@ -555,7 +559,6 @@ export default function GrowthClient() {
   const [showGrowthForm, setShowGrowthForm] = useState(false)
   const [showMealForm, setShowMealForm] = useState(false)
   const [showAI, setShowAI] = useState(false)
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
   const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
     if (typeof window === 'undefined') return []
     try {
@@ -819,7 +822,7 @@ export default function GrowthClient() {
                     {/* Topic sections */}
                     {openTopic === topic.id && (
                       <div className="border-t" style={{ borderColor: topic.borderColor, background: 'white' }}>
-                        {topic.sections.map((section, si) => (
+                        {(topic.sections ?? []).map((section, si) => (
                           <div key={si} className="border-b last:border-b-0" style={{ borderColor: '#F0EDE8' }}>
                             <button
                               onClick={() => setOpenAccordion(openAccordion === `${topic.id}-${si}` ? null : `${topic.id}-${si}`)}

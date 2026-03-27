@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   Brain, BookOpen, ClipboardList, Heart, Users, Focus, Target,
   Camera, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Clock, ChevronDown,
+  Info, TrendingUp, Plus, X, Clock, ChevronDown, Shield,
 } from 'lucide-react'
 
 const PSYCH_HUANG_TOPICS = [
@@ -357,6 +357,8 @@ export default function PsychologyClient() {
   ])
   const [showRecordForm, setShowRecordForm] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+  const [openHuangTopic, setOpenHuangTopic] = useState<string | null>(null)
+  const [openHuangItem, setOpenHuangItem] = useState<string | null>(null)
 
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)
