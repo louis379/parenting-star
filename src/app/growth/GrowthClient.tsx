@@ -3,12 +3,11 @@
 import { useState } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
-  Camera, FileVideo, Sparkles, CheckCircle2, ChevronRight,
-  Plus, X, Utensils, ChevronDown, Shield, Heart,
+  Camera, FileVideo, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
+  Plus, X, Utensils, ChevronDown, Shield,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
-type KnowledgeTab = 'growth' | 'symptoms' | 'vaccine'
 
 const AGE_GROUPS = [
   { key: '0-3m', label: '0–3月' },
@@ -33,7 +32,6 @@ const AGE_DATA: Record<string, {
   sleep: string
   sleepNote: string
   nutrition: string[]
-  storyNote: string
 }> = {
   '0-3m': {
     height: '男 50–62 / 女 49–61 cm',
@@ -43,7 +41,6 @@ const AGE_DATA: Record<string, {
     sleep: '14–17 小時/天',
     sleepNote: '白天：多次小睡（每次45–120分鐘，共4–5次）｜夜間：每2–4小時需餵奶，連續睡眠不超過4小時。建議：讓嬰兒學習區分日夜，白天多互動，夜間保持昏暗安靜。',
     nutrition: ['純母乳或配方奶，按需哺乳 8–12 次/天', '配方奶：每次 60–120 ml（隨月齡遞增）', '母乳/配方奶是唯一所需食物，禁止添加副食品', '每天補充維生素 D 400 IU（純母乳嬰兒必須補充）', '注意：不要給嬰兒飲水，以免低血鈉'],
-    storyNote: '0–3個月的寶寶正在從一個全新的世界探索者變成家庭的小太陽。這段時間你可能會發現寶貝大部分時間都在睡覺——別擔心，這是完全正常的，睡眠就是寶貝最重要的「工作」！你可能也注意到不同的哭聲聽起來不太一樣，餓的時候、累的時候、肚子不舒服的時候，寶貝已經在用自己的方式跟你說話了。約在6–8週左右，你會收到寶貝送給你的第一份大禮物——那個真正對著你綻放的社交微笑。那一刻，所有的辛苦都值得了。',
   },
   '4-6m': {
     height: '男 62–68 / 女 61–67 cm',
@@ -53,7 +50,6 @@ const AGE_DATA: Record<string, {
     sleep: '12–15 小時/天',
     sleepNote: '白天：午睡 3 次（上午、中午、下午，各 45–90 分鐘）｜夜間：可連續睡 5–6 小時。建議：4 月起可嘗試建立固定睡前儀式（洗澡→按摩→餵奶→放下）。',
     nutrition: ['母乳或配方奶仍為主食（每天 600–800 ml）', '4–6月可開始嘗試副食品（WHO建議6月後，個體差異大）', '副食品入門：鐵強化嬰兒米糊（1茶匙開始）', '單一食材試7天，無過敏反應再換新食材', '維生素 D 繼續每天補充 400 IU'],
-    storyNote: '4–6個月的寶寶正在快速發現「我可以控制我的身體！」你可能會發現他/她開始瘋狂地練習翻身，翻過來翻過去停不下來。這個階段不用擔心寶貝一直把東西往嘴裡放——這是他/她認識世界最重要的方式，口腔是這個年齡的主要感官工具。你也可能注意到寶貝對你的臉、你的聲音，甚至你的情緒，都有越來越強烈的反應。寶貝正在學習「這個大人是我的，我讓她笑或讓她擔心」，親子互動的雙向溝通正在建立。',
   },
   '7-9m': {
     height: '男 68–74 / 女 66–72 cm',
@@ -63,7 +59,6 @@ const AGE_DATA: Record<string, {
     sleep: '12–15 小時/天',
     sleepNote: '白天：午睡 2 次（上午9–10點、下午1–2點，各60–90分鐘）｜夜間：10–11 小時。建議：此期分離焦慮開始，固定照顧者執行睡眠儀式非常重要。',
     nutrition: ['每天副食品 1–2 餐，母乳/配方奶仍每天 600 ml', '蛋白質來源：雞肝泥、魚泥、豆腐（每天30–40g）', '蔬菜泥：南瓜、地瓜、紅蘿蔔（每天2–3湯匙）', '可引入全蛋蛋黃（過敏風險已降低，早引入反降低風險）', '開始嘗試手指食物：香蕉片、地瓜條（訓練自主進食）'],
-    storyNote: '7–9個月是寶寶「探險家」精神大爆發的時期！你可能會發現寶貝突然不滿足於待在原地了——爬行的動力越來越強，什麼都想去摸、去嘗試。這段時間如果出現「陌生人焦慮」，寶貝看到不熟悉的人就哭或躲，請不要擔心，這反而是一個好訊號，說明寶貝對照顧者建立了清晰的依附，能區分「親人」和「陌生人」了！繼續讓寶貝在安全的環境中自由探索，你的笑容就是最好的加油站。',
   },
   '10-12m': {
     height: '男 73–78 / 女 71–76 cm',
@@ -73,7 +68,6 @@ const AGE_DATA: Record<string, {
     sleep: '11–14 小時/天',
     sleepNote: '白天：午睡 1–2 次（逐漸整合為1次，共約1.5–2小時）｜夜間：穩定10–12小時。建議：10月前後可嘗試睡眠訓練（漸進式方式），建立固定睡覺時間。',
     nutrition: ['每天3餐副食品+2次點心，奶量 400–600 ml', '可引入全蛋（蒸蛋、炒蛋）', '軟固體食物：碎肉（每天30–40g）、豆腐、蒸魚', '避免：蜂蜜（1歲前）、整顆堅果（窒息風險）、含糖飲料', '鈣質需求 260mg/天（母乳/配方奶可提供大部分）'],
-    storyNote: '快到一歲啦！這個月齡的寶寶正在努力站起來，努力向前邁步——有些寶寶已經開始「巡走」，扶著沙發、牆壁、椅子四處探險。你可能會發現寶貝摔跌的次數突然變多，別太緊張，這是學走路必經的過程。這個階段也是互動最有趣的時候，寶貝開始懂得「給」和「拿」的遊戲，會用手指著想要的東西，會模仿你拍手、揮手。每一個小動作背後，都是大腦在高速運轉的證明。',
   },
   '1-2y': {
     height: '男 75–92 / 女 74–90 cm',
@@ -83,7 +77,6 @@ const AGE_DATA: Record<string, {
     sleep: '11–14 小時/天',
     sleepNote: '白天：午睡 1 次（約1–2小時，通常午飯後）｜夜間：10–12小時。建議：作息規律最重要，就寢時間固定在晚上7:30–8:30。',
     nutrition: ['全脂牛奶 360–480 ml/天（不超過600ml，避免影響食慾）', '每天1–2顆全蛋（蒸蛋/炒蛋/水煮蛋）', '肉類 30–50g/天（雞肉、魚肉、豬肉輪替）', '蔬菜 1/2 杯+水果 1/2 杯/天', '避免高糖、高鹽、加工食品。鈣質需求 700mg/天。'],
-    storyNote: '1–2歲，俗稱「Terrible Two前奏」，但換個角度看：這是寶貝人生中第一次大聲宣告「我有自己的想法！」你可能會發現「不要」成了出現頻率最高的詞，哭鬧的次數也增加了——請把這理解為成長的信號，不是行為問題。這個時期的寶貝大腦前額葉（情緒調節的指揮官）還在快速發育中，能量和情緒遠超過他/她能控制的能力，爆發是難免的。你能做的最重要的事：在旁邊陪著、命名他/她的情緒、等風暴過去。你做得很好。',
   },
   '2-3y': {
     height: '男 87–101 / 女 85–100 cm',
@@ -93,7 +86,6 @@ const AGE_DATA: Record<string, {
     sleep: '10–13 小時/天',
     sleepNote: '白天：午睡1次（約1–1.5小時，部分幼兒開始拒絕午睡）｜夜間：10–12小時。建議：若孩子拒絕午睡，可改為30分鐘安靜休息時間，但夜間就寢時間不應晚於8:30。',
     nutrition: ['每天牛奶 2 杯（360 ml），優格或起司計入鈣質', '五穀雜糧為主食（糙米、全麥麵包）', '蔬果彩虹飲食（每天5種顏色蔬果）', '堅果碎 10–15g/天（加入粥/飯增加好脂肪，需剁碎避免窒息）', '鈣質 700mg/天、鐵質 7mg/天'],
-    storyNote: '2–3歲的寶寶正在成為一個「小小人」。你可能會注意到他/她開始有真正的好朋友，開始問讓人頭疼的「為什麼」，開始在玩耍時創造出複雜的想象世界。情緒爆發還是會有，轉換困難還是會出現，但你可能也開始看到那個讓你融化的樣子——幫你遞東西、看到小狗說「好可愛」、主動抱著你說「我愛你」。同理心的種子正在萌芽，你每一次溫柔的回應都是在澆水。',
   },
   '3-4y': {
     height: '男 96–107 / 女 95–106 cm',
@@ -103,7 +95,6 @@ const AGE_DATA: Record<string, {
     sleep: '10–13 小時/天',
     sleepNote: '白天：部分幼兒不再需要午睡，如需午睡控制在45分鐘內避免影響夜眠｜夜間：10–11小時（不應晚於9:00就寢）。建議：固定睡前30分鐘安靜活動（繪本、輕柔音樂）。',
     nutrition: ['每天牛奶 2 杯（360 ml）+ 起司 1 片（補充鈣質600mg/天）', '全蛋每天1顆', '魚肉每週至少2次（DHA促進腦發育）', '新鮮蔬果每天5份（減少果汁，吃整顆水果更好）', '避免含糖飲料和零食，鐵質需求 10mg/天'],
-    storyNote: '3–4歲的孩子充滿了不可思議的創造力！你可能會發現他/她的問題越來越多、越來越奇怪，想像力旺盛到讓你目瞪口呆——積木可以是城堡，毛巾可以是翅膀，地板突然變成了熔岩。這個年齡也是恐懼的高峰期，害怕黑暗、害怕怪獸完全正常，因為孩子的大腦正在構建對世界的理解，想象力越豐富的孩子往往恐懼也越多——這是智能發展的好訊號。',
   },
   '4-5y': {
     height: '男 103–115 / 女 102–114 cm',
@@ -113,7 +104,6 @@ const AGE_DATA: Record<string, {
     sleep: '10–13 小時/天',
     sleepNote: '白天：通常不需要午睡｜夜間：10–11小時（建議晚上8:30前就寢）。建議：電子螢幕在就寢前1小時完全關閉，藍光影響褪黑激素分泌。',
     nutrition: ['每天牛奶 2–3 杯（鈣質 600mg/天）', '蛋白質 35g/天：1顆雞蛋+2份肉類（各30g）', '魚類每週2次（富含 Omega-3）', '全穀類每天 4–5 份（糙米、燕麥、全麥）', '鐵質 10mg/天（豆類、深綠蔬菜、紅肉補充）'],
-    storyNote: '4–5歲的孩子開始有越來越強烈的「社交意識」。你可能會發現他/她非常在意朋友怎麼看自己，輸了遊戲可能大哭，說謊的頻率也可能增加——不用過度擔心，這些都是社交認知發展的必經過程。這個年齡的孩子開始真正理解「規則」，喜歡有規則的遊戲，對「不公平」極度敏感。這是未來道德感、同理心的基礎。',
   },
   '5-6y': {
     height: '男 109–122 / 女 109–121 cm',
@@ -123,7 +113,6 @@ const AGE_DATA: Record<string, {
     sleep: '9–11 小時/天',
     sleepNote: '白天：不需要午睡｜夜間：9–11小時（不應晚於9:30就寢）。建議：學前入學準備期，建立固定就寢時間（晚上8:30）最重要，週末也不例外。',
     nutrition: ['鈣質 700mg/天：牛奶2杯+起司1–2片', '蛋白質 35g/天（1顆蛋+雞腿肉30g+魚肉30g）', '全穀類 4–5 份（白米:糙米=1:1 開始練習）', '新鮮蔬果5份/天（彩虹飲食原則）', '維生素 D 600 IU/天（補充或陽光曝曬20分鐘）'],
-    storyNote: '5–6歲的孩子正在跨越一個重要的里程碑：學習閱讀和書寫。你可能會發現他/她突然對文字很感興趣，或者相反，對讀書很有挫折感——這兩種都有可能，個體差異非常大，不用和別人比較。這個年齡的孩子通常對「一切怎麼運作」充滿好奇：水為什麼往下流？月亮為什麼跟著我們走？這些問題是科學思維的起點，值得認真對待。',
   },
   '6-8y': {
     height: '男 115–132 / 女 114–131 cm',
@@ -133,7 +122,6 @@ const AGE_DATA: Record<string, {
     sleep: '9–11 小時/天',
     sleepNote: '白天：不需午睡｜夜間：9–11小時（建議不晚於9:00就寢）。注意：學齡兒童睡眠不足會直接影響記憶力、專注力和情緒調節，請嚴格保護睡眠時間。',
     nutrition: ['熱量需求 1400–1600 kcal/天', '鈣質 800mg/天（牛奶2–3杯或豆漿2杯+高鈣豆腐）', '蛋白質 40g/天：每天2顆雞蛋+魚或肉50g', '鐵質 10mg/天（豬肝/蛤蜊/深色蔬菜）', '早餐必吃：全麥吐司+蛋+牛奶，提升上午專注力'],
-    storyNote: '6–8歲的孩子正式踏入學校的世界，也踏入了「同儕比較」的世界。你可能會發現孩子開始非常在意「別人怎麼看自己」，好朋友的重要性甚至超過了爸媽。這是完全正常的社會發展，意味著孩子的社交圈正在健康地擴展。學業壓力開始增加，但請記住：這個年齡最重要的學習，不是分數，而是「學習這件事是有趣的」這個信念。',
   },
   '8-10y': {
     height: '男 127–145 / 女 127–147 cm',
@@ -143,7 +131,6 @@ const AGE_DATA: Record<string, {
     sleep: '9–11 小時/天',
     sleepNote: '白天：不需午睡｜夜間：9–11小時（建議9:30前入睡）。注意：課業壓力增加，需特別保障睡眠。建議固定作業時間，避免熬夜完成功課。',
     nutrition: ['鈣質 1000mg/天（青春期準備，牛奶3杯或豆漿+高鈣食物）', '蛋白質 40g/天，包括每天2顆蛋+魚/肉60g', '複合碳水化合物為主（燕麥、糙米、全麥）', '鐵質 10mg/天（女孩月經前準備，特別重要）', 'Omega-3：每週吃鮭魚/鯖魚/沙丁魚2次'],
-    storyNote: '8–10歲的孩子通常在運動和技能方面有令人驚嘆的進步。你可能會發現他/她某一天突然「開竅」了——游泳不再喝水、腳踏車騎得很穩、樂器彈出了旋律。這個年齡的大腦整合能力正在快速提升。同時，女孩可能開始注意到身體的變化，部分孩子已進入青春期前期，溫和地提前溝通和準備，比措手不及更好。',
   },
   '10-12y': {
     height: '男 137–162 / 女 140–163 cm',
@@ -153,54 +140,158 @@ const AGE_DATA: Record<string, {
     sleep: '9–11 小時/天',
     sleepNote: '白天：不需午睡（若有，限30分鐘）｜夜間：9–11小時（建議不晚於10:00就寢）。注意：青春期荷爾蒙會讓就寢時間自然延後，需積極管理。週末補眠不超過1小時。',
     nutrition: ['鈣質 1300mg/天（青春期骨骼快速發育，牛奶3杯+起司+高鈣豆腐）', '鐵質：女孩月經開始後需 15mg/天（補血食物：豬肝、蛤蜊、菠菜）', '蛋白質 45g/天（肌肉發育，每天3份蛋/肉/魚/豆類）', '避免節食或不吃早餐（影響生長激素分泌）', '維生素 D 600–1000 IU/天（骨密度最重要時期）'],
-    storyNote: '10–12歲，青春期的門口。你可能會發現孩子開始尋求更多的私人空間，有時候會「不想說」，有時候對爸媽的意見很有主見（甚至抗議）。這不是叛逆，這是健康的個體化過程——孩子正在探索「我是誰」。最重要的事：保持溝通管道暢通，讓孩子知道你永遠在，不論他/她選擇分享什麼，你都不會評判。',
   },
 }
 
-// ===== 黃瑽寧醫師課程架構：靜態知識區塊 =====
-
-const NUTRITION_TOPICS = [
+const HUANG_TOPICS = [
   {
-    id: 'breastVsFormula',
-    title: '親餵 vs 瓶餵',
-    emoji: '🤱',
-    content: `親餵和瓶餵都是愛寶貝的方式，沒有哪個更好，只有哪個更適合你們家。\n\n親餵的優點：母乳含有活性免疫因子、益生菌、生長因子，能隨寶貝需求自動調整成分。研究顯示親餵可降低中耳炎、腸胃炎風險。\n\n瓶餵完全沒問題：現代配方奶營養完整，如果親餵讓媽媽非常痛苦或困難，換成配方奶寶貝也能健康長大。媽媽快樂，寶貝才快樂。\n\n混合哺育：白天瓶餵、晚上親餵，或依媽媽狀況靈活調整，完全OK。\n\n💙 黃瑽寧醫師說：「最好的餵食方式，就是讓媽媽和寶寶都舒服的方式。」`,
+    id: 'nutrition-feeding',
+    emoji: '🍼',
+    title: '營養餵食',
+    badge: '黃瑽寧醫師',
+    bgColor: '#FDF0E8',
+    borderColor: '#E8C4A0',
+    headerColor: '#B07548',
+    sections: [
+      {
+        title: '親餵 vs 瓶餵，哪個好？',
+        content: '你選擇親餵還是瓶餵，兩種都很好！最重要的是找到適合你和寶寶的方式。\n\n親餵的好處：母乳含有量身訂製的免疫因子（IgA、白血球），成分隨月齡自動調整，親餵也幫助子宮恢復。\n\n瓶餵的好處：爸爸和家人都能參與育兒、媽媽的睡眠更彈性、配方奶品質也已相當高。\n\n💡 小提醒：奶嘴有助於預防猝死（SIDS），3-6月寶寶超過5kg就可嘗試睡過夜囉！',
+      },
+      {
+        title: '副食品：什麼時候開始？',
+        content: '每個寶寶都有自己的步調，準備好了自然會告訴你！\n\n準備信號（通常4-6月出現）：\n• 能坐穩、頭部可控制\n• 看到大人吃飯會感興趣、流口水\n• 體重達出生2倍（約6kg以上）\n\nWHO建議純母乳至6月，但個體差異大，出現準備信號就可以開始。\n\n🌟 起步方式：從鐵強化米精開始（1茶匙），每種新食材試7天，確認沒有過敏反應再換下一種。',
+      },
+      {
+        title: '偏挑食，不用太緊張',
+        content: '孩子對新食物謹慎是正常的保護本能，不是故意挑剔！研究顯示需要15-20次嘗試，孩子才可能接受新食物。\n\n你可以試試：\n① 全家一起吃相同食物（身教是最好的示範）\n② 讓孩子參與備餐（洗菜、攪拌、擺盤）\n③ 小份量多次嘗試，不強迫進食\n④ 持續提供，不放棄\n\n💡 有實證的免疫輔助品：益生菌、多醣體（β-glucan）、維生素D',
+      },
+      {
+        title: '袋鼠育兒法 🦘',
+        content: '袋鼠育兒法結合肌膚接觸（Skin-to-skin）和安撫，對寶寶和家長都有好處！\n\n三個重點：\n① 照顧者與寶寶肌膚接觸——媽媽、爸爸或其他人都可以\n② 不一定要定點不動，可以到處走動，也可以使用揹巾\n③ 每次至少1小時，一天多次都沒關係\n\n💛 好處包括：調節寶寶體溫和心跳、增進親密感、促進母乳分泌。',
+      },
+      {
+        title: '5S 安撫法',
+        content: '寶寶哭的時候，先依序排除原因（換尿布→溫度→拍嗝→抱起→親餵），再進行5S安撫。\n\n5S模仿子宮環境，讓寶寶感到熟悉安全：\n\n🌀 Swaddle 包包巾\n🤱 Side/Stomach Position 側抱或趴抱\n🔄 Swing/Sway 搖擺\n🤫 Shush 噓聲\n👄 Suck 吸吮（奶嘴或手指）\n\n組合一起用效果更好！',
+      },
+      {
+        title: '解碼寶寶哭聲',
+        content: '寶寶在告訴你他的需要，這8個信號可以幫你讀懂：\n\n1. 轉頭蠕動、啄木鳥動作 → 餓了\n2. 拱背、腳蹬起來 → 需要拍嗝排氣\n3. 一放下就哭、抱起就停 → 需要安全感\n4. 尖叫大哭、滿臉脹紅 → 身體不舒服（可能腸絞痛）\n5. 閉眼哭、哭聲頻率一致 → 想睡了\n6. 喝奶到一半大哭 → 需要拍嗝或便秘\n7. 嘴邊輕點會轉動找奶 → 尋乳反射，不代表餓\n8. 奶瓶塞嘴就吸 → 吸吮反射，不代表餓',
+      },
+    ],
   },
   {
-    id: 'solidFood',
-    title: '副食品時機與方法',
-    emoji: '🥣',
-    content: `什麼時候開始？WHO建議6個月後，但觀察寶貝的發展信號更重要：能坐穩（不倒）、對食物有興趣、舌頭推出反射消失。大多數寶貝在4–6個月之間準備好。\n\n怎麼開始？\n• 從單一食材開始（鐵強化米糊、南瓜泥、地瓜泥）\n• 每次只加一種新食材，觀察3–7天\n• 份量：1茶匙開始，慢慢增加\n• 質地：稀泥狀→厚泥→軟塊→手指食物\n\n早點引入過敏原反而更好！最新研究顯示，花生、蛋、魚等在6個月左右早點引入，反而降低過敏風險。`,
-  },
-  {
-    id: 'pickyEater',
-    title: '偏挑食怎麼辦',
-    emoji: '🥕',
-    content: `偏挑食是2–6歲孩子最普遍的問題，90%以上的孩子都會有某種程度的偏食，你不孤單！\n\n為什麼孩子挑食？新食物恐懼症（Neophobia）是演化保護機制，2歲後大腦本能上對不熟悉的食物有防衛心。\n\n有效的方法：\n• 一種新食物需要嘗試8–15次才會接受，別在前5次就放棄\n• 不強迫吃完，但要求「嘗一小口」\n• 讓孩子參與備餐（洗菜、攪拌），增加接受度\n• 家人一起吃，示範比說教有效10倍\n\n不用擔心的情況：孩子活力好、體重在正常範圍、喜歡的食物還有10種以上，這就沒問題。\n\n小提醒：接受食物不到20種、質地敏感、完全拒絕某類食物，可以諮詢職能治療師。`,
-  },
-]
-
-const SLEEP_TOPICS = [
-  {
-    id: 'sleepRitual',
-    title: '睡前儀式建立',
+    id: 'sleep-routine',
     emoji: '🌙',
-    content: `睡前儀式讓寶貝的大腦「知道睡覺要來了」，是讓入睡更順利的最有效方法。\n\n建議順序（20–30分鐘）：\n1. 洗澡（溫水放鬆）\n2. 按摩/換睡衣\n3. 親餵或瓶餵（3個月後移至睡前倒數第二步）\n4. 閱讀1–2本繪本\n5. 輕柔歌謠/說晚安\n6. 放入小床\n\n關鍵：一致性比內容更重要。每天同樣順序、同樣時間，讓孩子的生理時鐘穩定。\n\n環境準備：昏暗（使用小夜燈）、涼爽（22–25°C）、白噪音（可選）。`,
+    title: '睡眠作息',
+    badge: '黃瑽寧醫師',
+    bgColor: '#EBF4FF',
+    borderColor: '#C5D8E8',
+    headerColor: '#5E85A3',
+    sections: [
+      {
+        title: '各年齡建議睡眠時數',
+        content: '半夜醒來在15分鐘內繼續入睡，都算是連續睡眠，很正常！\n\n建議總睡眠時數：\n🌟 0-3月：14小時\n🌟 4-11月：12小時\n🌟 1-2歲：11小時\n🌟 3-5歲：10小時\n🌟 6-13歲：9小時\n🌟 14-17歲：8小時\n\n睡足了，大腦才能好好整合白天學到的東西！',
+      },
+      {
+        title: '睡前儀式這樣建立',
+        content: '固定的睡前儀式幫助寶寶的大腦建立「要睡覺了」的信號，通常2-4週就能見效。\n\n推薦三步驟：\n① 洗澡 / 全身按摩（溫水放鬆肌肉）\n② 調暗燈光（促進褪黑激素分泌）\n③ 輕音樂或繪本故事\n\n寶寶睡眠週期約45-60分鐘，換週期時短暫醒來是正常的，輕聲陪伴即可。\n\n💡 3-6月寶寶體重超過5kg，就可以嘗試建立睡過夜的習慣了！',
+      },
+      {
+        title: '惡夢 vs 夜驚，怎麼分？',
+        content: '半夜哭鬧，先判斷是哪種：\n\n😨 惡夢（多在下半夜）：\n• 孩子會醒來、可以被安撫\n• 可能記得夢的內容\n• 處理：溫柔抱抱、說「沒事了，爸爸媽媽在這裡」\n\n😱 夜驚（多在上半夜）：\n• 孩子看似醒著但意識不清楚\n• 白天刺激過多會加劇\n• 處理：不要強行叫醒，保護安全，等待自然結束\n\n💡 整理白天的刺激源（減少3C、過多活動）可以有效減少夜驚。',
+      },
+      {
+        title: '打鼾、尿床、磨牙',
+        content: '這些都是家長常見的擔心，先放鬆一下：\n\n😴 打鼾：偶爾是正常的。若持續打鼾加上白天嗜睡、注意力差，可評估是否有腺樣體肥大，找耳鼻喉科看看。\n\n🌊 尿床：5歲前幾乎都是正常的生理發育現象，5歲後每週2次以上才需要特別關注。不要責罵孩子，這不是他的錯。\n\n⚙️ 磨牙：學齡前磨牙很常見（比例高達30%），多數會自然改善，壓力大或換牙期間較明顯。',
+      },
+    ],
   },
   {
-    id: 'sleepTraining',
-    title: '安穩入睡訓練',
-    emoji: '😴',
-    content: `幫助寶貝學習自主入睡（self-soothing）是睡眠訓練的核心目標。\n\n適合開始的時機：4–6個月，且排除身體不適、成長痛、出牙等原因的夜醒。\n\n漸進式方法：\n• 放下寶貝時還有一點點醒著\n• 離開房間，若哭泣等5分鐘後進去安撫（不抱起，口語/輕拍）\n• 再次離開，間隔拉長至10分鐘、15分鐘\n• 大多數孩子3–7天內能學會\n\n睡眠回歸期（Sleep Regression）：4個月、8–10個月、18個月、2歲，都可能出現，是發展里程碑的副作用，通常2–4週後會恢復。`,
+    id: 'vaccine',
+    emoji: '💉',
+    title: '疫苗接種',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F0FDF4',
+    borderColor: '#A7D7B8',
+    headerColor: '#3D8B5E',
+    sections: [
+      {
+        title: '為什麼要打疫苗？',
+        content: '疫苗讓寶寶的免疫系統提前「認識」病毒，建立保護記憶，不需要真的生病就能獲得抵抗力。\n\n媽媽給的抗體在6個月後逐漸消退，這段「免疫缺口期」需要疫苗接力保護。\n\n群體免疫的意義：當社區有足夠多人接種，連無法打疫苗的新生兒和免疫缺乏者也能得到保護。\n\n✅ 疫苗的安全性經過嚴格臨床試驗和長期追蹤，效益遠大於風險。',
+      },
+      {
+        title: '打完疫苗的正常反應',
+        content: '這些反應代表身體的免疫系統在認真工作，是好事：\n\n常見（幾天內自然消退）：\n• 注射部位紅腫、硬塊\n• 輕微發燒（38.5度以下）\n• 哭鬧不安、睡眠略有改變\n• 食慾稍降\n\n照顧方式：\n• 退燒藥讓孩子舒服，活動力好的話可等待觀察\n• 冷敷注射部位（毛巾包冰敷）\n• 補充水份\n\n🚨 需立即就醫：高燒39.5度以上、持續超過48小時、嚴重哭鬧不止',
+      },
+      {
+        title: '寶寶生病可以打疫苗嗎？',
+        content: '這是家長最常問的問題！以下是參考原則：\n\n✅ 通常可以接種：\n• 輕微感冒（流鼻涕但精神好）\n• 低燒但沒有其他症狀\n• 過敏性鼻炎、輕微濕疹\n\n⏸️ 建議延後：\n• 高燒（38.5度以上）\n• 嚴重急性病症（如腸胃炎伴嚴重嘔吐）\n• 正在使用免疫抑制藥物\n\n💡 有任何疑慮，直接告訴診間護理師，他們會幫你評估！不用自己猜。',
+      },
+    ],
   },
   {
-    id: 'sleepProblems',
-    title: '夜驚、惡夢、打鼾、尿床',
-    emoji: '😰',
-    content: `夜驚 vs 惡夢：\n• 夜驚：深睡期，孩子大叫哭鬧但其實沒醒，事後完全不記得。不需要介入，保護安全即可。\n• 惡夢：淺睡期，孩子醒來害怕，需要安撫和陪伴。\n\n打鼾：偶爾打鼾（感冒時）正常。若每週3次以上、白天精神不好、呼吸有暫停感，需就醫排除睡眠呼吸中止症（常見原因：腺樣體肥大）。\n\n尿床（夜間遺尿）：\n• 5歲前尿床完全正常，不需擔心\n• 7歲後每週超過2次，可考慮就醫\n• 絕對不要因尿床責罵孩子——這不是孩子能控制的事`,
+    id: 'illness',
+    emoji: '🌡️',
+    title: '常見病症照顧',
+    badge: '黃瑽寧醫師',
+    bgColor: '#FFF5F5',
+    borderColor: '#FFC5C5',
+    headerColor: '#C0392B',
+    sections: [
+      {
+        title: '發燒：退燒藥要不要吃？',
+        content: '先深呼吸！發燒是身體免疫反應，是好事，代表在對抗病菌。\n\n退燒藥的真正目的：讓孩子舒服、方便觀察活動力，不是「消滅」發燒。\n\n重要觀念：\n• 溫度沒有持續升高，活動力還不錯 → 不一定要吃退燒藥\n• 補充水份是最重要的事\n• 3個月以下嬰兒發燒 → 直接就醫，不用等\n\n⚠️ 熱性痙攣怎麼辦？\n① 手機錄影（對稱？持續幾秒？）\n② 讓口鼻暢通，讓孩子側躺\n③ 不要塞任何東西進嘴巴\n多數熱性痙攣1-3分鐘自然結束，雖然嚇人，大多數沒有後遺症。',
+      },
+      {
+        title: '流感',
+        content: '流感特徵：突然高燒 + 明顯肌肉酸痛（同時出現要想到流感）\n\n跟一般感冒最大差別：症狀來得快又猛，肌肉酸痛非常明顯，通常還有明顯疲倦感。\n\n克流感（Tamiflu）：\n• 48小時內使用效果最好\n• 接觸者也可預防性投藥\n• 懷疑流感，早點就醫！越早越好。\n\n💡 最有效的預防：每年秋季接種流感疫苗，可大幅降低重症和住院風險。',
+      },
+      {
+        title: '腸病毒',
+        content: '腸病毒特徵：口腔潰瘍 + 手腳皮疹（手足口病）\n\n照顧重點：\n• 補充水份（最重要！）：冰水、牛奶、冰淇淋都可以，讓孩子願意吃就好\n• 退燒止痛（讓孩子能喝水進食）\n• 口腔止痛噴劑（幫助孩子能進食）\n\n有效輔助品：益生菌、多醣體（β-glucan）、維生素D\n\n🚨 出現這些症狀立即送醫：\n• 嗜睡、意識改變\n• 肌躍抽搐（突然抖一下）\n• 持續嘔吐\n• 呼吸急促、心跳很快\n這些可能是重症腸病毒的前兆，不要等！',
+      },
+      {
+        title: '過敏：鼻炎與氣喘',
+        content: '過敏不是「體質差」，而是免疫系統對某些物質過度反應，可以好好管理！\n\n減少誘發因子：\n• PM2.5、PM5（空汙日減少戶外活動）\n• 氮氧化物（瓦斯爐旁加強通風，開窗或開抽油煙機）\n• 控制塵蟎（定期洗曬床具、避免毛绒玩具堆積）\n\n過敏鼻炎：生理食鹽水洗鼻 + 鼻噴類固醇（安全有效的第一線治療）\n\n氣喘：規律使用控制性吸入劑，不是只有發作才用，平日保養最重要！',
+      },
+      {
+        title: '異位性皮膚炎（濕疹）',
+        content: '皮膚保濕是第一優先！異位性皮膚炎是皮膚屏障功能受損，保濕比什麼都重要。\n\n日常照顧：\n• 避免過度清潔（不需要每天泡澡，水溫適中就好）\n• 避免香精、香皂、含酒精產品\n• 洗澡後3分鐘內立刻塗保濕乳液（趁皮膚還濕的時候）\n• 選擇棉質、寬鬆衣物\n\n💡 局部類固醇藥膏：正確使用是安全的，不要因為擔心副作用而放著皮膚一直發炎，那才傷害更大。有疑問請問醫師。',
+      },
+    ],
+  },
+  {
+    id: 'growth-height',
+    emoji: '📏',
+    title: '生長判斷與身高',
+    badge: '黃瑽寧醫師',
+    bgColor: '#F5F0FF',
+    borderColor: '#C5B8E8',
+    headerColor: '#6B4FA0',
+    sections: [
+      {
+        title: '寶寶生長基準（0-1歲）',
+        content: '了解寶寶的生長節奏，你就不會那麼緊張了：\n\n身高：\n• 1歲前，每月長約4cm\n• 之後放緩，每月約2-3cm\n\n體重：\n• 前3個月，每月長約1kg\n• 之後每月約增加0.5kg以上\n\n頭圍：\n• 滿月頭圍約35-37cm（腦部發育指標）\n\n社交發展：\n• 滿月後開始有社交行為（會笑、眼神接觸）\n• 4-5個月後，脖頸才慢慢發育完成',
+      },
+      {
+        title: '身高成長里程碑',
+        content: '不要跨超過2條百分位線才需要擔心，在範圍內的個體差異都是正常的！\n\n各年齡成長速度參考：\n• 0-6月：16cm / 半年\n• 7-12月：8cm / 半年\n• 1-2歲：12cm / 年\n• 2-3歲：10cm / 年\n• 3-5歲：7cm / 年\n• 5歲-青春期：5cm / 年\n• 4歲-青春期：一年長高4-6cm是正常範圍\n• 青春期女生：7cm / 年\n\n小於4cm偏慢，大於6cm偏快，可跟醫師討論。',
+      },
+      {
+        title: '身高迷思破解',
+        content: '這些常見說法，讓我們來一起看清楚：\n\n❌ 需要補很多鈣 → ✅ 不需要過度補鈣，均衡飲食就夠了\n❌ 可以打生長激素幫助長高 → ✅ 除非有醫療適應症，否則不需要\n❌ 要補綜合維他命 → ✅ 可能造成氣喘、過敏，飲食均衡優先\n❌ 喝豬骨湯長高 → ✅ 傳統骨湯小孩不排斥尚可，但鈣質含量非常低\n❌ 要在「養肝時間」睡覺才長高 → ✅ 沒有科學根據，充足睡眠才重要\n\n💡 初經來後還可以長高2-4年，平均約7cm，不用急！',
+      },
+      {
+        title: '性早熟需要注意',
+        content: '如果出現以下情況，建議積極評估：\n\n⚠️ 女孩未滿8歲出現乳房發育\n⚠️ 男孩未滿9歲出現陰毛或陰莖發育\n\n可能伴隨的症狀：\n• 骨齡超前（影響最終身高）\n• 頭痛\n• 莫名嘔吐\n• 看東西模糊\n\n💡 早期評估和處理效果很好，不用過度擔心，但也不要忽視。發現跡象請找小兒科或小兒內分泌科。',
+      },
+      {
+        title: '科學育兒 4 大 Tips',
+        content: '黃瑽寧醫師的科學育兒核心理念：\n\n① 培養成長型思維\n稱讚「努力過程」+「特質」，而不只是稱讚結果。大腦就像肌肉，是訓練出來的！\n\n② 告訴孩子誠實的好結果\n獎勵誠實的行為 + 以身作則（父母間也要誠實）\n\n③ 養邏輯思維\n多做創造性活動（不限制做法和說法），問「為什麼」比給答案更重要\n\n④ 支持型父母，培養內在動機\n7成事情讓孩子與父母討論，3成事情讓父母決定——讓孩子有參與感！',
+      },
+    ],
   },
 ]
-
 
 interface GrowthRecord {
   id: string
@@ -218,209 +309,47 @@ interface MealRecord {
 }
 
 interface AIResult {
-  great: string[]
-  suggestions: string[]
-  weekGoal: string
-  cheer: string
+  type: 'warning' | 'ok'
+  title: string
+  detail: string
+  suggestion: string
 }
 
-// ── 黃瑽寧醫師「0-12歲育兒全百科」知識架構 ──
-
-const SYMPTOM_GUIDE = [
+const MOCK_AI_RESULTS: AIResult[] = [
   {
-    id: 'fever',
-    icon: '🌡️',
-    title: '發燒',
-    subtitle: '孩子最常見的求救訊號',
-    story: '發燒本身不是壞事，而是寶貝免疫系統正在努力工作的證明！體溫升高會讓病毒和細菌更難存活。多數發燒可以在家觀察，重要的是觀察「整體狀況」，而不只是溫度數字。',
-    doList: [
-      '38°C 以上算發燒，體溫計量腋溫+0.5°C = 核心體溫',
-      '優先補充水分，少穿衣服（別包太緊）讓身體散熱',
-      '退燒藥的目的是讓孩子舒服，不是「讓體溫正常」',
-      '觀察精神狀況：退燒後孩子有精神、願意玩，通常不需擔心',
-    ],
-    dontList: [
-      '不要用酒精擦拭（酒精中毒風險）',
-      '不要冰敷額頭（無效且讓孩子不舒服）',
-      '不要強迫吃東西，食慾差是正常的',
-    ],
-    urgent: '出現這些情況立刻就醫：① 3個月以下任何發燒 ② 發燒超過5天 ③ 熱痙攣（抽筋）④ 出疹 ⑤ 頸部僵硬 ⑥ 嗜睡叫不醒',
-    reference: '— 黃瑽寧醫師 CH5 發燒篇',
+    type: 'warning',
+    title: '大腿肌力偏弱，膝蓋內旋',
+    detail: '從影片觀察，孩子蹲起動作時膝蓋內旋（膝蓋往內倒），大腿股四頭肌和臀中肌力量尚不足，長期可能影響膝關節健康。',
+    suggestion: '每天練習：①側躺抬腿10次×2組（訓練臀中肌）；②低矮台階上下踏步，每次10分鐘，持續2–3週。外出時鼓勵走路上下樓梯，避免長時間被抱。',
   },
   {
-    id: 'cold',
-    icon: '🤧',
-    title: '感冒與流感',
-    subtitle: '搞清楚差別，才知道怎麼處理',
-    story: '普通感冒是「鼻病毒」等造成的，症狀漸進、以流鼻水/咳嗽為主，通常7-10天自癒。流感症狀來得又快又猛，高燒、全身痠痛、疲憊感強烈，需要抗病毒藥物（流感快篩陽性，48小時內給克流感）。',
-    doList: [
-      '多休息、多喝水是感冒最有效的「藥」',
-      '流感高危族群（嬰幼兒、慢性病）24-48小時內就醫',
-      '每年打流感疫苗：6個月以上建議接種',
-      '洗手是最有效的傳染預防，肥皂洗20秒',
-    ],
-    dontList: [
-      '感冒藥4大迷思：感冒藥「縮短病程」（無效）、抗生素殺病毒（無效，感冒是病毒）、不發燒代表好了（不一定）、止咳藥讓咳嗽快好（無科學根據）',
-      '不要讓孩子帶病上學（傳染給同學）',
-    ],
-    urgent: '就醫時機：呼吸急促/呼吸困難、嘴唇發青、嗜睡叫不醒、超過5天沒改善',
-    reference: '— 黃瑽寧醫師 CH5 流感篇',
+    type: 'warning',
+    title: '蛋白質攝取不足（估計達標率70%）',
+    detail: '依據本週餐盤紀錄，白飯/麵條比例偏高（約佔盤面60%），豆蛋肉類攝取量估計低於建議量30%。蛋白質不足影響肌肉發育和免疫力。',
+    suggestion: '具體食物建議：每天2顆雞蛋（早餐1顆蒸蛋、晚餐1顆炒蛋）；每天一杯240ml全脂鮮奶（可加入燕麥一起煮燕麥牛奶粥）；30g核桃碎/腰果碎（剁碎後拌入粥飯，增加好脂肪）；每週至少2次魚肉（蒸鱸魚/鯖魚，20–30分鐘即可完成）。',
   },
   {
-    id: 'handfoot',
-    icon: '🖐️',
-    title: '腸病毒',
-    subtitle: '台灣夏季家長的心頭大患',
-    story: '腸病毒在台灣一年四季都有，但夏季是高峰。手足口病（手腳口有水泡、口腔潰瘍）是最常見的表現，多數5-7天自癒。但5歲以下，尤其是1-2歲嬰幼兒，要特別注意重症前兆！',
-    doList: [
-      '口腔潰瘍很痛：給冰涼食物（冰棒/布丁）緩解疼痛幫助進食',
-      '補充水分是最重要的護理工作',
-      '手足口病通常7天傳染期，退燒24小時才可上學',
-      '用肥皂洗手是最有效的預防（腸病毒對酒精消毒液抵抗力強）',
-    ],
-    dontList: [
-      '不要自行給類固醇（讓病毒更容易散播）',
-      '水泡不要刺破',
-    ],
-    urgent: '🚨 重症前兆，立刻急診：持續高燒、嗜睡/意識改變、肌躍型抽搐（突然抖一下）、手腳無力、嘔吐劇烈',
-    reference: '— 黃瑽寧醫師 CH5 腸病毒篇',
+    type: 'warning',
+    title: '鈣質攝取可能不足',
+    detail: '本週紀錄中牛奶/乳製品出現僅2次，此年齡段每天需鈣質700mg，約需2杯牛奶+1片起司才能達標。骨骼密度在兒童期建立，短缺難以補救。',
+    suggestion: '每天固定：①早餐240ml鮮奶或豆漿（高鈣豆漿優先）；②午餐一份豆腐（嫩豆腐100g含鈣150mg）；③點心1片起司或優格80g。可準備「起司蛋餅」「豆腐味噌湯」讓孩子喜歡乳製品。',
   },
   {
-    id: 'allergy',
-    icon: '🌿',
-    title: '過敏：鼻炎、氣喘、異位性皮膚炎',
-    subtitle: '了解過敏，和它好好相處',
-    story: '過敏是免疫系統「太敏感」的反應，有家族遺傳傾向。台灣每3個孩子就有1個有過敏體質。過敏不是病，而是一種體質，目標是「控制」而非「根治」。早期引入多樣食物（6個月後）有助降低食物過敏風險。',
-    doList: [
-      '過敏性鼻炎：避開塵螨（床套防塵螨、減少絨毛玩具）、規律服藥',
-      '氣喘：每天用藥（類固醇吸入劑）是最重要的，不用擔心少量類固醇',
-      '異位性皮膚炎：保濕是第一步（每天全身塗保濕霜），避免過度清潔',
-      '家中避免抽菸、地毯、寵物（強過敏原）',
-    ],
-    dontList: [
-      '不要因為「類固醇」兩個字就拒絕使用（局部/短期安全有效）',
-      '不要相信「斷根食療」「排毒飲食」等偏方',
-    ],
-    urgent: '急性氣喘發作（喘鳴、呼吸急促、說話困難）立刻就醫',
-    reference: '— 黃瑽寧醫師 CH5 過敏三部曲',
+    type: 'ok',
+    title: '精細動作發展正常',
+    detail: '孩子拇指食指捏取動作協調（觀察抓葡萄、撿小積木的影片），符合此年齡段標準。書寫前準備動作良好。',
+    suggestion: '可提供更多挑戰：珠子穿線（先大後小）、捏黏土搓長條/壓扁、剪紙（直線→曲線）。每天15–20分鐘精細活動，為日後書寫做準備。',
   },
   {
-    id: 'gut',
-    icon: '🫃',
-    title: '腸胃問題：吐奶、腹瀉、便秘',
-    subtitle: '寶寶腸胃的常見煩惱',
-    story: '嬰幼兒的腸胃系統正在成熟中，吐奶、腹瀉、便秘都是成長過程中非常常見的狀況，多數不需要藥物，調整飲食和生活方式就能改善。',
-    doList: [
-      '吐奶/溢奶（6個月前）：正常現象，餵奶後拍嗝、不要壓迫腹部',
-      '急性腸胃炎：口服電解質液補充（不是白開水或運動飲料）',
-      '腹瀉：繼續正常飲食（不需禁食），避免果汁和高糖飲料',
-      '便秘：多喝水、多吃蔬果、增加活動量；嬰兒可以順時針按摩腹部',
-    ],
-    dontList: [
-      '腹瀉不要用止瀉藥（阻止細菌/毒素排出）',
-      '不要給嬰兒喝白開水（電解質失衡風險）',
-    ],
-    urgent: '就醫：血便、嚴重嘔吐超過8小時、腹瀉超過24小時無改善、明顯脫水（小便很少、哭無淚）',
-    reference: '— 黃瑽寧醫師 CH5 腸胃篇',
-  },
-  {
-    id: 'skin',
-    icon: '🌸',
-    title: '皮膚問題：熱疹、蕁麻疹、尿布疹',
-    subtitle: '皮膚是孩子的第一道防線',
-    story: '孩子的皮膚比大人薄，容易出現各種疹子，多數是暫時性的、不傳染的。看到疹子先別慌，觀察疹子的「形狀、分佈、有無其他症狀」有助判斷。',
-    doList: [
-      '熱疹（痱子）：散熱最重要 — 薄衣服、涼爽環境',
-      '尿布疹：頻繁換尿布、換尿布時讓屁股「透氣」5-10分鐘，保護膏薄薄塗',
-      '蕁麻疹（風疹塊）：找出過敏原，急性期可給抗組織胺',
-      '異位性皮膚炎：早期使用保濕霜（不痛不癢也要每天塗）',
-    ],
-    dontList: [
-      '不要用痱子粉（吸入有風險）',
-      '皮膚問題不要自行買類固醇藥膏使用，需要醫師評估',
-    ],
-    urgent: '就醫：疹子快速擴散、伴隨發燒、嘴唇/眼睛腫脹（可能過敏性休克前兆）',
-    reference: '— 黃瑽寧醫師 CH5 皮膚篇',
+    type: 'ok',
+    title: '大動作發展符合標準',
+    detail: '孩子跑步步態協調，雙腳跳躍時離地清楚，符合此年齡段「2–3歲雙腳跳」發展里程碑。',
+    suggestion: '繼續提供多元運動機會：公園攀爬架（平衡感）、玩球（追球/踢球）、音樂律動（身體協調）。戶外活動每天至少60分鐘。',
   },
 ]
-
-const VACCINE_GUIDE = [
-  {
-    age: '出生',
-    vaccines: ['B型肝炎（第1劑）', 'BCG 卡介苗'],
-    note: '出生24小時內接種 B 肝，媽媽若帶原需加打免疫球蛋白',
-  },
-  {
-    age: '1–2 個月',
-    vaccines: ['B型肝炎（第2劑）'],
-    note: '與第1劑間隔至少4週',
-  },
-  {
-    age: '2 個月',
-    vaccines: ['五合一疫苗（第1劑）', '肺炎鏈球菌（第1劑）', '輪狀病毒（自費，第1劑）'],
-    note: '五合一：白喉+破傷風+百日咳+b型嗜血桿菌+小兒麻痺',
-  },
-  {
-    age: '4 個月',
-    vaccines: ['五合一疫苗（第2劑）', '肺炎鏈球菌（第2劑）', '輪狀病毒（自費，第2劑）'],
-    note: '',
-  },
-  {
-    age: '6 個月',
-    vaccines: ['五合一疫苗（第3劑）', '肺炎鏈球菌（第3劑）', 'B型肝炎（第3劑）', '流感疫苗（每年）'],
-    note: '流感疫苗：6個月以上建議每年接種，首次接種需打2劑（間隔4週）',
-  },
-  {
-    age: '12 個月',
-    vaccines: ['MMR 麻疹腮腺炎德國麻疹（第1劑）', '水痘（自費，第1劑）', '日本腦炎（第1劑）'],
-    note: '水痘疫苗自費，2劑效果最好；MMR可能引起輕微發燒/皮疹（正常反應）',
-  },
-  {
-    age: '15 個月',
-    vaccines: ['肺炎鏈球菌（第4劑追加）'],
-    note: '',
-  },
-  {
-    age: '18 個月',
-    vaccines: ['五合一疫苗（第4劑追加）', 'A型肝炎（自費，第1劑）'],
-    note: '追加劑加強長期免疫力',
-  },
-  {
-    age: '2 歲（24 個月）',
-    vaccines: ['日本腦炎（第2劑）', 'A型肝炎（自費，第2劑）'],
-    note: '',
-  },
-  {
-    age: '5 歲（入學前）',
-    vaccines: ['MMR（第2劑）', '水痘（自費，第2劑）', 'DTaP 追加', '小兒麻痺追加'],
-    note: '入學前加強：確認疫苗是否齊全，可帶兒童健康手冊請醫師核對',
-  },
-]
-
-const WHY_VACCINE = [
-  { q: '為什麼要打疫苗？', a: '疫苗訓練免疫系統「記住」病原體，讓身體在真正感染前就做好準備。不打疫苗不代表孩子不會生病，而是少了一層保護。台灣能控制小兒麻痺、麻疹等疾病，全靠高接種率的群體免疫。' },
-  { q: '疫苗的副作用嚴重嗎？', a: '多數副作用輕微暫時：注射部位紅腫（1-3天）、輕微發燒（1-2天）、煩躁。嚴重過敏反應（過敏性休克）極罕見（約每百萬劑1例），且發生在接種後15-30分鐘內，所以留在診所觀察30分鐘很重要。' },
-  { q: '發燒時可以打疫苗嗎？', a: '38°C以上發燒需暫緩。輕微鼻水/咳嗽、發燒已退，可以正常接種。打疫苗後發燒（通常低燒）是免疫反應，不是生病，可給退燒藥讓孩子舒服。' },
-]
-
-const MOCK_AI_RESULTS: AIResult = {
-  great: [
-    '寶貝的大動作發展非常棒！雙腳跳躍動作清楚有力，完全符合這個年齡段的里程碑，太厲害了 🎉',
-    '精細動作協調良好，拇指食指捏取準確，這表示小肌肉群發展得很健康，書寫前的準備已經打好基礎 ✨',
-    '你持續記錄飲食和生長數據，這份用心對寶貝來說是最珍貴的禮物 💙',
-  ],
-  suggestions: [
-    '蛋白質可以再補充一點點 — 每天多加一顆蒸蛋或一塊嫩豆腐就好，不用大改飲食，小小調整就有效果',
-    '大腿肌力可以用有趣的方式練習 — 一起走樓梯、踩石頭過河遊戲、上下小斜坡，讓寶貝在玩耍中自然強壯',
-    '鈣質補充很輕鬆 — 每天一杯奶加一片起司就能達標，可以做成寶貝喜歡的起司蛋餅或牛奶燕麥粥',
-  ],
-  weekGoal: '這週一起試試看：每天散步回家時，讓寶貝自己走樓梯上樓（至少2層），大腿肌肉在遊戲中自然強壯 🪜',
-  cheer: '你記錄了這麼多珍貴的成長瞬間，每一筆紀錄都會成為寶貝長大後最寶貴的回憶。你真的很用心，繼續加油！💙',
-}
 
 export default function GrowthClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
-  const [knowledgeTab, setKnowledgeTab] = useState<KnowledgeTab>('growth')
   const [selectedAge, setSelectedAge] = useState('1-2y')
   const [growthRecords, setGrowthRecords] = useState<GrowthRecord[]>([
     { id: '1', date: '2026-01-15', height: '85', weight: '12.5', note: '健康檢查' },
@@ -430,14 +359,11 @@ export default function GrowthClient() {
   const [mealRecords, setMealRecords] = useState<MealRecord[]>([
     { id: '1', date: '2026-03-25', meal: '午餐', desc: '白飯半碗、蒸蛋1個、花椰菜炒肉' },
   ])
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+  const [openTopic, setOpenTopic] = useState<string | null>(null)
   const [showGrowthForm, setShowGrowthForm] = useState(false)
   const [showMealForm, setShowMealForm] = useState(false)
   const [showAI, setShowAI] = useState(false)
-  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
-
-  function toggleAccordion(id: string) {
-    setOpenAccordion(prev => prev === id ? null : id)
-  }
   const [growthForm, setGrowthForm] = useState({ date: new Date().toISOString().split('T')[0], height: '', weight: '', note: '' })
   const [mealForm, setMealForm] = useState({ date: new Date().toISOString().split('T')[0], meal: '早餐', desc: '' })
 
@@ -466,10 +392,7 @@ export default function GrowthClient() {
       >
         <div className="flex items-center gap-2 text-white mb-4">
           <TrendingUp size={22} strokeWidth={2.5} />
-          <div>
-            <h1 className="text-xl font-black">生長發展</h1>
-            <p className="text-sm text-white opacity-80 mt-0.5">陪伴寶貝每一個成長瞬間</p>
-          </div>
+          <h1 className="text-xl font-black">生長發展</h1>
         </div>
         <div className="flex rounded-2xl p-1" style={{ background: 'rgba(255,255,255,0.15)' }}>
           <button
@@ -492,27 +415,6 @@ export default function GrowthClient() {
       {/* === 專業知識 Tab === */}
       {mainTab === 'knowledge' && (
         <div>
-          {/* 子導覽 */}
-          <div className="flex gap-1 px-5 py-3 overflow-x-auto border-b" style={{ borderColor: '#E8E0D5', background: 'white' }}>
-            {[
-              { key: 'growth', label: '成長發展', icon: TrendingUp },
-              { key: 'symptoms', label: '常見病症', icon: Heart },
-              { key: 'vaccine', label: '疫苗指南', icon: Shield },
-            ].map(({ key, label, icon: Icon }) => (
-              <button
-                key={key}
-                onClick={() => setKnowledgeTab(key as KnowledgeTab)}
-                className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border"
-                style={{ background: knowledgeTab === key ? '#7B9EBD' : 'white', color: knowledgeTab === key ? 'white' : '#6B7B8D', borderColor: knowledgeTab === key ? '#7B9EBD' : '#E8E0D5' }}
-              >
-                <Icon size={12} />{label}
-              </button>
-            ))}
-          </div>
-
-          {/* 成長發展 */}
-          {knowledgeTab === 'growth' && (
-          <div>
           <div className="px-5 py-3 border-b" style={{ background: 'white', borderColor: '#E8E0D5' }}>
             <p className="text-xs font-semibold mb-2" style={{ color: '#6B7B8D' }}>選擇年齡段</p>
             <div className="flex gap-2 overflow-x-auto pb-1">
@@ -534,15 +436,6 @@ export default function GrowthClient() {
           </div>
 
           <div className="px-5 py-5 space-y-5">
-            {/* 寶貝的成長故事 */}
-            <section className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
-              <div className="flex items-center gap-2 mb-2">
-                <span style={{ fontSize: 18 }}>✨</span>
-                <p className="text-xs font-bold" style={{ color: '#5E85A3' }}>這個階段的寶貝正在經歷...</p>
-              </div>
-              <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{ageData.storyNote}</p>
-            </section>
-
             {/* 身高體重範圍 */}
             <section>
               <div className="flex items-center gap-2 mb-3">
@@ -575,7 +468,7 @@ export default function GrowthClient() {
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <span style={{ fontSize: 16 }}>🏃</span>
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>這個月可以期待的大動作 🏃</h2>
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>大動作里程碑</h2>
                 <span className="evidence-badge">Cochrane A</span>
               </div>
               <div className="space-y-2">
@@ -594,7 +487,7 @@ export default function GrowthClient() {
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <span style={{ fontSize: 16 }}>✋</span>
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>小手指的神奇發展 ✋</h2>
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>精細動作里程碑</h2>
                 <span className="evidence-badge">Cochrane A</span>
               </div>
               <div className="space-y-2">
@@ -613,7 +506,7 @@ export default function GrowthClient() {
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <Moon size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>寶貝的睡眠時光 🌙</h2>
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>睡眠建議</h2>
                 <span className="evidence-badge">NSF 實證</span>
               </div>
               <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
@@ -629,7 +522,7 @@ export default function GrowthClient() {
             <section>
               <div className="flex items-center gap-2 mb-3">
                 <Utensils size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>吃得好，長得棒 🥦</h2>
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>營養需求重點</h2>
                 <span className="evidence-badge">Cochrane 實證</span>
               </div>
               <div className="space-y-2">
@@ -645,69 +538,66 @@ export default function GrowthClient() {
               <p className="text-xs mt-2" style={{ color: '#8E9EAD' }}>* 依據 Cochrane Review: 早期嬰兒營養、台灣衛福部每日飲食指南</p>
             </section>
 
-            {/* 睡眠作息深度指南（手風琴） */}
+            {/* 黃瑽寧醫師課程知識庫 */}
             <section>
-              <div className="flex items-center gap-2 mb-3">
-                <Moon size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>睡眠作息深度指南</h2>
-                <span className="evidence-badge">黃瑽寧醫師</span>
+              <div className="flex items-center gap-2 mb-4">
+                <Shield size={16} style={{ color: '#7B9EBD' }} />
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+                <span className="evidence-badge">59單元</span>
               </div>
-              <div className="space-y-2">
-                {SLEEP_TOPICS.map(topic => (
-                  <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+              <div className="space-y-3">
+                {HUANG_TOPICS.map((topic) => (
+                  <div key={topic.id} className="rounded-2xl overflow-hidden border" style={{ borderColor: topic.borderColor }}>
+                    {/* Topic header */}
                     <button
-                      onClick={() => toggleAccordion('sleep_' + topic.id)}
-                      className="w-full flex items-center justify-between px-4 py-3"
+                      onClick={() => setOpenTopic(openTopic === topic.id ? null : topic.id)}
+                      className="w-full flex items-center justify-between p-4"
+                      style={{ background: topic.bgColor }}
                     >
                       <div className="flex items-center gap-2">
-                        <span style={{ fontSize: 18 }}>{topic.emoji}</span>
-                        <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                        <span style={{ fontSize: 20 }}>{topic.emoji}</span>
+                        <div className="text-left">
+                          <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
+                          <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
+                        </div>
                       </div>
                       <ChevronDown
                         size={16}
-                        style={{ color: '#7B9EBD', transform: openAccordion === 'sleep_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                        style={{
+                          color: topic.headerColor,
+                          transform: openTopic === topic.id ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.2s ease'
+                        }}
                       />
                     </button>
-                    {openAccordion === 'sleep_' + topic.id && (
-                      <div className="px-4 pb-4">
-                        <div className="p-3 rounded-xl" style={{ background: '#F5F8FF' }}>
-                          <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 營養餵食深度指南（手風琴） */}
-            <section>
-              <div className="flex items-center gap-2 mb-3">
-                <Utensils size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>營養餵食深度指南</h2>
-                <span className="evidence-badge">黃瑽寧醫師</span>
-              </div>
-              <div className="space-y-2">
-                {NUTRITION_TOPICS.map(topic => (
-                  <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                    <button
-                      onClick={() => toggleAccordion('nutrition_' + topic.id)}
-                      className="w-full flex items-center justify-between px-4 py-3"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span style={{ fontSize: 18 }}>{topic.emoji}</span>
-                        <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
-                      </div>
-                      <ChevronDown
-                        size={16}
-                        style={{ color: '#7B9EBD', transform: openAccordion === 'nutrition_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
-                      />
-                    </button>
-                    {openAccordion === 'nutrition_' + topic.id && (
-                      <div className="px-4 pb-4">
-                        <div className="p-3 rounded-xl" style={{ background: '#FFF8EC' }}>
-                          <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
-                        </div>
+                    {/* Topic sections */}
+                    {openTopic === topic.id && (
+                      <div className="border-t" style={{ borderColor: topic.borderColor, background: 'white' }}>
+                        {topic.sections.map((section, si) => (
+                          <div key={si} className="border-b last:border-b-0" style={{ borderColor: '#F0EDE8' }}>
+                            <button
+                              onClick={() => setOpenAccordion(openAccordion === `${topic.id}-${si}` ? null : `${topic.id}-${si}`)}
+                              className="w-full flex items-center justify-between px-4 py-3"
+                            >
+                              <span className="text-sm font-semibold text-left" style={{ color: '#2D3436' }}>{section.title}</span>
+                              <ChevronDown
+                                size={14}
+                                style={{
+                                  color: '#8E9EAD',
+                                  flexShrink: 0,
+                                  marginLeft: 8,
+                                  transform: openAccordion === `${topic.id}-${si}` ? 'rotate(180deg)' : 'rotate(0deg)',
+                                  transition: 'transform 0.2s ease'
+                                }}
+                              />
+                            </button>
+                            {openAccordion === `${topic.id}-${si}` && (
+                              <div className="px-4 pb-4">
+                                <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#4A5568' }}>{section.content}</p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
@@ -719,155 +609,16 @@ export default function GrowthClient() {
             <div className="flex items-start gap-2 p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
               <Info size={16} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
               <p className="text-xs leading-relaxed" style={{ color: '#5E85A3' }}>
-                每個寶貝都有自己獨特的成長節奏，以上數據來自 WHO 兒童生長標準（2006）及 Cochrane 系統性回顧，是「參考範圍」而非「標準答案」。如果有任何疑問，主治醫師和兒科醫生是最好的夥伴。
+                本頁資料來源：WHO Child Growth Standards（2006）、Cochrane 系統性回顧、美國國家睡眠基金會（NSF）、台灣衛福部國民健康署每日飲食指南。建議僅供參考，個別差異因人而異，請諮詢專業醫師/營養師。
               </p>
             </div>
           </div>
-          </div>
-          )} {/* end knowledgeTab === 'growth' */}
-
-          {/* === 常見病症 Tab === */}
-          {knowledgeTab === 'symptoms' && (
-            <div className="px-5 py-5 space-y-4">
-              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Heart size={16} style={{ color: '#5E85A3' }} />
-                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>黃瑽寧醫師 CH5 知識精華</p>
-                </div>
-                <p className="text-xs leading-relaxed" style={{ color: '#6B7B8D' }}>
-                  遇到孩子生病，家長最需要的是「判斷力」，而不是焦慮。了解常見症狀的處理原則，讓你在孩子生病時更有信心陪伴他度過。
-                </p>
-              </div>
-              {SYMPTOM_GUIDE.map(s => (
-                <div key={s.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <div className="px-4 py-3 flex items-center gap-3" style={{ background: '#F5F8FF' }}>
-                    <span style={{ fontSize: 24 }}>{s.icon}</span>
-                    <div>
-                      <p className="font-bold text-sm" style={{ color: '#2D3436' }}>{s.title}</p>
-                      <p className="text-xs" style={{ color: '#6B7B8D' }}>{s.subtitle}</p>
-                    </div>
-                  </div>
-                  <div className="px-4 py-4 space-y-3">
-                    <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{s.story}</p>
-                    <div className="p-3 rounded-xl" style={{ background: '#EBF8EB' }}>
-                      <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>✅ 正確做法</p>
-                      <div className="space-y-1.5">
-                        {s.doList.map((d, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <CheckCircle2 size={12} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
-                            <p className="text-xs" style={{ color: '#2D3436' }}>{d}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-3 rounded-xl" style={{ background: '#FFF8EC' }}>
-                      <p className="text-xs font-bold mb-2" style={{ color: '#8A6020' }}>💭 比較好避免的</p>
-                      <div className="space-y-1.5">
-                        {s.dontList.map((d, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <ChevronRight size={12} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
-                            <p className="text-xs" style={{ color: '#2D3436' }}>{d}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="p-3 rounded-xl" style={{ background: '#EBF4FF' }}>
-                      <p className="text-xs font-bold mb-1" style={{ color: '#5E85A3' }}>🔔 何時需要就醫</p>
-                      <p className="text-xs leading-relaxed" style={{ color: '#2D3436' }}>{s.urgent}</p>
-                    </div>
-                    <p className="text-xs text-right" style={{ color: '#8E9EAD' }}>{s.reference}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* === 疫苗指南 Tab === */}
-          {knowledgeTab === 'vaccine' && (
-            <div className="px-5 py-5 space-y-4">
-              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Shield size={16} style={{ color: '#5E85A3' }} />
-                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>黃瑽寧醫師 CH4 疫苗知識</p>
-                </div>
-                <p className="text-xs leading-relaxed" style={{ color: '#6B7B8D' }}>
-                  疫苗是給孩子最重要的禮物之一。了解「為什麼要打」「有什麼副作用」「什麼時候打」，讓你對疫苗更有信心。
-                </p>
-              </div>
-              {/* 為什麼要打疫苗 Q&A */}
-              <div className="space-y-3">
-                {WHY_VACCINE.map((item, i) => (
-                  <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                    <p className="font-bold text-sm mb-2" style={{ color: '#5E85A3' }}>Q：{item.q}</p>
-                    <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item.a}</p>
-                  </div>
-                ))}
-              </div>
-              {/* 疫苗時程 */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <Shield size={16} style={{ color: '#7B9EBD' }} />
-                  <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>台灣公費 + 自費疫苗時程</h2>
-                </div>
-                <div className="space-y-2">
-                  {VACCINE_GUIDE.map((v, i) => (
-                    <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-black px-2 py-1 rounded-xl" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{v.age}</span>
-                      </div>
-                      <div className="space-y-1">
-                        {v.vaccines.map((vac, j) => (
-                          <div key={j} className="flex items-center gap-2">
-                            <div className="shrink-0 w-1.5 h-1.5 rounded-full" style={{ background: '#7B9EBD' }} />
-                            <p className="text-sm" style={{ color: '#2D3436' }}>{vac}</p>
-                          </div>
-                        ))}
-                      </div>
-                      {v.note && <p className="text-xs mt-2" style={{ color: '#6B7B8D' }}>{v.note}</p>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="flex items-start gap-2 p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
-                <Info size={16} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
-                <p className="text-xs leading-relaxed" style={{ color: '#5E85A3' }}>
-                  以上為台灣常規疫苗時程，詳細接種計畫請以兒童健康手冊為準，並諮詢您的兒科醫師。
-                </p>
-              </div>
-            </div>
-          )}
-
         </div>
       )}
 
       {/* === 家長紀錄 Tab === */}
       {mainTab === 'records' && (
         <div className="px-5 py-5 space-y-5">
-          {/* 成長亮點卡片 */}
-          <section>
-            <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #A8C5DA, #7B9EBD)' }}>
-              <div className="flex items-center gap-2 mb-3">
-                <span style={{ fontSize: 20 }}>🌟</span>
-                <h2 className="font-black text-white text-base">寶貝的成長亮點</h2>
-              </div>
-              <div className="grid grid-cols-3 gap-2 mb-3">
-                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                  <p className="text-white font-black text-lg">+2cm</p>
-                  <p className="text-white text-xs opacity-80">過去3個月</p>
-                </div>
-                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                  <p className="text-white font-black text-lg">7天</p>
-                  <p className="text-white text-xs opacity-80">連續記錄</p>
-                </div>
-                <div className="p-3 rounded-xl text-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
-                  <p className="text-white font-black text-lg">+0.5kg</p>
-                  <p className="text-white text-xs opacity-80">健康增重</p>
-                </div>
-              </div>
-              <p className="text-white text-xs opacity-90 text-center">每一次記錄都是給寶貝最好的禮物 💙</p>
-            </div>
-          </section>
-
           {/* 上傳區域 */}
           <section>
             <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>上傳紀錄媒體</h2>
@@ -941,74 +692,45 @@ export default function GrowthClient() {
                 <h3 className="font-bold" style={{ color: '#2D3436' }}>AI 智慧分析</h3>
               </div>
               <p className="text-xs mb-3" style={{ color: '#6B7B8D' }}>
-                上傳照片/影片和飲食記錄，成長秘書會給寶貝一份專屬的「成長亮點報告」，讓你看見孩子的每一個進步
+                上傳照片/影片和飲食紀錄後，AI 將分析孩子動作發展和營養攝取情況
               </p>
               <button
                 onClick={() => setShowAI(true)}
                 className="w-full py-3 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2"
                 style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}
               >
-                <Sparkles size={16} />讓成長秘書來看看
+                <Sparkles size={16} />立即 AI 分析
               </button>
             </div>
           </section>
 
           {/* AI 分析結果 */}
           {showAI && (
-            <section className="space-y-3">
-              <h2 className="font-bold" style={{ color: '#2D3436' }}>AI 成長秘書分析報告</h2>
-
-              {/* 做得很好 */}
-              <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span style={{ fontSize: 18 }}>🌟</span>
-                  <p className="font-bold text-sm" style={{ color: '#3A7A3A' }}>寶貝做得很棒的地方</p>
-                </div>
-                <div className="space-y-2">
-                  {MOCK_AI_RESULTS.great.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle2 size={14} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
-                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
+            <section>
+              <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>AI 分析結果</h2>
+              <div className="space-y-3">
+                {MOCK_AI_RESULTS.map((r, i) => (
+                  <div key={i} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: r.type === 'warning' ? '#F5C5C5' : '#B8D8B8' }}>
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: r.type === 'warning' ? '#FFF0F0' : '#EBF4EB' }}>
+                        {r.type === 'warning'
+                          ? <AlertTriangle size={16} style={{ color: '#C45A5A' }} />
+                          : <CheckCircle2 size={16} style={{ color: '#5A8A5A' }} />
+                        }
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-bold text-sm mb-1" style={{ color: '#2D3436' }}>{r.title}</p>
+                        <p className="text-xs leading-relaxed mb-2" style={{ color: '#6B7B8D' }}>{r.detail}</p>
+                        <div className="p-2.5 rounded-xl flex items-start gap-1.5" style={{ background: r.type === 'warning' ? '#FFF8F0' : '#EBF4EB' }}>
+                          <ChevronRight size={13} className="shrink-0 mt-0.5" style={{ color: r.type === 'warning' ? '#B07548' : '#5A8A5A' }} />
+                          <p className="text-xs" style={{ color: r.type === 'warning' ? '#B07548' : '#3A6A3A' }}>{r.suggestion}</p>
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-
-              {/* 可以一起努力 */}
-              <div className="p-4 rounded-2xl border" style={{ background: '#FFF8EC', borderColor: '#F5D8A0' }}>
-                <div className="flex items-center gap-2 mb-3">
-                  <span style={{ fontSize: 18 }}>💡</span>
-                  <p className="font-bold text-sm" style={{ color: '#8A6020' }}>可以一起努力的方向</p>
-                </div>
-                <div className="space-y-2">
-                  {MOCK_AI_RESULTS.suggestions.map((item, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <ChevronRight size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
-                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* 這週小目標 */}
-              <div className="p-4 rounded-2xl border" style={{ background: '#EBF4FF', borderColor: '#C5D8E8' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <span style={{ fontSize: 18 }}>🎯</span>
-                  <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>這週的小目標</p>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{MOCK_AI_RESULTS.weekGoal}</p>
-              </div>
-
-              {/* 加油打氣 */}
-              <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <span style={{ fontSize: 18 }}>💪</span>
-                  <p className="font-bold text-sm text-white">給你的加油打氣</p>
-                </div>
-                <p className="text-sm leading-relaxed text-white opacity-95">{MOCK_AI_RESULTS.cheer}</p>
-              </div>
-
-              <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果，實際功能即將上線</p>
+              <p className="text-xs text-center mt-3" style={{ color: '#8E9EAD' }}>* 此為模擬分析結果</p>
             </section>
           )}
         </div>
