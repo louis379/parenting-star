@@ -25,48 +25,62 @@ const LANGUAGE_DATA: Record<string, {
   expression: string
   note: string
   warning: string
+  activities: string[]
+  bilingual: string
 }> = {
   '0-1y': {
-    vocab: '第一個有意義的詞（約10–12月）',
-    sentence: '牙牙學語、重複音節（ba-ba, ma-ma）',
-    expression: '哭聲分化、手勢指物（9–12月）',
-    note: '對聲音有反應，開始模仿口型，以哭聲/表情溝通',
-    warning: '12月後仍無任何語音或手勢，需評估',
+    vocab: '被動詞彙：約50詞（10-12月）｜主動說出：1-3個有意義的詞（約12月）',
+    sentence: '牙牙學語（ba-ba, ma-ma, da-da）、重複音節模仿、開始有意圖的發音',
+    expression: '哭聲分化（餓/累/痛不同）、9–12月手勢指物（指著想要的東西）、揮手拜拜',
+    note: '語言發展的基礎在聽覺輸入。對聲音有反應（4月），模仿口型（4-6月），輪流對話（6月），共同注意力（9月）。越多對話輸入，語言發展越好。',
+    warning: '12月後仍無任何語音或手勢→需評估聽力和語言發展｜6月對聲音無反應→聽力檢查',
+    activities: ['每天大量說話（描述動作：「媽媽在洗碗」）', '念押韻兒歌和手指謠（促進語音意識）', '讀厚紙板書，指著圖說名稱', '等待孩子「回應」後再繼續說（輪流對話訓練）', '減少背景噪音（電視），讓孩子聽清楚語音'],
+    bilingual: '雙語環境從出生即可。「一人一語」原則最有效（爸爸說國語、媽媽說台語）。兩種語言的總詞彙量加起來看，不是只看單一語言。',
   },
   '1-2y': {
-    vocab: '10–50 個詞（18月後詞彙爆發）',
-    sentence: '兩詞組合（媽媽水、爸爸走）',
-    expression: '用詞+手勢表達多重含義',
-    note: '18月是詞彙爆發關鍵點，此後每週平均新增10個詞',
-    warning: '18月不到10個詞、24月不到50個詞需評估',
+    vocab: '12月：約10詞｜18月：約50詞（詞彙爆發）｜24月：約200-300詞',
+    sentence: '18月：兩詞組合（媽媽水、爸爸走、不要！）｜24月：三詞句（寶寶要喝水）',
+    expression: '用詞+手勢表達多重含義（說「要」同時伸手）、開始問「這是什麼？」',
+    note: '18月是詞彙爆發的關鍵時間點，此後每週平均新增10個新詞。若18月詞彙爆發未出現，需留意。注意：這個階段的語言發展是「被輸入量」決定的，跟孩子說越多，累積越多。',
+    warning: '18月主動詞彙<10個→語言治療評估｜24月主動詞彙<50個→語言治療評估｜不使用手勢（指物/揮手）→評估',
+    activities: ['每天親子共讀15-20分鐘（指著圖命名）', '描述孩子正在做的事（「你在踢球！球飛走了！」）', '擴充孩子說的話（孩子說「水」→你說「要喝水，冷冷的水」）', '唱兒歌和動作歌（頭兒肩膀膝腳趾）', '避免「聽懂就給」，鼓勵孩子開口說'],
+    bilingual: '雙語詞彙混用（中英混搭）完全正常，不代表混亂或語言障礙。看總詞彙量（兩種語言加起來），而非單一語言的詞彙量。',
   },
   '2-3y': {
-    vocab: '200–300 個詞',
-    sentence: '3–4詞完整句，開始問「是什麼」',
-    expression: '能敘述剛發生的事，使用代名詞（我/你）',
-    note: '開始問為什麼，語法快速複雜化',
-    warning: '3歲陌生人聽不懂75%以上，需語言評估',
+    vocab: '24月：200-300詞｜36月：500-1000詞',
+    sentence: '3-4詞完整句（我要喝牛奶）→複雜句（因為我餓了所以要吃）｜開始問「為什麼？這是什麼？」',
+    expression: '能敘述剛發生的簡單事件｜使用代名詞（我/你）｜理解並說出顏色/大小/位置',
+    note: '這階段是語法爆炸期，每週都有新的語法結構出現。孩子開始問大量的「為什麼」，是語言和認知整合的重要標誌。陌生人應能聽懂孩子75%的話。',
+    warning: '3歲陌生人聽不懂50%以上的話→語言清晰度評估｜3歲不使用3詞以上的句子→語言治療評估',
+    activities: ['講故事（你說上句，孩子說下句）', '玩「描述遊戲」（這個東西是什麼顏色？圓的？）', '一起看圖書討論（「你覺得小熊接下來會做什麼？」）', '角色扮演（扮家家酒、醫生/病人）增加語言使用情境', '每天念繪本，讀完後問2-3個簡單問題'],
+    bilingual: '雙語兒童的某一語言語法可能稍晚建立，但整體語言能力與單語兒童相當。重要：確保兩種語言都有足夠輸入（不只學校語言）。',
   },
   '3-5y': {
-    vocab: '1000–2000 個詞',
-    sentence: '複雜句型，使用連接詞（因為/但是）',
-    expression: '能講有情節的故事，理解過去/未來',
-    note: '大量發問期，語法接近成人，出現創意語言遊戲',
-    warning: '5歲仍有明顯發音錯誤或結巴需評估',
+    vocab: '3歲：約1000詞｜5歲：約2000詞',
+    sentence: '複雜句型（連接詞：因為/但是/如果/雖然）｜開始使用時態（昨天/明天）',
+    expression: '能講有情節的故事（開始→中間→結尾）｜理解和使用比喻｜能解釋「為什麼」',
+    note: '語言進入創意期：孩子開始創造新詞（把垃圾車叫「臭臭車」）、玩文字遊戲、押韻。這時期親子共讀是語言發展最有效的活動（Cochrane A級證據）。',
+    warning: '5歲仍有多個固定的語音錯誤（如「兔子」說「肚子」）→語音評估｜無法敘述簡單事件序列→語言理解評估',
+    activities: ['每天親子共讀20分鐘（選詞彙豐富的繪本）', '說故事接龍（輪流加一句）', '「詞語猜謎」（它是紅的、圓的、甜的，是什麼？）', '學習兒歌、順口溜（語音意識，閱讀準備度基礎）', '讓孩子「說說看」今天在學校發生了什麼（敘事能力）'],
+    bilingual: '雙語兒童在抑制控制（執行功能）上優於單語兒童（Cochrane研究）。維持兩種語言的輸入，包括讓孩子在兩種語言環境中都有機會「說」。',
   },
   '5-7y': {
-    vocab: '2000–5000 個詞',
-    sentence: '成人語法結構，理解反話/玩笑',
-    expression: '能解釋抽象概念，書寫語言萌發',
-    note: '開始學習閱讀，語言和認知高度整合',
-    warning: '無法理解同年齡閱讀材料需評估',
+    vocab: '5歲：2000-3000詞｜7歲：4000-5000詞（開始從閱讀中習得詞彙）',
+    sentence: '接近成人語法結構｜理解被動句（「貓被狗追了」）｜理解反話和玩笑',
+    expression: '書寫語言萌發（認識常用字，開始寫名字）｜能解釋抽象概念｜論述能力初步',
+    note: '語言和閱讀高度整合期。閱讀準備度關鍵：音素意識（知道「貓」有3個音）、字型意識（知道字是從左到右）。此時期親子共讀的書可更長、詞彙更豐富。',
+    warning: '無法識別和自己名字相關的字→閱讀準備度評估｜無法理解同年齡閱讀材料→讀寫障礙篩查',
+    activities: ['開始「手指跟著字走」的閱讀方式（建立字音對應）', '字母/注音拼音遊戲（磁鐵字母拼接）', '讓孩子自己「讀」（即使是看圖說故事）', '玩押韻遊戲（「貓、刀、高」押韻嗎？）', '圖書館每週借5-7本書自主選擇'],
+    bilingual: '母語閱讀能力可遷移到第二語言（共同底層能力）。先建立一種語言的閱讀基礎，另一語言的閱讀習得會更快。',
   },
   '7-12y': {
-    vocab: '5000+ 個詞（閱讀擴大詞彙量）',
-    sentence: '複雜書面語/口語區分',
-    expression: '論述/說服/比喻，語用技巧成熟',
-    note: '語言成為學習工具，閱讀為主要知識獲取方式',
-    warning: '閱讀困難（讀寫障礙）需早期介入',
+    vocab: '7歲：5000詞｜12歲：15000-20000詞（大量從閱讀習得）',
+    sentence: '書面語和口語開始分化｜複雜書面句型（主從句、分詞短語）｜修辭和比喻',
+    expression: '論述/說服（能提出論點和理由）｜比喻和成語理解｜語用技巧成熟（不同場合用不同語體）',
+    note: '語言成為學習工具。每天閱讀30分鐘的孩子，每年額外學習約100萬個詞彙的使用情境。差異化越來越大：閱讀量大的孩子，詞彙成長呈指數型。',
+    warning: '閱讀速度明顯比同齡慢→讀寫障礙評估｜理解課文有困難但聽力理解正常→閱讀理解策略輔導',
+    activities: ['每天固定閱讀30分鐘（讓孩子自選書目）', '讀完後討論：「你最喜歡哪一段？為什麼？」', '寫讀書心得（3句話）培養書面表達', '查字典習慣：遇到不懂的詞立刻查（電子字典更方便）', '參加辯論或演講活動，鍛鍊口語論述'],
+    bilingual: '雙語學習在小學階段的優勢進一步顯現：更強的元語言意識，能分析語言規則。維持雙語的鑰匙是「功能」——讓兩種語言都有不可替代的使用場合。',
   },
 }
 
@@ -74,47 +88,81 @@ const piagetStages = [
   {
     stage: '感覺動作期',
     age: '0–2 歲',
-    key: '用感官和動作認識世界',
-    traits: ['客體永久性（8–12月出現）', '模仿學習為主', '因果概念萌發（9–12月）', '符號功能出現（18–24月）'],
-    tips: ['提供多元感官刺激（不同材質/聲音）', '玩藏東西遊戲（布偶躲起來）', '讓孩子自由探索安全環境', '說出孩子的動作（「你在拍！」）'],
+    key: '用感官和動作認識世界，建立基礎認知架構',
+    traits: ['0-4月：反射期，吸吮/抓握為主要探索方式', '4-8月：開始重複有趣的動作（敲擊→有聲音→再敲）', '8-12月：客體永久性出現（布蓋住玩具後知道還在）', '12-18月：新方法嘗試，因果概念建立（推倒積木）', '18-24月：符號功能出現（用木棍代替電話）'],
+    tips: ['感官探索箱：裝豆子/麵粉/沙子讓孩子用手探索', '藏玩具遊戲：布蓋住玩具，讓孩子找（8月後）', '提供不同材質物品（光滑/粗糙/柔軟），說出感覺', '讓孩子自由探索安全環境（不要過度限制）', '說出孩子的動作（「你在拍！好大聲！」）'],
+    games: ['感官箱探索', '藏貓貓/藏玩具', '水沙玩耍', '敲打樂器', '鏡子遊戲（認識自己）'],
     color: '#5A8A5A',
     bg: '#EBF4EB',
   },
   {
     stage: '前運思期',
     age: '2–7 歲',
-    key: '符號思維，但以自我為中心',
-    traits: ['自我中心思維（不理解他人觀點）', '萬物有靈論（玩具有感情）', '缺乏守恆概念（高杯/矮杯水量相同不理解）', '象徵遊戲活躍'],
-    tips: ['角色扮演遊戲促進觀點取替', '不急著糾正「錯誤」邏輯', '繪本建立因果思維', '讓孩子主導假裝遊戲'],
+    key: '符號思維豐富，但以自我為中心，缺乏邏輯守恆',
+    traits: ['自我中心思維：無法理解他人與自己有不同觀點', '萬物有靈論：相信玩具、太陽有情感和意志', '缺乏守恆概念：高細杯和矮寬杯「水量一樣」不理解', '象徵遊戲豐富：積木是城堡，毯子是海洋', '直覺思維：根據外觀而非邏輯做判斷'],
+    tips: ['角色扮演遊戲促進觀點取替（換角色演）', '不急著糾正「錯誤」邏輯，好奇地問「為什麼你覺得呢？」', '用繪本建立因果思維（「先發生什麼，後來呢？」）', '守恆實驗：讓孩子自己倒水，親眼驗證', '讓孩子主導假想遊戲，跟著孩子的劇情走'],
+    games: ['扮家家酒/角色扮演', '積木城堡建築', '水和容器實驗（守恆觀察）', '黏土捏塑', '排序遊戲（大中小）'],
     color: '#5E85A3',
     bg: '#EBF4FF',
   },
   {
     stage: '具體運思期',
     age: '7–12 歲',
-    key: '邏輯思維，但需具體物件輔助',
-    traits: ['守恆概念建立', '分類與序列能力', '去除自我中心，理解他人觀點', '理解規則，公平感強'],
-    tips: ['操作性學習（積木、測量、實驗）', '自然觀察記錄（植物生長）', '規律作息和學習習慣', '給予挑戰但不要超前太多'],
+    key: '邏輯思維發展，但需具體物件輔助，抽象思維受限',
+    traits: ['守恆概念完全建立（數量/重量/體積守恆）', '分類能力：能依多重屬性分類（顏色+形狀）', '序列能力：能按大小/長短排序', '去自我中心：能站在他人角度思考', '理解規則和公平：道德推理開始'],
+    tips: ['操作性學習：積木測量、秤重實驗、分組分類', '自然觀察日記：記錄植物生長、天氣變化', '數學用實物（積木/籌碼）建立概念，不急著進入抽象符號', '給予挑戰但不超前太多（最近發展區理論）', '讓孩子解釋解題過程，培養邏輯表達'],
+    games: ['積木橋梁工程挑戰', '自然觀察日記', '棋類遊戲（圍棋/象棋）', '數學實物操作（分數切水果）', '地圖製作（方向感）'],
     color: '#B07548',
     bg: '#FDF0E8',
   },
   {
     stage: '形式運思期',
     age: '12 歲+',
-    key: '抽象邏輯、假設演繹',
-    traits: ['抽象推理（代數/哲學）', '假設思維（「如果……那麼」）', '系統性問題解決', '道德哲學思考萌發'],
-    tips: ['辯論、討論時事', '科學實驗設計', '鼓勵質疑與批判性思維', '尊重其獨立見解'],
+    key: '抽象邏輯成熟，假設演繹，系統性思維',
+    traits: ['抽象推理：能理解代數符號、哲學概念', '假設思維：「如果……那麼……」的推理', '系統性問題解決：考慮所有變量', '道德哲學思考：質疑規則的合理性', '後設認知：知道自己知道什麼，知道自己不知道什麼'],
+    tips: ['辯論時事（支持孩子提出論點，即使不同意）', '科學實驗設計：讓孩子自己設計變量控制', '鼓勵質疑和批判性思維（「你怎麼知道這是真的？」）', '尊重孩子的獨立見解，保持開放對話', '引導閱讀有深度的書（小說/哲學/科普）'],
+    games: ['辯論和時事討論', '複雜桌遊（文明/移民火星）', '科學實驗設計', '閱讀哲學繪本', '思想實驗（電車問題等）'],
     color: '#5E85A3',
     bg: '#EBF4FF',
   },
 ]
 
 const subjectGuide = [
-  { subject: '數學', age: '3–6歲', method: '數積木/步數/餅乾、形狀分類', milestone: '認識1–10數字，簡單加法', avoid: '提前做計算題，忽略概念理解' },
-  { subject: '語文', age: '2–6歲', method: '每天親子共讀15分鐘、說故事', milestone: '認識常用字、自己看圖說故事', avoid: '大量抄寫、枯燥拼音練習' },
-  { subject: '自然科學', age: '3–8歲', method: '觀察蝸牛/植物/昆蟲、簡單實驗', milestone: '能觀察並描述現象，提出疑問', avoid: '只背答案，不觀察過程' },
-  { subject: '藝術', age: '2歲+', method: '自由塗鴉、黏土、音樂律動', milestone: '自由表達情感，不追求「像不像」', avoid: '要求臨摹標準答案，批評作品' },
-  { subject: '社會探索', age: '4歲+', method: '角色扮演（醫生/老師/廚師）、參觀社區', milestone: '了解社會角色，建立公民感', avoid: '過早強調競爭，忽視合作學習' },
+  {
+    subject: '數學', age: '3–8歲',
+    method: '數積木/步數/餅乾、形狀分類、用實物做加減法（拿走3顆積木）、量高度比較、分組計數',
+    milestone: '3歲：認識1-10、形狀分類｜5歲：10以內加減（實物）｜7歲：基礎加減法自動化、簡單分數概念',
+    activities: ['「數步走路」：走路時數步數，到10換另一腳', '超市數學：讓孩子數水果、比較哪堆多', '積木測量：用積木量桌子多少「積木長」', '烹飪數學：量杯、半杯、四分之一（分數直觀）'],
+    avoid: '提前做計算題紙本（3歲前）｜用記憶代替理解（死背九九乘法表前先理解）｜因計算錯誤責罵',
+  },
+  {
+    subject: '語文/閱讀', age: '0歲起',
+    method: '每天親子共讀15-30分鐘、說故事接龍、字卡遊戲、指字閱讀、圖書館定期借書',
+    milestone: '3歲：認識自己名字的字｜5歲：認識常用字30-50個｜7歲：獨立閱讀短文｜10歲：閱讀為主要學習方式',
+    activities: ['繪本讀完後問「接下來會怎樣？」（預測）', '讓孩子「讀」給你聽（即使是看圖說故事）', '做書籤：孩子設計自己的書籤', '寫/畫一本自製小書（孩子是作者）'],
+    avoid: '大量抄寫漢字（6歲前）｜枯燥拼音/注音練習（應配合有意義的詞）｜強迫讀不感興趣的書',
+  },
+  {
+    subject: '自然科學', age: '3–10歲',
+    method: '觀察蝸牛/植物/昆蟲生長記錄、簡單家庭實驗（醋和小蘇打）、天氣觀察日記、參觀科學館',
+    milestone: '4歲：能觀察並描述現象（「葉子是綠的/有斑點」）｜6歲：提出問題和假設｜8歲：設計簡單實驗',
+    activities: ['種豆芽菜：每天觀察記錄（畫圖/照相）', '廚房科學：食用色素在水裡擴散', '「為什麼」日記：每天記錄一個好問題', '夜晚觀星：認識月亮變化（30天月相記錄）'],
+    avoid: '只背答案，不觀察過程｜否定孩子的「錯誤」假設（科學就是提出假設驗證）｜要求「正確結論」而非「好問題」',
+  },
+  {
+    subject: '藝術表達', age: '2歲起',
+    method: '自由塗鴉（提供大紙和粗筆）、黏土/麵團捏塑、音樂律動、混色實驗、拼貼創作',
+    milestone: '2歲：自由塗鴉（歷程重於結果）｜4歲：畫出有意義的圖（人/房子）｜6歲：有細節的創作',
+    activities: ['混色實驗：三原色加水混出各種顏色', '撕紙拼貼：雜誌圖案剪下拼成新圖', '音樂律動：聽不同節奏用身體反應', '用不同工具畫：海綿/牙刷/葉子印章'],
+    avoid: '批評作品「不像」｜要求臨摹標準答案｜過早強調技巧（如素描透視）而非表達｜比較兄弟姊妹的作品',
+  },
+  {
+    subject: '社會探索', age: '3歲起',
+    method: '角色扮演（醫生/老師/廚師/消防員）、參觀社區設施（消防局/農場/市場）、合作任務、義工活動',
+    milestone: '3歲：了解基本社會角色｜5歲：理解規則和公民概念｜8歲：開始理解公平/正義/道德',
+    activities: ['超市「購物任務」：讓孩子負責選擇和付款', '家庭角色扮演：一天的「小廚師/小助手」', '社區觀察：走出去找10種社區職業', '討論新聞中的社會問題（適齡化）'],
+    avoid: '過早強調競爭（輸贏）而忽視合作｜只關注學業成績，忽視公民素養｜不給孩子承擔責任的機會',
+  },
 ]
 
 interface LearningRecord {
@@ -126,14 +174,16 @@ interface LearningRecord {
 }
 
 const BOOK_ANALYSIS = [
-  { type: 'ok', title: '閱讀流暢度良好', detail: '孩子能順暢閱讀句子，斷句自然，未出現逐字閱讀的跡象。', suggestion: '可以嘗試閱讀段落更長的繪本，循序漸進挑戰詞彙量。' },
-  { type: 'warning', title: '發音準確度需加強', detail: '「zh/ch/sh」等捲舌音發音不準，可能需要語音訓練。', suggestion: '每天做5分鐘繞口令練習（「吃葡萄不吐葡萄皮」），趣味性強效果佳。' },
+  { type: 'ok', title: '閱讀流暢度良好', detail: '孩子能順暢閱讀句子，斷句自然，未出現逐字閱讀的跡象。句間停頓和語調有起伏，顯示理解力同步發展。', suggestion: '下一步：選詞彙稍難的繪本（如有說明文字的科普繪本），讓孩子遇到不懂的詞立刻查字典，培養主動學習習慣。' },
+  { type: 'warning', title: '捲舌音發音不準確', detail: '「zh/ch/sh/r」等捲舌音發音明顯不準（如「吃」說成「七」），在6歲後仍有此狀況需關注。語音不準確可能影響拼音學習。', suggestion: '每天練習5分鐘：①繞口令「吃葡萄不吐葡萄皮」；②對著鏡子練習舌頭位置（捲舌音：舌尖翹起）；③錄音比較自己和標準音的差異。若6週無改善，建議語言治療評估。' },
+  { type: 'warning', title: '閱讀理解深度待加強', detail: '孩子能正確讀出文字，但回答「故事講什麼」時描述表面細節，未能掌握主旨。顯示解碼能力（讀出字）和理解能力（懂意思）發展不同步。', suggestion: '讀完後問3層次問題：①「剛才讀了什麼？」（記憶）→②「為什麼主角要這樣做？」（理解）→③「如果你是主角，你會怎麼做？」（應用）。每次只問其中一個，不要全問。' },
 ]
 
 const EXAM_ANALYSIS = [
-  { type: 'warning', title: '易錯類型：應用題理解', detail: '計算題正確率高，但文字應用題失分多，顯示「閱讀理解→數學轉換」連結尚弱。', suggestion: '練習時先圈出題目關鍵詞，再列式計算，培養審題習慣。' },
-  { type: 'warning', title: '知識缺口：分數概念', detail: '分數比較和加減運算有系統性錯誤，基本概念需鞏固。', suggestion: '用實物操作（切蘋果/披薩）重新建立分數直覺，再進入計算練習。' },
-  { type: 'ok', title: '文字書寫整潔', detail: '書寫工整，計算步驟清晰，良好的學習習慣值得繼續保持。', suggestion: '繼續維持，可以加入更多「解釋你的思路」類題目培養邏輯表達。' },
+  { type: 'warning', title: '應用題失分：閱讀→數學轉換弱', detail: '計算題正確率85%，但應用題正確率僅50%，差距大。問題不在計算，在「把文字情境轉換為數學式」的能力。', suggestion: '練習方法：①先讀題2遍；②圈出關鍵詞（「共有」「還剩」「多幾個」）；③畫圖/畫線段輔助；④再列式計算。每天練習2題應用題，而非大量計算題。' },
+  { type: 'warning', title: '分數概念有系統性錯誤', detail: '分數比較（1/3 vs 1/4 哪個大）和分數加法（1/2+1/3）均有錯誤，且犯同類型錯誤，顯示基本分數概念未建立，不是粗心。', suggestion: '回到具體操作：①切蘋果/披薩驗證1/2 vs 1/4大小；②用折紙理解分數加法；③確認概念後才回到符號計算。切勿只做計算練習，概念錯誤需先修正。' },
+  { type: 'ok', title: '書寫習慣優秀', detail: '書寫工整，計算步驟清楚，每一步都有寫出，未跳步。這個習慣在高年級複雜題目時非常重要，值得繼續保持。', suggestion: '進階挑戰：加入「解釋你的思路」題（口頭或書面），如「為什麼你用這個方法？有沒有其他方法？」培養數學邏輯表達能力。' },
+  { type: 'ok', title: '學習態度積極', detail: '從紀錄看，孩子能主動完成作業並記錄學習里程碑，學習動機良好。', suggestion: '維持學習動機的關鍵：讓孩子看到自己的進步（保存舊試卷/作業，每月比較一次）。避免只關注分數，稱讚「這次你用了新方法」或「你比上次多做了20分鐘」。' },
 ]
 
 export default function EducationClient() {
@@ -218,32 +268,50 @@ export default function EducationClient() {
               </div>
               <div className="px-5 py-5 space-y-4">
                 <div className="flex items-center gap-2">
-                  <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>語言發展</h2>
+                  <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>語言發展標準</h2>
                   <span className="evidence-badge">Cochrane A</span>
                 </div>
                 <div className="space-y-3">
                   {[
-                    { label: '詞彙量', value: langData.vocab, color: '#5E85A3', bg: '#EBF4FF' },
+                    { label: '詞彙量標準', value: langData.vocab, color: '#5E85A3', bg: '#EBF4FF' },
                     { label: '句型發展', value: langData.sentence, color: '#5A8A5A', bg: '#EBF4EB' },
-                    { label: '表達力', value: langData.expression, color: '#B07548', bg: '#FDF0E8' },
+                    { label: '表達能力', value: langData.expression, color: '#B07548', bg: '#FDF0E8' },
                   ].map(item => (
                     <div key={item.label} className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
                       <div className="inline-block px-2 py-0.5 rounded-lg text-xs font-bold mb-2" style={{ background: item.bg, color: item.color }}>{item.label}</div>
-                      <p className="text-sm font-semibold" style={{ color: '#2D3436' }}>{item.value}</p>
+                      <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{item.value}</p>
                     </div>
                   ))}
                 </div>
                 <div className="p-3 rounded-xl" style={{ background: '#F5F8FF', borderColor: '#C5D8E8', border: '1px solid #C5D8E8' }}>
-                  <p className="text-xs font-bold mb-1" style={{ color: '#5E85A3' }}>發展特點</p>
+                  <p className="text-xs font-bold mb-1" style={{ color: '#5E85A3' }}>發展特點與重要里程碑</p>
                   <p className="text-xs leading-relaxed" style={{ color: '#6B7B8D' }}>{langData.note}</p>
+                </div>
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>推薦活動與練習方式</p>
+                  <div className="space-y-1.5">
+                    {langData.activities.map((a, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <Star size={11} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} fill="#5A8A5A" />
+                        <p className="text-xs" style={{ color: '#2D3436' }}>{a}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl" style={{ background: '#FDF5FF', borderColor: '#D5A8F5', border: '1px solid #D5A8F5' }}>
+                  <p className="text-xs font-bold mb-1" style={{ color: '#7A4A9A' }}>雙語環境建議</p>
+                  <p className="text-xs leading-relaxed" style={{ color: '#5A3A7A' }}>{langData.bilingual}</p>
                 </div>
                 <div className="p-3 rounded-xl flex items-start gap-2" style={{ background: '#FFF8F0', borderColor: '#F5D5A8', border: '1px solid #F5D5A8' }}>
                   <AlertTriangle size={14} className="shrink-0 mt-0.5" style={{ color: '#B07548' }} />
-                  <p className="text-xs leading-relaxed" style={{ color: '#8A5A28' }}>{langData.warning}</p>
+                  <div>
+                    <p className="text-xs font-bold mb-0.5" style={{ color: '#B07548' }}>需評估的警訊</p>
+                    <p className="text-xs leading-relaxed" style={{ color: '#8A5A28' }}>{langData.warning}</p>
+                  </div>
                 </div>
                 <div className="flex items-start gap-2 p-3 rounded-xl" style={{ background: '#EBF4FF', borderColor: '#C5D8E8', border: '1px solid #C5D8E8' }}>
                   <Info size={14} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
-                  <p className="text-xs" style={{ color: '#5E85A3' }}>語言發展具有大範圍個體差異，以上為一般參考值。若擔心孩子發展，請諮詢語言治療師評估。</p>
+                  <p className="text-xs" style={{ color: '#5E85A3' }}>語言發展具有大範圍個體差異，以上為一般參考值。若擔心孩子發展，請諮詢語言治療師（SLP）評估，早期介入效果最佳。</p>
                 </div>
               </div>
             </div>
@@ -283,6 +351,14 @@ export default function EducationClient() {
                         </div>
                       ))}
                     </div>
+                    <div className="mt-3 p-3 rounded-xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                      <p className="text-xs font-bold mb-1.5" style={{ color: '#5E85A3' }}>推薦遊戲 & 活動</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {stage.games.map((g, i) => (
+                          <span key={i} className="text-xs px-2 py-0.5 rounded-xl" style={{ background: stage.bg, color: stage.color }}>{g}</span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -303,12 +379,21 @@ export default function EducationClient() {
                       <span className="font-bold text-sm" style={{ color: '#2D3436' }}>{g.subject}</span>
                       <span className="text-xs px-2 py-0.5 rounded-lg" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{g.age}</span>
                     </div>
-                    <p className="text-xs mb-1.5" style={{ color: '#6B7B8D' }}>
+                    <p className="text-xs mb-2" style={{ color: '#6B7B8D' }}>
                       <span className="font-semibold" style={{ color: '#5A8A5A' }}>推薦方法：</span>{g.method}
                     </p>
-                    <p className="text-xs mb-1.5" style={{ color: '#6B7B8D' }}>
+                    <p className="text-xs mb-2" style={{ color: '#6B7B8D' }}>
                       <span className="font-semibold" style={{ color: '#5E85A3' }}>里程碑：</span>{g.milestone}
                     </p>
+                    <div className="p-3 rounded-xl mb-2" style={{ background: '#EBF8EB' }}>
+                      <p className="text-xs font-bold mb-1.5" style={{ color: '#3A7A3A' }}>具體活動</p>
+                      {g.activities.map((a, i) => (
+                        <div key={i} className="flex items-start gap-1.5 mb-1">
+                          <Star size={10} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} fill="#5A8A5A" />
+                          <span className="text-xs" style={{ color: '#2D3436' }}>{a}</span>
+                        </div>
+                      ))}
+                    </div>
                     <p className="text-xs" style={{ color: '#8E9EAD' }}>
                       <span className="font-semibold" style={{ color: '#C45A5A' }}>避免：</span>{g.avoid}
                     </p>
