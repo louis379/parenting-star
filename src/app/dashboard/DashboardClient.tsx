@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { Bell, Settings, ChevronRight, TrendingUp, MapPin, School, AlertCircle, Plus, Utensils, Star, Heart } from 'lucide-react'
 import { formatAge, getAgeStage, calcAgeMonths } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/Card'
+import { useProfileStore } from '@/stores/profileStore'
 import type { Profile, Child } from '@/types/database'
 
 interface Props {
@@ -57,8 +58,18 @@ const quickActions = [
 ]
 
 export default function DashboardClient({ profile, children, recentMeal, latestGrowth, achievedMilestones }: Props) {
-  const [activeChildIdx, setActiveChildIdx] = useState(0)
-  const activeChild = children[activeChildIdx]
+  const { setProfile, setChildren, activeChildId, setActiveChildId, activeChild: getActiveChild } = useProfileStore()
+
+  useEffect(() => {
+    setProfile(profile)
+    setChildren(children)
+  }, [profile, children, setProfile, setChildren])
+
+  const activeChild = getActiveChild()
+  function setActiveChildIdx(idx: number) {
+    setActiveChildId(children[idx]?.id ?? null)
+  }
+  const activeChildIdx = children.findIndex(c => c.id === activeChildId)
   const ageMonths = activeChild ? calcAgeMonths(activeChild.birth_date) : 0
   const milestones = getMilestones(ageMonths)
   const displayName = profile?.display_name || '爸媽'
