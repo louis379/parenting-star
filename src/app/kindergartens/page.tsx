@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import KindergartensClient from './KindergartensClient'
+import { MOCK_KINDERGARTENS } from '@/lib/mock-data'
 
 export const metadata: Metadata = {
   title: '幼兒園查詢 | 育兒智多星',
@@ -13,17 +13,29 @@ export const metadata: Metadata = {
 }
 
 export default async function KindergartensPage() {
-  const supabase = await createClient()
+  let kindergartens: any[] = []
 
-  const { data: kindergartens } = await supabase
-    .from('kindergartens')
-    .select('*')
-    .order('name')
-    .limit(50)
+  try {
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('kindergartens')
+      .select('*')
+      .order('name')
+      .limit(50)
+
+    if (!error && data && data.length > 0) {
+      kindergartens = data
+    } else {
+      kindergartens = MOCK_KINDERGARTENS
+    }
+  } catch {
+    kindergartens = MOCK_KINDERGARTENS
+  }
 
   return (
     <AppShell>
-      <KindergartensClient initialData={kindergartens ?? []} />
+      <KindergartensClient initialData={kindergartens} />
     </AppShell>
   )
 }

@@ -1,5 +1,5 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { MOCK_KINDERGARTENS } from '@/lib/mock-data'
 
 /**
  * GET /api/kindergartens — 查詢幼兒園，支援多種篩選條件
@@ -16,7 +16,6 @@ import { NextRequest, NextResponse } from 'next/server'
  *   offset            — 分頁起始位置（預設 0）
  */
 export async function GET(request: NextRequest) {
-  const supabase = await createClient()
   const params = new URL(request.url).searchParams
 
   const city = params.get('city')
@@ -29,22 +28,45 @@ export async function GET(request: NextRequest) {
   const limit = Math.min(parseInt(params.get('limit') ?? '20'), 50)
   const offset = parseInt(params.get('offset') ?? '0')
 
-  let query = supabase
-    .from('kindergartens')
-    .select('*')
-    .order('monthly_fee', { ascending: true })
-    .range(offset, offset + limit - 1)
+  try {
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
 
-  if (city) query = query.eq('city', city)
-  if (district) query = query.eq('district', district)
-  if (type) query = query.eq('type', type)
-  if (teachingMethod) query = query.contains('teaching_method', [teachingMethod])
-  if (monthlyFeeMax) query = query.lte('monthly_fee', parseInt(monthlyFeeMax))
-  if (monthlyFeeMin) query = query.gte('monthly_fee', parseInt(monthlyFeeMin))
-  if (ratioMax) query = query.lte('student_teacher_ratio', parseFloat(ratioMax))
+    let query = supabase
+      .from('kindergartens')
+      .select('*')
+      .order('monthly_fee', { ascending: true })
+      .range(offset, offset + limit - 1)
 
-  const { data, error, count } = await query
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    if (city) query = query.eq('city', city)
+    if (district) query = query.eq('district', district)
+    if (type) query = query.eq('type', type)
+    if (teachingMethod) query = query.contains('teaching_method', [teachingMethod])
+    if (monthlyFeeMax) query = query.lte('monthly_fee', parseInt(monthlyFeeMax))
+    if (monthlyFeeMin) query = query.gte('monthly_fee', parseInt(monthlyFeeMin))
+    if (ratioMax) query = query.lte('student_teacher_ratio', parseFloat(ratioMax))
 
-  return NextResponse.json({ data, total: count, limit, offset })
+    const { data, error, count } = await query
+    if (!error && data && data.length > 0) {
+      return NextResponse.json({ data, total: count, limit, offset })
+    }
+  } catch {
+    // fall through to mock data
+  }
+
+  // Supabase 不可用或無資料時使用 mock data
+  let data = [...MOCK_KINDERGARTENS]
+  if (city) data = data.filter(k => k.city === city)
+  if (district) data = data.filter(k => k.district === district)
+  if (type) data = data.filter(k => k.type === type)
+  if (teachingMethod) data = data.filter(k => k.teaching_method.includes(teachingMethod))
+  if (monthlyFeeMax) data = data.filter(k => k.monthly_fee <= parseInt(monthlyFeeMax))
+  if (monthlyFeeMin) data = data.filter(k => k.monthly_fee >= parseInt(monthlyFeeMin))
+  if (ratioMax) data = data.filter(k => k.student_teacher_ratio <= parseFloat(ratioMax))
+
+  data.sort((a, b) => a.monthly_fee - b.monthly_fee)
+  const total = data.length
+  data = data.slice(offset, offset + limit)
+
+  return NextResponse.json({ data, total, limit, offset })
 }

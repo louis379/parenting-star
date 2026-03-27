@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronLeft, Baby, Heart, Home, CheckCircle } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/utils'
@@ -45,7 +44,6 @@ const STEPS = [
 export default function OnboardingPage() {
   const router = useRouter()
   const [step, setStep] = useState(0)
-  const [loading, setLoading] = useState(false)
   const [child, setChild] = useState<ChildData>({
     nickname: '', birthDate: '', gender: '', birthWeightG: '',
     birthHeightCm: '', gestationalWeeks: '', allergies: [], healthConditions: [], specialTraits: [],
@@ -58,53 +56,36 @@ export default function OnboardingPage() {
     return arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]
   }
 
-  async function handleFinish() {
-    setLoading(true)
-    try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('未登入')
-
-      // 建立 family
-      const { data: familyData, error: familyErr } = await supabase
-        .from('families')
-        .insert({ name: family.familyName || `${child.nickname}的家`, created_by: user.id })
-        .select()
-        .single()
-      if (familyErr) throw familyErr
-
-      // 加入 family_members
-      await supabase.from('family_members').insert({
-        family_id: familyData.id, user_id: user.id, role: 'primary_caregiver', permissions: 'admin',
-      })
-
-      // 建立 child
-      await supabase.from('children').insert({
-        family_id: familyData.id,
+  function handleFinish() {
+    // 儲存到 localStorage，待用戶註冊後再同步到 Supabase
+    const onboardingData = {
+      child: {
         nickname: child.nickname,
-        birth_date: child.birthDate,
+        birthDate: child.birthDate,
         gender: child.gender || null,
-        birth_weight_g: child.birthWeightG ? parseInt(child.birthWeightG) : null,
-        birth_height_cm: child.birthHeightCm ? parseFloat(child.birthHeightCm) : null,
-        gestational_weeks: child.gestationalWeeks ? parseInt(child.gestationalWeeks) : null,
+        birthWeightG: child.birthWeightG ? parseInt(child.birthWeightG) : null,
+        birthHeightCm: child.birthHeightCm ? parseFloat(child.birthHeightCm) : null,
+        gestationalWeeks: child.gestationalWeeks ? parseInt(child.gestationalWeeks) : null,
         allergies: child.allergies,
-        health_conditions: child.healthConditions,
-        special_traits: child.specialTraits,
-      })
-
-      // 更新 profile
-      await supabase.from('profiles').update({
+        healthConditions: child.healthConditions,
+        specialTraits: child.specialTraits,
+      },
+      family: {
+        name: family.familyName || `${child.nickname}的家`,
         city: family.city,
         district: family.district,
-        parenting_style: family.parentingStyle,
-      }).eq('id', user.id)
-
-      setStep(3)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
+        parentingStyle: family.parentingStyle,
+      },
+      completedAt: new Date().toISOString(),
     }
+
+    try {
+      localStorage.setItem('ps_onboarding', JSON.stringify(onboardingData))
+    } catch {
+      // localStorage 不可用時靜默忽略
+    }
+
+    setStep(3)
   }
 
   const progress = ((step + 1) / STEPS.length) * 100
@@ -344,7 +325,6 @@ export default function OnboardingPage() {
             <Button
               size="lg"
               className="w-full mt-4"
-              loading={loading}
               onClick={handleFinish}
             >
               完成設定！
@@ -371,9 +351,16 @@ export default function OnboardingPage() {
                 </div>
               ))}
             </div>
-            <Button size="lg" className="w-full mt-8" onClick={() => router.push('/dashboard')}>
+            <Button size="lg" className="w-full mt-6" onClick={() => router.push('/dashboard')}>
               開始使用
             </Button>
+            <button
+              type="button"
+              onClick={() => router.push('/register')}
+              className="w-full text-center text-sm text-gray-400 hover:text-gray-600 mt-3"
+            >
+              建立帳號以儲存資料
+            </button>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
+import { MOCK_PLACES } from '@/lib/mock-data'
 
 /**
  * GET /api/places — 查詢親子景點，支援多種篩選條件
@@ -16,7 +16,6 @@ import { NextRequest, NextResponse } from 'next/server'
  *   offset        — 分頁起始位置（預設 0）
  */
 export async function GET(request: NextRequest) {
-  const supabase = await createClient()
   const params = new URL(request.url).searchParams
 
   const city = params.get('city')
@@ -29,25 +28,50 @@ export async function GET(request: NextRequest) {
   const limit = Math.min(parseInt(params.get('limit') ?? '20'), 50)
   const offset = parseInt(params.get('offset') ?? '0')
 
-  let query = supabase
-    .from('places')
-    .select('*')
-    .order('avg_rating', { ascending: false })
-    .range(offset, offset + limit - 1)
+  try {
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
 
-  if (city) query = query.eq('city', city)
-  if (district) query = query.eq('district', district)
-  if (isIndoor !== null) query = query.eq('is_indoor', isIndoor === 'true')
-  if (placeType) query = query.contains('place_type', [placeType])
+    let query = supabase
+      .from('places')
+      .select('*')
+      .order('avg_rating', { ascending: false })
+      .range(offset, offset + limit - 1)
+
+    if (city) query = query.eq('city', city)
+    if (district) query = query.eq('district', district)
+    if (isIndoor !== null) query = query.eq('is_indoor', isIndoor === 'true')
+    if (placeType) query = query.contains('place_type', [placeType])
+    if (ageMonths) {
+      const age = parseInt(ageMonths)
+      query = query.lte('suitable_age_min', age).gte('suitable_age_max', age)
+    }
+    if (mosquitoMax) query = query.lte('mosquito_risk_level', parseInt(mosquitoMax))
+    if (trending === 'true') query = query.eq('is_trending', true)
+
+    const { data, error, count } = await query
+    if (!error && data && data.length > 0) {
+      return NextResponse.json({ data, total: count, limit, offset })
+    }
+  } catch {
+    // fall through to mock data
+  }
+
+  // Supabase 不可用或無資料時使用 mock data
+  let data = [...MOCK_PLACES]
+  if (city) data = data.filter(p => p.city === city)
+  if (district) data = data.filter(p => p.district === district)
+  if (isIndoor !== null) data = data.filter(p => p.is_indoor === (isIndoor === 'true'))
+  if (placeType) data = data.filter(p => p.place_type.includes(placeType))
   if (ageMonths) {
     const age = parseInt(ageMonths)
-    query = query.lte('suitable_age_min', age).gte('suitable_age_max', age)
+    data = data.filter(p => p.suitable_age_min <= age && p.suitable_age_max >= age)
   }
-  if (mosquitoMax) query = query.lte('mosquito_risk_level', parseInt(mosquitoMax))
-  if (trending === 'true') query = query.eq('is_trending', true)
+  if (mosquitoMax) data = data.filter(p => p.mosquito_risk_level <= parseInt(mosquitoMax))
+  if (trending === 'true') data = data.filter(p => p.is_trending)
 
-  const { data, error, count } = await query
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  const total = data.length
+  data = data.slice(offset, offset + limit)
 
-  return NextResponse.json({ data, total: count, limit, offset })
+  return NextResponse.json({ data, total, limit, offset })
 }

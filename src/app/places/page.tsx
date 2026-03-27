@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { createClient } from '@/lib/supabase/server'
 import { AppShell } from '@/components/layouts/AppShell'
 import PlacesClient from './PlacesClient'
+import { MOCK_PLACES } from '@/lib/mock-data'
 
 export const metadata: Metadata = {
   title: '親子景點 | 育兒智多星',
@@ -13,17 +13,29 @@ export const metadata: Metadata = {
 }
 
 export default async function PlacesPage() {
-  const supabase = await createClient()
+  let places: any[] = []
 
-  const { data: places } = await supabase
-    .from('places')
-    .select('*')
-    .order('avg_rating', { ascending: false })
-    .limit(50)
+  try {
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('places')
+      .select('*')
+      .order('avg_rating', { ascending: false })
+      .limit(50)
+
+    if (!error && data && data.length > 0) {
+      places = data
+    } else {
+      places = MOCK_PLACES
+    }
+  } catch {
+    places = MOCK_PLACES
+  }
 
   return (
     <AppShell>
-      <PlacesClient initialPlaces={places ?? []} />
+      <PlacesClient initialPlaces={places} />
     </AppShell>
   )
 }
