@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   Brain, BookOpen, ClipboardList, Heart, Users, Focus, Target,
   Camera, FileVideo, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Clock,
+  Info, TrendingUp, Plus, X, Clock, ChevronDown,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
@@ -201,6 +201,46 @@ const AI_ANALYSIS: Record<string, {
   },
 }
 
+// ===== 黃瑽寧醫師課程架構：情緒力延伸指南 =====
+
+const EMOTION_EXTRA_TOPICS = [
+  {
+    id: 'highSensitive',
+    title: '高敏感孩子',
+    emoji: '🌸',
+    content: `高敏感孩子（HSC, Highly Sensitive Child）佔孩子總數的15–20%，是天生的神經系統差異，不是問題，不是病。\n\n高敏感的特徵：\n• 對聲音、光線、氣味、質地特別敏感\n• 情緒反應比其他孩子更強烈\n• 對環境變化需要更長的適應時間\n• 觀察力強、同理心高、思考深入\n• 換場景或新刺激後需要更多時間「充電」\n\n如何引導高敏感孩子：\n• 提前預告任何改變（「等一下我們要去新的地方，會有很多人，我會一直陪著你」）\n• 不要催促他「快一點適應」，給足夠的緩衝時間\n• 退出嘈雜環境是正當的需求，不是嬌氣\n• 找到他的能量充電方式（多數是安靜獨處）並尊重這個需求\n• 幫助他為強烈情緒命名：「你的感受器比別人靈敏，所以你感覺得更深，這不是壞事」\n\n💙 高敏感孩子的優勢：往往是最有創造力、最有同理心、最深刻思考的人。`,
+  },
+  {
+    id: 'parentEmotion',
+    title: '爸媽情緒控制',
+    emoji: '🧘',
+    content: `孩子的情緒調節能力，很大程度來自觀察爸媽如何處理情緒。我們不需要完美，但可以「示範修復」。\n\n為什麼爸媽容易在孩子哭鬧時崩潰？\n• 孩子的哭聲在演化上設計來讓成人焦慮，這是本能反應\n• 當你自己疲憊/飢餓/壓力大，前額葉（理性）更難壓制杏仁核（情緒）\n• 這不是你的錯，是神經系統的特性\n\n當你感覺要爆炸的時候：\n• 先把孩子放在安全的地方\n• 離開現場30秒到1分鐘（不是逃跑，是調節）\n• 深呼吸：吸4秒、憋4秒、呼6秒（啟動副交感神經）\n• 說「媽媽現在需要冷靜一下，我馬上回來」\n\n當你確實發火之後：\n• 事後（情緒平靜後）和孩子修復：「剛才媽媽對你大叫，我做得不好，對不起。你沒有做錯。」\n• 修復本身就是在示範：人可以犯錯，也可以道歉和改善\n• 不要在親子關係的自責中打轉，向前走更重要\n\n💙 黃瑽寧醫師說：「爸媽不需要完美，需要的是在孩子面前示範真實的人。」`,
+  },
+]
+
+// ===== 黃瑽寧醫師課程架構：社交力延伸指南 =====
+
+const SOCIAL_EXTRA_TOPICS = [
+  {
+    id: 'groupAdaptation',
+    title: '適應團體生活',
+    emoji: '🏫',
+    content: `進入幼兒園、托嬰中心是孩子人生第一次長期與陌生人相處，需要時間和支持。\n\n準備期（入園前1–2個月）：\n• 帶孩子提前參觀幼兒園，認識老師和環境\n• 閱讀關於上學的繪本（《我愛幼兒園》《要上幼兒園了》）\n• 練習與照顧者短暫分離，建立「你會回來」的信任\n\n入園適應期（前2–4週）：\n• 大多數孩子需要2–6週適應，部分需要更長\n• 建立固定告別儀式，平靜快速告別\n• 不要因孩子哭泣而猶豫徘徊（越猶豫孩子越焦慮）\n• 每天固定時間接送，讓孩子知道你會來\n\n需要多留意的情況：\n• 適應超過3個月仍每天大哭\n• 開始出現退縮（不說話、縮回嬰兒行為）\n• 持續身體症狀（肚子痛/頭痛）但無生理原因\n\n💙 適應不良不是孩子的錯，也不是家長的錯。慢慢來，你陪在身邊就是最大的力量。`,
+  },
+  {
+    id: 'bullying',
+    title: '霸凌應對',
+    emoji: '🛡️',
+    content: `霸凌的定義：重複性、有意的攻擊行為，且雙方有力量差距（不是一般衝突）。\n\n如何判斷是否是霸凌？\n• 一次性衝突、互相吵架 → 正常人際衝突，需要引導\n• 針對特定人、重複發生、孩子無力反擊 → 可能是霸凌\n\n孩子被霸凌的跡象：\n• 不想上學、找身體不舒服的理由請假\n• 回家情緒特別低落、易怒\n• 東西莫名消失或損壞\n• 突然沒有朋友話題或說「我沒有朋友」\n\n家長怎麼做？\n• 先傾聽，不要急著問細節或解決（孩子需要先被理解）\n• 告訴孩子：「這不是你的錯，我相信你」\n• 通知老師/學校（留下書面記錄）\n• 不要叫孩子「自己解決」或「打回去」（升高風險）\n• 嚴重情況：與學校溝通制定保護計畫，或尋求學校輔導\n\n💙 孩子告訴你「有人欺負我」是一份信任，請認真對待。`,
+  },
+  {
+    id: 'siblingConflict',
+    title: '手足紛爭（公平感）',
+    emoji: '👫',
+    content: `手足衝突是完全正常的，甚至是練習衝突解決能力的最佳場所。完全沒有衝突才需要擔心。\n\n為什麼孩子對「公平」這麼執著？\n• 孩子的「公平感」在2–3歲開始發展\n• 他們理解的公平是「一樣多」，而不是「各得所需」\n• 對不公平的強烈反應是認知發展的正常現象\n\n家長常犯的錯誤：\n• 要求老大「讓弟弟/妹妹」（對老大不公平，且傳達「你因為大就要吃虧」）\n• 比較兩個孩子（「你看妹妹多乖」）\n• 每次都介入解決（剝奪自主解決能力）\n\n更有效的方式：\n• 輪流原則：清楚說明規則「今天哥哥先選，明天弟弟先選」\n• 計時器：「計時器響了就換人」，規則代替家長\n• 衝突後引導：「你們都想要同一個玩具，你們覺得可以怎麼辦？\"\n• 分別給每個孩子獨自相處時間，減少注意力爭奪\n\n💙 手足是孩子一生最長的關係之一。衝突是過程，讓他們練習解決，比替他們解決更有價值。`,
+  },
+]
+
 interface PsychRecord {
   id: string
   date: string
@@ -219,6 +259,11 @@ export default function PsychologyClient() {
     { id: '2', date: '2026-03-25', situation: 'social', desc: '在遊樂場一直獨自玩，不願意和其他小朋友互動', analyzed: false },
   ])
   const [showRecordForm, setShowRecordForm] = useState(false)
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+
+  function toggleAccordion(id: string) {
+    setOpenAccordion(prev => prev === id ? null : id)
+  }
   const [showAI, setShowAI] = useState(false)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], situation: 'crying' as SituationType, desc: '' })
 
@@ -369,6 +414,41 @@ export default function PsychologyClient() {
                     ))}
                   </div>
                 </div>
+
+                {/* 情緒力延伸指南（手風琴） */}
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Heart size={15} style={{ color: '#7B9EBD' }} />
+                    <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>情緒力深度指南</h3>
+                    <span className="evidence-badge">黃瑽寧醫師</span>
+                  </div>
+                  <div className="space-y-2">
+                    {EMOTION_EXTRA_TOPICS.map(topic => (
+                      <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                        <button
+                          onClick={() => toggleAccordion('emotion_' + topic.id)}
+                          className="w-full flex items-center justify-between px-4 py-3"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                            <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                          </div>
+                          <ChevronDown
+                            size={16}
+                            style={{ color: '#7B9EBD', transform: openAccordion === 'emotion_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                          />
+                        </button>
+                        {openAccordion === 'emotion_' + topic.id && (
+                          <div className="px-4 pb-4">
+                            <div className="p-3 rounded-xl" style={{ background: '#F5F8FF' }}>
+                              <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -463,6 +543,41 @@ export default function PsychologyClient() {
                 <p className="text-xs leading-relaxed" style={{ color: '#8A5A28' }}>
                   若孩子在18個月後仍缺乏眼神接觸、指物、呼名反應，建議進行自閉症早期篩檢（M-CHAT）。早期發現、早期介入效果最佳。
                 </p>
+              </div>
+
+              {/* 社交力延伸指南（手風琴） */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Users size={15} style={{ color: '#7B9EBD' }} />
+                  <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>社交力深度指南</h3>
+                  <span className="evidence-badge">黃瑽寧醫師</span>
+                </div>
+                <div className="space-y-2">
+                  {SOCIAL_EXTRA_TOPICS.map(topic => (
+                    <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                      <button
+                        onClick={() => toggleAccordion('social_' + topic.id)}
+                        className="w-full flex items-center justify-between px-4 py-3"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                          <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                        </div>
+                        <ChevronDown
+                          size={16}
+                          style={{ color: '#7B9EBD', transform: openAccordion === 'social_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                        />
+                      </button>
+                      {openAccordion === 'social_' + topic.id && (
+                        <div className="px-4 pb-4">
+                          <div className="p-3 rounded-xl" style={{ background: '#EBF4FF' }}>
+                            <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
