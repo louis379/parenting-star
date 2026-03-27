@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
-  Camera, FileVideo, Sparkles, CheckCircle2, ChevronRight,
+  Camera, Sparkles, CheckCircle2, ChevronRight,
   Plus, X, Utensils, ChevronDown, Shield, Heart,
 } from 'lucide-react'
 
@@ -178,6 +178,12 @@ const NUTRITION_TOPICS = [
     emoji: '🥕',
     content: `偏挑食是2–6歲孩子最普遍的問題，90%以上的孩子都會有某種程度的偏食，你不孤單！\n\n為什麼孩子挑食？新食物恐懼症（Neophobia）是演化保護機制，2歲後大腦本能上對不熟悉的食物有防衛心。\n\n有效的方法：\n• 一種新食物需要嘗試8–15次才會接受，別在前5次就放棄\n• 不強迫吃完，但要求「嘗一小口」\n• 讓孩子參與備餐（洗菜、攪拌），增加接受度\n• 家人一起吃，示範比說教有效10倍\n\n不用擔心的情況：孩子活力好、體重在正常範圍、喜歡的食物還有10種以上，這就沒問題。\n\n小提醒：接受食物不到20種、質地敏感、完全拒絕某類食物，可以諮詢職能治療師。`,
   },
+  {
+    id: 'growthNutrition',
+    title: '成長營養5大提醒',
+    emoji: '🌱',
+    content: `黃瑽寧醫師的5個營養觀念校正：\n\n① 不需要急著補充各種營養品\n天然食物提供的營養已經足夠。各種「成長補充品」廣告常誇大效果，先吃好日常飲食最重要。\n\n② 天然的最好\n加工食品中的化學添加物要盡量避免。新鮮食材、少加工、少糖鹽，是最好的飲食原則。\n\n③ 肉吃不夠不代表有影響\n孩子不吃肉但會吃豆腐、雞蛋、魚等其他蛋白質來源，一樣可以長得很好，不必逼孩子吃肉。\n\n④ 偏挑食：帶孩子去戶外跑跑\n讓孩子消耗體力、增加飢餓感，是改善食慾最自然有效的方法。挑食很多時候是「不夠餓」。\n\n⑤ 關於身高：6個好時機\n生長激素分泌高峰：熟睡時（前3小時）、運動後、傍晚。確保充足睡眠 + 規律運動，對身高最有幫助。`,
+  },
 ]
 
 const SLEEP_TOPICS = [
@@ -198,6 +204,12 @@ const SLEEP_TOPICS = [
     title: '夜驚、惡夢、打鼾、尿床',
     emoji: '😰',
     content: `夜驚 vs 惡夢：\n• 夜驚：深睡期，孩子大叫哭鬧但其實沒醒，事後完全不記得。不需要介入，保護安全即可。\n• 惡夢：淺睡期，孩子醒來害怕，需要安撫和陪伴。\n\n打鼾：偶爾打鼾（感冒時）正常。若每週3次以上、白天精神不好、呼吸有暫停感，需就醫排除睡眠呼吸中止症（常見原因：腺樣體肥大）。\n\n尿床（夜間遺尿）：\n• 5歲前尿床完全正常，不需擔心\n• 7歲後每週超過2次，可考慮就醫\n• 絕對不要因尿床責罵孩子——這不是孩子能控制的事`,
+  },
+  {
+    id: 'sleepBasics',
+    title: '睡眠週期與作息表',
+    emoji: '📊',
+    content: `黃瑽寧醫師課程：睡眠基礎知識\n\n睡眠週期：嬰幼兒每個睡眠週期約 45–60 分鐘，成人為 90 分鐘。週期結束時寶寶會有短暫清醒，這是正常的！\n\n睡前儀式重點：\n• 洗澡/全身按摩 → 調暗燈光 → 輕音樂\n• 奶嘴有助防猝死（SIDS），放心使用\n• 3–6個月的寶寶（超過5kg）可以開始睡過夜\n• 不用特意保持家裡安靜，讓寶寶習慣正常家庭音量\n\n半夜醒來：15分鐘內自行入睡算連續睡眠，不需介入\n夜驚（上半夜）：大腦在整理白天刺激，不需介入\n惡夢（下半夜）：孩子清醒且記得，需要安撫\n\n每日建議睡眠時數：\n| 月齡 | 總時數 | 日間小睡次數 |\n|------|--------|-------------|\n| 1–3月 | 15–17小時 | 4–5次，每次3–5小時 |\n| 4–6月 | 13–16小時 | 3–4次 |\n| 7–12月 | 11–14小時 | 2–3次 |\n| 1–2歲 | 11–14小時 | 1–2次 |\n| 2–3歲 | 10–13小時 | 1次 |\n| 3–5歲 | 10–13小時 | 可不午睡 |\n| 5歲+ | 9–11小時 | 不需午睡 |\n\n尿布更換頻率參考：\n• 每2小時換一次是基準\n| 月齡 | 尿次數 | 尿量 | 便次數 |\n|------|--------|------|--------|\n| 1–3月 | 15–20次/天 | 10–70cc | 2–10次 |\n| 3–6月 | 10–15次/天 | 70–100cc | 2–10次 |\n| 6–12月 | 8–12次/天 | 100cc+ | 1–3次 |\n| 1–2歲 | 4–8次/天 | 80–100cc | 1–2次 |\n| 2歲+ | 3–6次/天 | 150cc+ | 1次 |`,
   },
 ]
 
@@ -224,6 +236,15 @@ interface AIResult {
   cheer: string
 }
 
+interface PhotoRecord {
+  id: string
+  date: string
+  sortDate: number
+  imageData: string
+  note: string
+  page: string
+}
+
 // ── 黃瑽寧醫師「0-12歲育兒全百科」知識架構 ──
 
 const SYMPTOM_GUIDE = [
@@ -238,6 +259,8 @@ const SYMPTOM_GUIDE = [
       '優先補充水分，少穿衣服（別包太緊）讓身體散熱',
       '退燒藥的目的是讓孩子舒服，不是「讓體溫正常」',
       '觀察精神狀況：退燒後孩子有精神、願意玩，通常不需擔心',
+      '熱痙攣（高燒引起的抽搐）：① 立刻拿手機錄影（記錄時間和持續長度）② 確保孩子安全（側躺、遠離危險物品）③ 不要強壓四肢，等待自行停止 ④ 停止後立刻就醫',
+      '退燒藥目的：讓孩子舒服、維持活動力，不是「把溫度降到正常」',
     ],
     dontList: [
       '不要用酒精擦拭（酒精中毒風險）',
@@ -256,6 +279,7 @@ const SYMPTOM_GUIDE = [
     doList: [
       '多休息、多喝水是感冒最有效的「藥」',
       '流感高危族群（嬰幼兒、慢性病）24-48小時內就醫',
+      '流感：48小時內吃克流感效果最佳，確診後越快吃越好。也可預防性投藥保護家中密切接觸者。',
       '每年打流感疫苗：6個月以上建議接種',
       '洗手是最有效的傳染預防，肥皂洗20秒',
     ],
@@ -296,6 +320,8 @@ const SYMPTOM_GUIDE = [
       '氣喘：每天用藥（類固醇吸入劑）是最重要的，不用擔心少量類固醇',
       '異位性皮膚炎：保濕是第一步（每天全身塗保濕霜），避免過度清潔',
       '家中避免抽菸、地毯、寵物（強過敏原）',
+      '環境控制：注意 PM2.5、PM10、氮氧化物等空氣污染，過敏季節減少戶外活動時間',
+      '異位性皮膚炎：避免過度清潔、過度日曬、含香精的清潔用品',
     ],
     dontList: [
       '不要因為「類固醇」兩個字就拒絕使用（局部/短期安全有效）',
@@ -341,6 +367,26 @@ const SYMPTOM_GUIDE = [
     ],
     urgent: '就醫：疹子快速擴散、伴隨發燒、嘴唇/眼睛腫脹（可能過敏性休克前兆）',
     reference: '— 黃瑽寧醫師 CH5 皮膚篇',
+  },
+  {
+    id: 'heightDev',
+    icon: '📏',
+    title: '身高發展與成長速率',
+    subtitle: '了解孩子正常的身高成長節奏',
+    story: '孩子的身高成長不是均速的，每個階段速率不同。了解正常速率，就能更從容地判斷孩子的生長狀況，不焦慮、不急著補品。',
+    doList: [
+      '身高預測參考：不太可能超過父母中較矮的那位，遺傳是主要因素',
+      '4歲是觀察關鍵點：若一年長高不到4cm，可考慮照手部X光（骨齡評估）',
+      '骨齡檢查：照手掌X光，評估骨骼成熟度，可預測最終身高',
+      '確保充足睡眠（生長激素主要在熟睡前3小時分泌）+ 規律運動',
+      '均衡飲食勝於補充劑：鈣、蛋白質、維生素D從天然食物補充最好',
+    ],
+    dontList: [
+      '不要盲目購買「長高補充品」，缺乏科學根據',
+      '不要因短暫成長停滯就焦慮，季節性波動是正常的',
+    ],
+    urgent: '需要評估：① 4–6歲每年長高 <4cm ② 5歲以前就出現青春期特徵（性早熟） ③ 身高落在同齡同性別第3百分位以下',
+    reference: '— 黃瑽寧醫師課程：身高發展篇',
   },
 ]
 
@@ -418,6 +464,19 @@ const MOCK_AI_RESULTS: AIResult = {
   cheer: '你記錄了這麼多珍貴的成長瞬間，每一筆紀錄都會成為寶貝長大後最寶貴的回憶。你真的很用心，繼續加油！💙',
 }
 
+const PHOTO_AI_RESULT = {
+  stage: '寶貝目前階段評估',
+  stageDesc: '從照片觀察，寶貝的發展狀態看起來活潑有朝氣！臉部比例、體型比例都很正常，繼續這樣健康成長就對了。',
+  trend: '累積記錄趨勢分析',
+  trendDesc: '你已經累積了多張成長照片，從時間序列來看，寶貝的成長軌跡很穩定。持續記錄下去，3個月後就能看到明顯的成長對比！',
+  suggestions: [
+    '每個月在固定地點、固定角度拍一張站立照，方便對比身高變化',
+    '拍照時讓寶貝自然放鬆，能更真實反映當下的發展狀態',
+    '可以在旁邊放一個固定物（如積木）作為比例參考',
+  ],
+  cheer: '每一張照片都是時間的禮物。現在看起來平凡的日常，幾年後都會變成珍貴的回憶。你做得很棒，繼續記錄下去 💙',
+}
+
 export default function GrowthClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeTab, setKnowledgeTab] = useState<KnowledgeTab>('growth')
@@ -434,6 +493,15 @@ export default function GrowthClient() {
   const [showMealForm, setShowMealForm] = useState(false)
   const [showAI, setShowAI] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+  const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      const saved = localStorage.getItem('growth_photos')
+      return saved ? JSON.parse(saved) : []
+    } catch { return [] }
+  })
+  const [showPhotoAI, setShowPhotoAI] = useState(false)
+  const [photoNote, setPhotoNote] = useState('')
 
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)
@@ -455,6 +523,47 @@ export default function GrowthClient() {
     setMealRecords(r => [...r, { id: Date.now().toString(), ...mealForm }])
     setShowMealForm(false)
     setMealForm({ date: new Date().toISOString().split('T')[0], meal: '早餐', desc: '' })
+  }
+
+  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    Array.from(files).forEach((file, idx) => {
+      const photoDate = new Date(file.lastModified)
+      const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        const img = new Image()
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const maxSize = 800
+          let w = img.width, h = img.height
+          if (w > maxSize || h > maxSize) {
+            if (w > h) { h = h * maxSize / w; w = maxSize }
+            else { w = w * maxSize / h; h = maxSize }
+          }
+          canvas.width = w; canvas.height = h
+          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
+          const compressed = canvas.toDataURL('image/jpeg', 0.7)
+          const newPhoto: PhotoRecord = {
+            id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`,
+            date: dateStr,
+            sortDate: photoDate.getTime(),
+            imageData: compressed,
+            note: '',
+            page: 'growth',
+          }
+          setPhotos(prev => {
+            const updated = [...prev, newPhoto].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
+            localStorage.setItem('growth_photos', JSON.stringify(updated))
+            return updated
+          })
+        }
+        img.src = ev.target?.result as string
+      }
+      reader.readAsDataURL(file)
+    })
+    e.target.value = ''
   }
 
   return (
@@ -868,21 +977,124 @@ export default function GrowthClient() {
             </div>
           </section>
 
-          {/* 上傳區域 */}
+          {/* 成長相簿 */}
           <section>
-            <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>上傳紀錄媒體</h2>
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border transition-opacity active:opacity-70" style={{ background: 'white', borderColor: '#C5D8E8' }}>
-                <Camera size={24} style={{ color: '#7B9EBD' }} />
-                <span className="text-xs font-semibold" style={{ color: '#5E85A3' }}>上傳照片</span>
-                <span className="text-[10px]" style={{ color: '#8E9EAD' }}>支援 JPG / PNG</span>
-              </button>
-              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border transition-opacity active:opacity-70" style={{ background: 'white', borderColor: '#C5D8E8' }}>
-                <FileVideo size={24} style={{ color: '#7B9EBD' }} />
-                <span className="text-xs font-semibold" style={{ color: '#5E85A3' }}>上傳影片</span>
-                <span className="text-[10px]" style={{ color: '#8E9EAD' }}>支援 MP4 / MOV</span>
-              </button>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>成長相簿 📸</h2>
+              <span className="text-xs px-2 py-1 rounded-xl font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{photos.length} 張</span>
             </div>
+
+            {/* 累積鼓勵訊息 */}
+            {photos.length > 0 && (
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #EBF8EB, #D8F5D8)', border: '1px solid #A8D8A8' }}>
+                <span style={{ fontSize: 16 }}>✨</span>
+                <p className="text-xs font-semibold" style={{ color: '#3A7A3A' }}>
+                  已累積 {photos.length} 張成長紀錄
+                  {photos.length >= 10 ? '，AI 分析越來越準確了！🎯' : photos.length >= 5 ? '，繼續加油，累積越多分析越精準！' : '，再多幾張，成長軌跡就會清晰起來！'}
+                </p>
+              </div>
+            )}
+
+            {/* 上傳按鈕區 */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              {/* 拍照（單張，使用相機） */}
+              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#7B9EBD', background: 'linear-gradient(135deg, #F0F7FF, #EBF4FF)' }}>
+                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                  <Camera size={18} className="text-white" />
+                </div>
+                <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>立即拍照</span>
+              </label>
+              {/* 批次導入（多選） */}
+              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#B07548', background: 'linear-gradient(135deg, #FFF8F0, #FDF0E8)' }}>
+                <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #D4885A, #B07548)' }}>
+                  <span style={{ fontSize: 18 }}>📸</span>
+                </div>
+                <span className="text-xs font-bold" style={{ color: '#B07548' }}>批次導入</span>
+              </label>
+            </div>
+            <p className="text-[10px] text-center mb-3" style={{ color: '#8E9EAD' }}>批次導入會自動讀取照片日期，按時間排序</p>
+
+            {/* 時間軸相簿 */}
+            {photos.length > 0 && (() => {
+              // 按月份分組
+              const groups: Record<string, PhotoRecord[]> = {}
+              photos.forEach(p => {
+                const d = new Date(p.sortDate ?? Date.now())
+                const key = `${d.getFullYear()}年${String(d.getMonth() + 1).padStart(2, '0')}月`
+                if (!groups[key]) groups[key] = []
+                groups[key].push(p)
+              })
+              const sortedGroups = Object.entries(groups).sort(([a], [b]) => b.localeCompare(a))
+              return (
+                <div className="space-y-4 mb-3">
+                  {sortedGroups.map(([month, monthPhotos]) => (
+                    <div key={month}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 rounded-full" style={{ background: '#7B9EBD' }} />
+                        <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>{month}</span>
+                        <span className="text-[10px]" style={{ color: '#8E9EAD' }}>{monthPhotos.length} 張</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {monthPhotos.map(photo => (
+                          <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                            <img src={photo.imageData} alt="成長照片" className="w-full h-full object-cover" />
+                            <div className="absolute bottom-0 left-0 right-0 px-1 py-0.5" style={{ background: 'rgba(0,0,0,0.45)' }}>
+                              <p className="text-white text-[9px] text-center">{photo.date}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            })()}
+
+            {/* AI 分析照片按鈕 */}
+            {photos.length > 0 && (
+              <button
+                onClick={() => setShowPhotoAI(true)}
+                className="w-full py-3 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
+                style={{ background: 'linear-gradient(135deg, #A8C5DA, #5E85A3)' }}
+              >
+                <Sparkles size={16} />AI 分析成長照片（{photos.length} 張）
+              </button>
+            )}
+
+            {/* AI 分析結果 */}
+            {showPhotoAI && (
+              <div className="mt-1 space-y-3">
+                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span style={{ fontSize: 18 }}>🔍</span>
+                    <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>{PHOTO_AI_RESULT.stage}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{PHOTO_AI_RESULT.stageDesc}</p>
+                </div>
+                <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span style={{ fontSize: 18 }}>📈</span>
+                    <p className="font-bold text-sm" style={{ color: '#2D3436' }}>{PHOTO_AI_RESULT.trend}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#6B7B8D' }}>{PHOTO_AI_RESULT.trendDesc}</p>
+                </div>
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>📷 拍照建議</p>
+                  {PHOTO_AI_RESULT.suggestions.map((s, i) => (
+                    <div key={i} className="flex items-start gap-2 mb-1.5">
+                      <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                      <p className="text-xs leading-relaxed" style={{ color: '#2D3436' }}>{s}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                  <p className="text-sm leading-relaxed text-white">{PHOTO_AI_RESULT.cheer}</p>
+                </div>
+                <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析，非醫療診斷</p>
+              </div>
+            )}
           </section>
 
           {/* 身高體重記錄 */}
