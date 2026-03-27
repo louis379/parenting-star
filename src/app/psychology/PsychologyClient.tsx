@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import {
   Brain, BookOpen, ClipboardList, Heart, Users, Focus, Target,
-  Camera, FileVideo, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
+  Camera, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
   Info, TrendingUp, Plus, X, Clock, ChevronDown,
 } from 'lucide-react'
 
@@ -201,6 +201,19 @@ const AI_ANALYSIS: Record<string, {
   },
 }
 
+const PSYCH_PHOTO_AI_RESULT = {
+  stage: '情緒狀態觀察',
+  stageDesc: '從照片的表情和肢體語言來看，寶貝看起來狀態很好！眼神充滿好奇，是探索欲旺盛的好徵兆。',
+  trend: '情緒發展趨勢',
+  trendDesc: '持續記錄日常互動照片，可以幫助你看出孩子的情緒模式——哪些時候最開心？哪些情境容易情緒波動？這些觀察是了解孩子內心世界最直接的窗口。',
+  suggestions: [
+    '記錄孩子開心玩耍的照片，觀察他/她最沉浸的活動類型，這反映了天生的興趣傾向',
+    '也可以記錄情緒爆發後平靜下來的照片，對比兩種狀態，幫助了解調節時間',
+    '拍攝親子互動時的照片（自拍），觀察你們的眼神交流和肢體語言',
+  ],
+  cheer: '你願意這麼認真觀察和記錄孩子的情緒，這份用心本身就是最好的育兒方式。被充分理解的孩子，才能長出健康的情緒力 💙',
+}
+
 // ===== 黃瑽寧醫師課程架構：情緒力延伸指南 =====
 
 const EMOTION_EXTRA_TOPICS = [
@@ -215,6 +228,18 @@ const EMOTION_EXTRA_TOPICS = [
     title: '爸媽情緒控制',
     emoji: '🧘',
     content: `孩子的情緒調節能力，很大程度來自觀察爸媽如何處理情緒。我們不需要完美，但可以「示範修復」。\n\n為什麼爸媽容易在孩子哭鬧時崩潰？\n• 孩子的哭聲在演化上設計來讓成人焦慮，這是本能反應\n• 當你自己疲憊/飢餓/壓力大，前額葉（理性）更難壓制杏仁核（情緒）\n• 這不是你的錯，是神經系統的特性\n\n當你感覺要爆炸的時候：\n• 先把孩子放在安全的地方\n• 離開現場30秒到1分鐘（不是逃跑，是調節）\n• 深呼吸：吸4秒、憋4秒、呼6秒（啟動副交感神經）\n• 說「媽媽現在需要冷靜一下，我馬上回來」\n\n當你確實發火之後：\n• 事後（情緒平靜後）和孩子修復：「剛才媽媽對你大叫，我做得不好，對不起。你沒有做錯。」\n• 修復本身就是在示範：人可以犯錯，也可以道歉和改善\n• 不要在親子關係的自責中打轉，向前走更重要\n\n💙 黃瑽寧醫師說：「爸媽不需要完美，需要的是在孩子面前示範真實的人。」`,
+  },
+  {
+    id: 'babyCrySignals',
+    title: '解讀寶寶的6種哭鬧信號',
+    emoji: '👶',
+    content: `黃瑽寧醫師：讀懂寶寶在說什麼\n\n寶寶在學會說話前，用整個身體在溝通。這6種信號是最常見的：\n\n1. 寶寶肚子搖擺、頭轉動 → 肚子餓了，想喝奶\n2. 寶寶吐舌頭、腳往上踢 → 肚子脹氣或不舒服，需要排氣\n3. 寶寶一扭一扭、蹭來蹭去 → 想睡了、想動一動、或是洗澡會讓他舒服\n4. 寶寶嗝嗝聲然後大哭 → 需要拍嗝、幫助排氣\n5. 寶寶頭轉來轉去找東西 → 覓乳反射（Rooting Reflex），寶寶在找奶，是餓的信號\n6. 寶寶嘴巴做出吸吮動作 → 吸吮反射（Sucking Reflex），這是本能，代表想要安撫\n\n寶寶哭的排除清單（依序確認）：\n① 清潔 → 尿布濕了嗎？\n② 飢餓 → 距離上次喝奶多久了？\n③ 溫度 → 太冷或太熱？\n④ 環境 → 光線太強？聲音太大？\n⑤ 擁抱 → 需要肌膚接觸和安全感\n⑥ 觀察 → 以上都沒有，可能只是需要陪伴\n\n💙 每個寶寶都有自己獨特的哭聲密碼，你是最了解自己寶貝的專家，相信直覺。`,
+  },
+  {
+    id: 'fiveSMethod',
+    title: '5S 安撫法 + 袋鼠育兒',
+    emoji: '🤱',
+    content: `黃瑽寧醫師推薦：科學有效的安撫方式\n\n🌟 5S 安撫法（模仿子宮環境）\n\n① Swaddle 包巾包裹\n緊實包裹讓寶寶有被「抱住」的安全感，但注意不要太緊影響髖關節發育。\n\n② Side/Stomach Position 側抱或趴抱\n側躺或趴著（在大人懷裡，不是床上！）能有效緩解不適。注意：只有睡覺時才讓寶寶仰臥，防猝死。\n\n③ Swing/Sway 搖擺\n輕柔、規律的搖擺動作，模仿媽媽肚子裡的感覺。不需要劇烈搖晃，輕柔才有效。\n\n④ Shush 噓聲\n在耳邊輕聲「嘘嘘嘘」，模仿子宮內的血流聲。聲音要持續且比哭聲稍大才有效。\n\n⑤ Suck 吸吮\n奶嘴、乾淨手指都能讓寶寶平靜。吸吮是最強力的自我安撫機制。\n\n🦘 袋鼠育兒法（Kangaroo Care）\n\n核心精神：肌膚對肌膚的接觸（Skin-to-Skin）\n\n做法：\n• 照顧者（媽媽、爸爸、祖父母都可以）解開上衣，讓寶寶直接貼在胸口\n• 不需要固定不動，可以到處走動，也可以使用背巾\n• 每次至少1小時，一天多次沒問題\n\n好處：\n• 調節寶寶體溫、心跳、呼吸\n• 促進泌乳、提升母乳成功率\n• 建立安全依附關係\n• 爸爸做同樣有效！\n\n💙 對早產兒尤其重要，但對所有寶寶都有益。`,
   },
 ]
 
@@ -239,6 +264,12 @@ const SOCIAL_EXTRA_TOPICS = [
     emoji: '👫',
     content: `手足衝突是完全正常的，甚至是練習衝突解決能力的最佳場所。完全沒有衝突才需要擔心。\n\n為什麼孩子對「公平」這麼執著？\n• 孩子的「公平感」在2–3歲開始發展\n• 他們理解的公平是「一樣多」，而不是「各得所需」\n• 對不公平的強烈反應是認知發展的正常現象\n\n家長常犯的錯誤：\n• 要求老大「讓弟弟/妹妹」（對老大不公平，且傳達「你因為大就要吃虧」）\n• 比較兩個孩子（「你看妹妹多乖」）\n• 每次都介入解決（剝奪自主解決能力）\n\n更有效的方式：\n• 輪流原則：清楚說明規則「今天哥哥先選，明天弟弟先選」\n• 計時器：「計時器響了就換人」，規則代替家長\n• 衝突後引導：「你們都想要同一個玩具，你們覺得可以怎麼辦？\"\n• 分別給每個孩子獨自相處時間，減少注意力爭奪\n\n💙 手足是孩子一生最長的關係之一。衝突是過程，讓他們練習解決，比替他們解決更有價值。`,
   },
+  {
+    id: 'emotionTimeline',
+    title: '情緒發展時間線',
+    emoji: '📅',
+    content: `黃瑽寧醫師：不同階段的情緒需求\n\n哭鬧背後的原因隨年齡變化：\n\n0–3個月：寶寶哭是為了讓大人來照顧，這是純生存本能，及時回應不會寵壞孩子。\n\n6個月：開始出現分離焦慮，因為依附關係正在形成，這是好事！\n\n1.5歲：想要的事情辦不到會有強烈挫折感（例如東西放不進去、積木倒了）。這是理解能力超前動作能力造成的落差，不是壞脾氣。\n\n2歲：Terrible Two — 知道自己想要什麼，但不知道如何用語言表達，也無法接受「不行」。理想和現實的差距讓他們爆發。\n\n3歲：語言能力提升後，情緒爆發開始減少，但仍需要大人幫助命名和整理情緒。\n\n處理情緒的六步法：\n① 花時間：先把孩子的情緒「接住」，讓他感覺被看見\n② 同理：「我知道你很難過／生氣／害怕」\n③ 擁抱：肢體接觸是最快的安撫\n④ 等待：讓情緒自然平息，不催促「快停哭」\n⑤ 倒數或給時間：「再哭一會兒，哭完我們來想辦法」\n⑥ 提供解決方式：「你覺得我們可以怎麼辦？」\n\n建立良好依附關係4要素：\n① 保持可預測性：固定作息讓孩子有安全感\n② 0–1歲是關鍵期：及時回應建立信任基礎\n③ 每次分離都好好說再見\n④ 擁抱要多，語言要溫柔\n\n💙 完美的依附關係不存在，「夠好的爸媽」（Good Enough Parent）就已經足夠了。`,
+  },
 ]
 
 interface PsychRecord {
@@ -247,6 +278,15 @@ interface PsychRecord {
   situation: SituationType
   desc: string
   analyzed: boolean
+}
+
+interface PhotoRecord {
+  id: string
+  date: string
+  sortDate: number
+  imageData: string
+  note: string
+  page: string
 }
 
 export default function PsychologyClient() {
@@ -266,6 +306,14 @@ export default function PsychologyClient() {
   }
   const [showAI, setShowAI] = useState(false)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], situation: 'crying' as SituationType, desc: '' })
+  const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      const saved = localStorage.getItem('psych_photos')
+      return saved ? JSON.parse(saved) : []
+    } catch { return [] }
+  })
+  const [showPhotoAI, setShowPhotoAI] = useState(false)
 
   const emotionData = EMOTION_DATA[selectedAge]
 
@@ -274,6 +322,47 @@ export default function PsychologyClient() {
     setRecords(r => [...r, { id: Date.now().toString(), ...recordForm, analyzed: false }])
     setShowRecordForm(false)
     setRecordForm({ date: new Date().toISOString().split('T')[0], situation: 'crying', desc: '' })
+  }
+
+  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    Array.from(files).forEach((file, idx) => {
+      const photoDate = new Date(file.lastModified)
+      const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        const img = new Image()
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const maxSize = 800
+          let w = img.width, h = img.height
+          if (w > maxSize || h > maxSize) {
+            if (w > h) { h = h * maxSize / w; w = maxSize }
+            else { w = w * maxSize / h; h = maxSize }
+          }
+          canvas.width = w; canvas.height = h
+          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
+          const compressed = canvas.toDataURL('image/jpeg', 0.7)
+          const newPhoto: PhotoRecord = {
+            id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`,
+            date: dateStr,
+            sortDate: photoDate.getTime(),
+            imageData: compressed,
+            note: '',
+            page: 'psychology',
+          }
+          setPhotos(prev => {
+            const updated = [...prev, newPhoto].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
+            localStorage.setItem('psych_photos', JSON.stringify(updated))
+            return updated
+          })
+        }
+        img.src = ev.target?.result as string
+      }
+      reader.readAsDataURL(file)
+    })
+    e.target.value = ''
   }
 
   return (
@@ -607,19 +696,119 @@ export default function PsychologyClient() {
             </div>
           </section>
 
-          {/* 上傳媒體 */}
+          {/* 情緒相簿 */}
           <section>
-            <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>上傳情境記錄</h2>
-            <div className="grid grid-cols-2 gap-3">
-              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border active:opacity-70" style={{ background: 'white', borderColor: '#C5D8E8' }}>
-                <Camera size={24} style={{ color: '#7B9EBD' }} />
-                <span className="text-xs font-semibold" style={{ color: '#5E85A3' }}>上傳照片</span>
-              </button>
-              <button className="flex flex-col items-center gap-2 p-4 rounded-2xl border active:opacity-70" style={{ background: 'white', borderColor: '#C5D8E8' }}>
-                <FileVideo size={24} style={{ color: '#7B9EBD' }} />
-                <span className="text-xs font-semibold" style={{ color: '#5E85A3' }}>上傳影片</span>
-              </button>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>情緒記錄相簿 📸</h2>
+              <span className="text-xs px-2 py-1 rounded-xl font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{photos.length} 張</span>
             </div>
+
+            {/* 累積鼓勵訊息 */}
+            {photos.length > 0 && (
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #EBF8EB, #D8F5D8)', border: '1px solid #A8D8A8' }}>
+                <span style={{ fontSize: 16 }}>✨</span>
+                <p className="text-xs font-semibold" style={{ color: '#3A7A3A' }}>
+                  已累積 {photos.length} 張情緒記錄
+                  {photos.length >= 10 ? '，AI 分析越來越準確了！🎯' : photos.length >= 5 ? '，繼續加油，累積越多分析越精準！' : '，再多幾張，情緒模式就會浮現出來！'}
+                </p>
+              </div>
+            )}
+
+            {/* 上傳按鈕區 */}
+            <div className="grid grid-cols-2 gap-2 mb-3">
+              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#7B9EBD', background: 'linear-gradient(135deg, #F0F7FF, #EBF4FF)' }}>
+                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                  <Camera size={18} className="text-white" />
+                </div>
+                <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>立即拍照</span>
+              </label>
+              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#B07548', background: 'linear-gradient(135deg, #FFF8F0, #FDF0E8)' }}>
+                <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} />
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #D4885A, #B07548)' }}>
+                  <span style={{ fontSize: 18 }}>📸</span>
+                </div>
+                <span className="text-xs font-bold" style={{ color: '#B07548' }}>批次導入</span>
+              </label>
+            </div>
+            <p className="text-[10px] text-center mb-3" style={{ color: '#8E9EAD' }}>批次導入會自動讀取照片日期，按時間排序</p>
+
+            {/* 時間軸相簿 */}
+            {photos.length > 0 && (() => {
+              const groups: Record<string, PhotoRecord[]> = {}
+              photos.forEach(p => {
+                const d = new Date(p.sortDate ?? Date.now())
+                const key = `${d.getFullYear()}年${String(d.getMonth() + 1).padStart(2, '0')}月`
+                if (!groups[key]) groups[key] = []
+                groups[key].push(p)
+              })
+              const sortedGroups = Object.entries(groups).sort(([a], [b]) => b.localeCompare(a))
+              return (
+                <div className="space-y-4 mb-3">
+                  {sortedGroups.map(([month, monthPhotos]) => (
+                    <div key={month}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 rounded-full" style={{ background: '#7B9EBD' }} />
+                        <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>{month}</span>
+                        <span className="text-[10px]" style={{ color: '#8E9EAD' }}>{monthPhotos.length} 張</span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {monthPhotos.map(photo => (
+                          <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                            <img src={photo.imageData} alt="情緒記錄" className="w-full h-full object-cover" />
+                            <div className="absolute bottom-0 left-0 right-0 px-1 py-0.5" style={{ background: 'rgba(0,0,0,0.45)' }}>
+                              <p className="text-white text-[9px] text-center">{photo.date}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )
+            })()}
+
+            {photos.length > 0 && (
+              <button
+                onClick={() => setShowPhotoAI(true)}
+                className="w-full py-3 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
+                style={{ background: 'linear-gradient(135deg, #A8C5DA, #5E85A3)' }}
+              >
+                <Sparkles size={16} />AI 分析情緒狀態（{photos.length} 張）
+              </button>
+            )}
+
+            {showPhotoAI && (
+              <div className="mt-1 space-y-3">
+                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span style={{ fontSize: 18 }}>🔍</span>
+                    <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>{PSYCH_PHOTO_AI_RESULT.stage}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{PSYCH_PHOTO_AI_RESULT.stageDesc}</p>
+                </div>
+                <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span style={{ fontSize: 18 }}>📈</span>
+                    <p className="font-bold text-sm" style={{ color: '#2D3436' }}>{PSYCH_PHOTO_AI_RESULT.trend}</p>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#6B7B8D' }}>{PSYCH_PHOTO_AI_RESULT.trendDesc}</p>
+                </div>
+                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
+                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>📷 記錄建議</p>
+                  {PSYCH_PHOTO_AI_RESULT.suggestions.map((s, i) => (
+                    <div key={i} className="flex items-start gap-2 mb-1.5">
+                      <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
+                      <p className="text-xs leading-relaxed" style={{ color: '#2D3436' }}>{s}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                  <p className="text-sm leading-relaxed text-white">{PSYCH_PHOTO_AI_RESULT.cheer}</p>
+                </div>
+                <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析，非醫療診斷</p>
+              </div>
+            )}
           </section>
 
           {/* 情境記錄 */}
