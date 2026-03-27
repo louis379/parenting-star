@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   BookOpen, ClipboardList, MessageSquare, Lightbulb, GraduationCap,
   Camera, FileText, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Star, ChevronDown,
+  Info, TrendingUp, Plus, X, Star, ChevronDown, Shield,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
@@ -358,6 +358,8 @@ export default function EducationClient() {
   }
   const [showBookAI, setShowBookAI] = useState(false)
   const [showExamAI, setShowExamAI] = useState(false)
+  const [openEduTopic, setOpenEduTopic] = useState<string | null>(null)
+  const [openEduItem, setOpenEduItem] = useState<string | null>(null)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], type: 'milestone' as 'book' | 'exam' | 'milestone', desc: '' })
 
   const langData = LANGUAGE_DATA[selectedAge]
@@ -710,6 +712,61 @@ export default function EducationClient() {
               </div>
             </div>
           )}
+
+          {/* 黃瑽寧醫師課程：教育發展 */}
+          <div className="px-5 py-5 space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield size={16} style={{ color: '#7B9EBD' }} />
+              <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+              <span className="evidence-badge">教育發展</span>
+            </div>
+            <div className="space-y-3">
+              {EDU_HUANG_TOPICS.map((topic) => (
+                <div key={topic.id} className="rounded-2xl overflow-hidden border" style={{ borderColor: topic.borderColor }}>
+                  <button
+                    onClick={() => setOpenEduTopic(openEduTopic === topic.id ? null : topic.id)}
+                    className="w-full flex items-center justify-between p-4"
+                    style={{ background: topic.bgColor }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span style={{ fontSize: 20 }}>{topic.emoji}</span>
+                      <div className="text-left">
+                        <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
+                        <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
+                      </div>
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      style={{ color: topic.headerColor, transform: openEduTopic === topic.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                    />
+                  </button>
+                  {openEduTopic === topic.id && (
+                    <div className="border-t" style={{ borderColor: topic.borderColor, background: 'white' }}>
+                      {topic.sections.map((section, si) => (
+                        <div key={si} className="border-b last:border-b-0" style={{ borderColor: '#F0EDE8' }}>
+                          <button
+                            onClick={() => setOpenEduItem(openEduItem === `${topic.id}-${si}` ? null : `${topic.id}-${si}`)}
+                            className="w-full flex items-center justify-between px-4 py-3"
+                          >
+                            <span className="text-sm font-semibold text-left" style={{ color: '#2D3436' }}>{section.title}</span>
+                            <ChevronDown
+                              size={14}
+                              style={{ color: '#8E9EAD', flexShrink: 0, marginLeft: 8, transform: openEduItem === `${topic.id}-${si}` ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s ease' }}
+                            />
+                          </button>
+                          {openEduItem === `${topic.id}-${si}` && (
+                            <div className="px-4 pb-4">
+                              <p className="text-sm leading-relaxed whitespace-pre-line" style={{ color: '#4A5568' }}>{section.content}</p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
