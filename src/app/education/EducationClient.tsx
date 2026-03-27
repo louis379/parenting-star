@@ -4,7 +4,7 @@ import { useState } from 'react'
 import {
   BookOpen, ClipboardList, MessageSquare, Lightbulb, GraduationCap,
   Camera, FileText, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Star,
+  Info, TrendingUp, Plus, X, Star, ChevronDown,
 } from 'lucide-react'
 
 type MainTab = 'knowledge' | 'records'
@@ -165,6 +165,77 @@ const subjectGuide = [
   },
 ]
 
+// ===== 黃瑽寧醫師課程架構：教育深度指南 =====
+
+const INTELLIGENCE_TOPICS = [
+  {
+    id: 'keyFactors',
+    title: '智力發展關鍵因素',
+    emoji: '🧠',
+    content: `影響孩子智力發展的關鍵因素（按影響力排序）：\n\n1. 安全依附關係（最重要）：感覺被愛、被理解的孩子，大腦才有安全感去探索和學習。壓力荷爾蒙皮質醇過高會抑制大腦發育。\n\n2. 豐富的語言輸入：出生到3歲是大腦語言神經網路快速建立期。和孩子說話的「品質」（互動性、回應性）比數量更重要。\n\n3. 親子共讀：每天15–30分鐘，是已知對語言、認知、情緒最綜合有效的活動（Cochrane A級）。\n\n4. 自由遊戲時間：非結構性的自由玩耍促進執行功能、創造力、解決問題能力。\n\n5. 睡眠充足：記憶鞏固發生在深睡眠。學齡前兒童每少睡1小時，注意力和記憶力顯著下降。\n\n不影響智力的因素：閃卡、早期識字、提前學習算術（缺乏長期效益的科學證據）。`,
+  },
+  {
+    id: 'talkMore',
+    title: '多說話：語言輸入的藝術',
+    emoji: '💬',
+    content: `美國學者 Hart & Risley 的研究（3000萬詞彙研究）發現：\n• 高收入家庭的孩子到3歲，比低收入家庭多接觸了3000萬個詞彙\n• 這個差距直接預測4–6歲的語言能力和學業準備度\n\n7:1 說話原則：每一個「指令/糾正」，應該配上至少7個「肯定/描述/對話」。\n\n如何「說話」最有效？\n• 描述孩子正在做的事：「你在把積木疊高高！」\n• 擴充孩子說的話：孩子說「狗狗」，你說「是啊，那是一隻棕色的大狗狗！」\n• 提問引發思考（而非測試）：「你覺得接下來會怎樣？」\n• 說自己的思考過程：「媽媽在想今天午餐要做什麼，我要看看冰箱有什麼...」\n\n💙 和孩子說話的黃金時間：洗澡、吃飯、搭車、睡前，這些日常中的對話是最寶貴的語言課。`,
+  },
+  {
+    id: 'sharedReading',
+    title: '親子共讀的科學',
+    emoji: '📚',
+    content: `親子共讀是已知對孩子發展最有影響的單一活動，Cochrane 系統性回顧證實對語言、認知、親子關係、情緒調節都有顯著正效益。\n\n什麼樣的共讀最有效？\n• 互動式共讀（Dialogic Reading）比「讀出來」更好\n• 問問題：「你覺得小熊為什麼難過？」\n• 讓孩子預測：「你覺得接下來會發生什麼？」\n• 連結生活：「你也有過這樣的感覺嗎？」\n• 讓孩子自己翻頁、指圖、說出來\n\n選書原則：\n• 0–2歲：厚紙板書、洞洞書、押韻書\n• 2–4歲：簡單情節、重複句型、豐富圖畫\n• 4–6歲：角色有情緒、有問題需要解決的故事\n• 6歲+：孩子自選，什麼類型都好\n\n💙 不需要讀「有教育意義」的書。孩子喜歡、你們一起笑、一起討論，就是最好的共讀。`,
+  },
+  {
+    id: 'playTogether',
+    title: '一起玩：遊戲的學習力',
+    emoji: '🎮',
+    content: `遊戲是孩子的工作。自由遊戲（非結構性）促進：\n• 執行功能（計劃、靈活切換、抑制衝動）\n• 創造力和問題解決\n• 社交技能（協商、輪流、同理）\n• 情緒調節\n\n「以孩子主導」的遊戲最有效：\n• 讓孩子決定玩什麼、怎麼玩\n• 你的角色是「在場的夥伴」，而非「老師/導演」\n• 跟著孩子的劇情走，不要糾正「玩法不對」\n• 大量描述和讚美（「哇，你把橋蓋到這麼高！」）\n\n不同年齡的遊戲重點：\n• 0–2歲：感官探索（沙/水/麵粉）、藏貓貓、因果玩具\n• 2–4歲：角色扮演、積木建構、繪畫塗鴉\n• 4–7歲：合作遊戲、桌遊、戶外探索\n• 7歲+：棋盤遊戲、收集興趣、競技體育\n\n💙 每天15–30分鐘不看手機、完全專注和孩子玩，是最廉價最有效的「育兒投資」。`,
+  },
+]
+
+const LANGUAGE_EXTRA_TOPICS = [
+  {
+    id: 'delayJudge',
+    title: '語言遲緩如何判斷',
+    emoji: '🔔',
+    content: `語言遲緩的「三不原則」（不急著確診、不盲目等待、不只看詞彙量）：\n\n需要評估的信號：\n• 12月：呼名不回應（可能聽力問題）\n• 18月：主動詞彙少於10個、不會指物\n• 24月：主動詞彙少於50個、不說兩個詞的短句\n• 3歲：陌生人聽不懂50%以上的話\n• 任何年齡：語言發展停滯不前或退步\n\n如何區分「正常晚說話」和「需要評估」？\n• 晚說話但理解力正常（聽懂指令）→ 觀察為主\n• 晚說話且理解力也落後 → 需要評估\n• 有其他發展疑慮（眼神接觸、社交） → 需要評估\n\n評估管道：\n• 兒科醫師門診\n• 語言治療師（SLP）直接評估\n• 台灣各縣市早療聯合評估中心（免費）\n\n💙 早期介入在3歲前效果最好，評估不是「確診問題」，而是「了解孩子」。不要等，有疑慮就諮詢。`,
+  },
+  {
+    id: 'bilingualPrinciples',
+    title: '雙語三大原則',
+    emoji: '🌍',
+    content: `原則一：一人一語（OPOL, One Parent One Language）\n最有效的雙語環境策略。爸爸固定說一種語言，媽媽固定說另一種。孩子的大腦非常擅長分離不同語言的規則，這不會造成混亂。\n\n原則二：看總詞彙量，不只看單一語言\n雙語兒童的任一單一語言詞彙可能少於單語同齡兒童，但兩種語言加起來的概念詞彙總量通常相當甚至更多。評估語言發展時需要用「概念詞彙」衡量（兩語言加總）。\n\n原則三：確保「功能性使用」維持雙語\n語言需要使用才不會消退。讓每種語言都有不可替代的使用場合：\n• 家裡說媽媽語言，學校說教學語言\n• 一種語言的朋友圈、一種語言的書\n• 旅行/視訊讓孩子接觸第二語言的真實場合\n\n雙語的認知優勢：注意力控制、多工處理、轉換思維方式，這些益處在雙語程度越高的孩子身上越明顯。\n\n💙 最常見的錯誤：擔心混亂而放棄一種語言。請放心，大腦能夠處理多種語言。`,
+  },
+]
+
+const FOCUS_TOPICS = [
+  {
+    id: 'correctExpectation',
+    title: '正確的學習期待',
+    emoji: '🎯',
+    content: `「三歲前不需要學認字」「幼兒園重點不是學科知識」這些說法的科學依據是什麼？\n\n大腦的學習方式（Vygotsky 最近發展區）：\n孩子最能有效學習的範圍，是「剛好有一點挑戰」的事——比目前能力稍微高一點點。太容易無聊，太難挫折放棄。\n\n不同年齡的正確學習目標：\n• 0–3歲：建立安全感、感官探索、基礎語言輸入\n• 3–5歲：自由遊戲、社交學習、語言豐富化、好奇心保護\n• 5–7歲：閱讀準備度、數概念直觀（非算術）、學習習慣建立\n• 7歲+：學科知識、學習策略、自主閱讀\n\n提前學習的研究結果：\n• 幼兒園學認字、算術的孩子，在小學一年級有短暫優勢\n• 到小學三年級，差異消失（追趕效應）\n• 但早期過度學業壓力，對學習動機有持久負面影響\n\n💙 種樹的最佳時機是今天，但你澆的水要是對的水。好奇心和學習熱情，比超前學習更值得保護。`,
+  },
+  {
+    id: 'brainHowWork',
+    title: '大腦怎麼學習最有效',
+    emoji: '⚡',
+    content: `學習科學的幾個反直覺發現：\n\n1. 睡眠比熬夜多學更有效\n記憶鞏固發生在深睡眠。學了之後睡一覺，記憶比繼續學習更穩固。不要因為功課多讓孩子少睡。\n\n2. 間隔複習比集中學習好\n「今天學10次」不如「連續5天每天學2次」。間隔效應是記憶科學最確定的發現之一。\n\n3. 主動提取比再讀一遍好\n讓孩子合上書回答問題（即使答不出），比再讀一遍更能強化記憶。不要只劃重點，要自我測試。\n\n4. 犯錯是學習必要條件\n當孩子犯錯然後得到正確答案，學習效果最強。不要保護孩子不犯錯——犯錯後的驚訝感讓記憶更深刻。\n\n5. 情緒參與促進記憶\n有情緒連結的學習（好奇/驚訝/有趣）比無情緒的學習記憶更持久，這就是為什麼「玩中學」有效。`,
+  },
+  {
+    id: 'screenTime',
+    title: '3C 管控原則',
+    emoji: '📱',
+    content: `美國兒科學會（AAP）和台灣兒科醫學會的建議：\n• 18月以下：除視訊通話外，避免螢幕\n• 18–24月：只有高品質內容，且需家長陪同觀看\n• 2–5歲：每天不超過1小時，陪同觀看\n• 6歲+：建立一致的限制，確保不影響睡眠、運動、學習\n\n3C 對孩子的實際影響：\n• 快速切換的螢幕內容降低真實世界的注意力（不是讓孩子專注力差，是讓他們習慣高刺激）\n• 就寢前螢幕藍光抑制褪黑激素，影響睡眠品質\n• 社群媒體與8歲以上孩子的焦慮/憂鬱相關（對女孩尤其顯著）\n\n如何管理 3C？\n• 規則孩子參與制定，比大人單方規定更容易遵守\n• 充電器放客廳，手機不進臥室\n• 就寢前1小時無螢幕（全家一起執行）\n• 用「時間代幣」而非「禁止」（限量但不匱乏）\n• 陪孩子選擇高品質內容，而非直接說「不行」\n\n💙 重點不是完全禁3C，而是讓孩子建立「我可以決定何時用、何時放下」的自主控制感。`,
+  },
+  {
+    id: 'learningFun',
+    title: '讓學習變有趣',
+    emoji: '✨',
+    content: `內在動機 vs 外在動機：\n給予外在獎勵（貼紙/零食/金錢）換取學習，短期有效，但長期降低內在學習動機（這是有研究支持的）。\n\n什麼促進內在動機？\n• 自主感（可以選擇）：「你要先做數學還是國語？」\n• 能力感（感覺進步）：「你今天比昨天多做對3題！」\n• 連結感（有人陪伴）：陪孩子學習，而非監督孩子學習\n\n具體讓學習變有趣的方法：\n• 遊戲化：字卡遊戲、數學競賽（和上次的自己比）\n• 故事化：把計算題的數字變成角色（6顆糖果和3顆糖果戰鬥）\n• 真實應用：買東西找零錢、烹飪量杯\n• 選擇感：今天學什麼順序、用什麼方式學\n• 慶祝小進步：「你今天比昨天早5分鐘寫完功課！」\n\n自信心和學習的關係：\n相信「我能進步」（成長型思維）比「我聰明」更重要。稱讚努力和策略，不只稱讚結果。\n\n💙 孩子對學習的態度，大部分來自觀察你對待學習的態度。`,
+  },
+]
+
 interface LearningRecord {
   id: string
   date: string
@@ -220,6 +291,11 @@ export default function EducationClient() {
     { id: '2', date: '2026-03-20', type: 'milestone', desc: '能數到30，開始認識簡單國字', analyzed: false },
   ])
   const [showForm, setShowForm] = useState(false)
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null)
+
+  function toggleAccordion(id: string) {
+    setOpenAccordion(prev => prev === id ? null : id)
+  }
   const [showBookAI, setShowBookAI] = useState(false)
   const [showExamAI, setShowExamAI] = useState(false)
   const [recordForm, setRecordForm] = useState({ date: new Date().toISOString().split('T')[0], type: 'milestone' as 'book' | 'exam' | 'milestone', desc: '' })
@@ -339,6 +415,41 @@ export default function EducationClient() {
                   <Info size={14} className="shrink-0 mt-0.5" style={{ color: '#5E85A3' }} />
                   <p className="text-xs" style={{ color: '#5E85A3' }}>語言發展具有大範圍個體差異，以上為一般參考值。若擔心孩子發展，請諮詢語言治療師（SLP）評估，早期介入效果最佳。</p>
                 </div>
+
+                {/* 語言力深度指南（手風琴） */}
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <MessageSquare size={15} style={{ color: '#7B9EBD' }} />
+                    <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>語言力深度指南</h3>
+                    <span className="evidence-badge">黃瑽寧醫師</span>
+                  </div>
+                  <div className="space-y-2">
+                    {LANGUAGE_EXTRA_TOPICS.map(topic => (
+                      <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                        <button
+                          onClick={() => toggleAccordion('lang_' + topic.id)}
+                          className="w-full flex items-center justify-between px-4 py-3"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                            <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                          </div>
+                          <ChevronDown
+                            size={16}
+                            style={{ color: '#7B9EBD', transform: openAccordion === 'lang_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                          />
+                        </button>
+                        {openAccordion === 'lang_' + topic.id && (
+                          <div className="px-4 pb-4">
+                            <div className="p-3 rounded-xl" style={{ background: '#FDF5FF' }}>
+                              <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -388,6 +499,41 @@ export default function EducationClient() {
                   </div>
                 ))}
               </div>
+
+              {/* 智力發展深度指南（手風琴） */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <Lightbulb size={15} style={{ color: '#7B9EBD' }} />
+                  <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>智力發展深度指南</h3>
+                  <span className="evidence-badge">黃瑽寧醫師</span>
+                </div>
+                <div className="space-y-2">
+                  {INTELLIGENCE_TOPICS.map(topic => (
+                    <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                      <button
+                        onClick={() => toggleAccordion('intel_' + topic.id)}
+                        className="w-full flex items-center justify-between px-4 py-3"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                          <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                        </div>
+                        <ChevronDown
+                          size={16}
+                          style={{ color: '#7B9EBD', transform: openAccordion === 'intel_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                        />
+                      </button>
+                      {openAccordion === 'intel_' + topic.id && (
+                        <div className="px-4 pb-4">
+                          <div className="p-3 rounded-xl" style={{ background: '#EBF4EB' }}>
+                            <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -425,6 +571,41 @@ export default function EducationClient() {
                     </p>
                   </div>
                 ))}
+              </div>
+
+              {/* 專注力深度指南（手風琴） */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp size={15} style={{ color: '#7B9EBD' }} />
+                  <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>專注力與學習深度指南</h3>
+                  <span className="evidence-badge">黃瑽寧醫師</span>
+                </div>
+                <div className="space-y-2">
+                  {FOCUS_TOPICS.map(topic => (
+                    <div key={topic.id} className="rounded-2xl border overflow-hidden" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                      <button
+                        onClick={() => toggleAccordion('focus_' + topic.id)}
+                        className="w-full flex items-center justify-between px-4 py-3"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span style={{ fontSize: 18 }}>{topic.emoji}</span>
+                          <span className="text-sm font-semibold" style={{ color: '#2D3436' }}>{topic.title}</span>
+                        </div>
+                        <ChevronDown
+                          size={16}
+                          style={{ color: '#7B9EBD', transform: openAccordion === 'focus_' + topic.id ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                        />
+                      </button>
+                      {openAccordion === 'focus_' + topic.id && (
+                        <div className="px-4 pb-4">
+                          <div className="p-3 rounded-xl" style={{ background: '#FDF0E8' }}>
+                            <p className="text-xs leading-relaxed whitespace-pre-line" style={{ color: '#2D3436' }}>{topic.content}</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
