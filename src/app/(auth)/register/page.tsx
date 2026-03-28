@@ -42,9 +42,14 @@ export default function RegisterPage() {
       },
     })
     if (error) {
-      setServerError(
-        error.message.includes('already registered') ? '此 Email 已被註冊' : error.message
-      )
+      const msg = error.message.toLowerCase()
+      if (msg.includes('already registered')) {
+        setServerError('此 Email 已被註冊，請直接登入')
+      } else if (msg.includes('rate limit')) {
+        setServerError('註冊請求太頻繁，請稍等幾分鐘再試')
+      } else {
+        setServerError(error.message)
+      }
       return
     }
     setSuccess(true)

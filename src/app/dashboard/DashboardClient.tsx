@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
-import { Bell, Settings, ChevronRight, TrendingUp, MapPin, School, AlertCircle, Plus, Utensils, Star, Heart, Clock } from 'lucide-react'
+import { Bell, Settings, ChevronRight, TrendingUp, MapPin, School, AlertCircle, Plus, Utensils, Star, Heart, Clock, BookOpen, Brain, Sprout } from 'lucide-react'
 import { formatAge, getAgeStage, calcAgeMonths } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/Card'
 import { useProfileStore } from '@/stores/profileStore'
@@ -57,6 +57,62 @@ const quickActions = [
   { href: '/parents', icon: Heart, label: '家長心態', color: 'bg-[#FDF0E8] text-[#D4956A]' },
   { href: '/sos', icon: AlertCircle, label: '崩潰急救', color: 'bg-red-50 text-red-400' },
 ]
+
+// 階段推薦好文 — 根據月齡推薦對應文章
+const STAGE_ARTICLES: Record<string, { title: string; desc: string; href: string; icon: typeof BookOpen; tag: string; tagColor: string }[]> = {
+  '0-3': [
+    { title: '新生兒哭泣的 6 種信號解讀', desc: '讀懂寶寶的溝通語言，減少焦慮', href: '/psychology', icon: Brain, tag: '心理', tagColor: 'bg-purple-100 text-purple-600' },
+    { title: '0-3 個月餵食指南', desc: '母乳 vs 配方奶，按需哺餵的節奏', href: '/growth', icon: Sprout, tag: '生長', tagColor: 'bg-green-100 text-green-600' },
+    { title: '建立安全依附：新手爸媽必讀', desc: '7:1 正向互動法則，打造情感基礎', href: '/psychology', icon: Heart, tag: '教養', tagColor: 'bg-rose-100 text-rose-600' },
+  ],
+  '4-6': [
+    { title: '副食品啟程：何時開始？怎麼開始？', desc: '從十倍粥到根莖泥，循序漸進', href: '/growth', icon: Sprout, tag: '營養', tagColor: 'bg-green-100 text-green-600' },
+    { title: '翻身期的感統遊戲', desc: '趴趴練習 + 觸覺刺激，促進大動作', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+    { title: '4-6 個月情緒發展里程碑', desc: '社交微笑、分離焦慮的正確回應', href: '/psychology', icon: Brain, tag: '心理', tagColor: 'bg-purple-100 text-purple-600' },
+  ],
+  '7-12': [
+    { title: '爬行期安全空間設計', desc: '居家防護 + 鼓勵探索的平衡', href: '/growth', icon: Sprout, tag: '生長', tagColor: 'bg-green-100 text-green-600' },
+    { title: '手指食物階段：培養自主進食', desc: 'BLW 入門 vs 傳統餵食的優缺', href: '/meals', icon: Utensils, tag: '營養', tagColor: 'bg-amber-100 text-amber-600' },
+    { title: '語言啟蒙：親子共讀的神奇效果', desc: '每天 15 分鐘，詞彙量翻倍', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+  ],
+  '13-24': [
+    { title: '語言爆發期：如何正確引導', desc: '命名遊戲、自言自語是好事', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+    { title: '學步期情緒風暴對應指南', desc: 'Terrible Two 不可怕的 4 步心法', href: '/psychology', icon: Brain, tag: '心理', tagColor: 'bg-purple-100 text-purple-600' },
+    { title: '1-2 歲大動作發展：從扶走到奔跑', desc: '每個月齡的正常發展與紅旗指標', href: '/growth', icon: Sprout, tag: '生長', tagColor: 'bg-green-100 text-green-600' },
+  ],
+  '25-48': [
+    { title: '正向教養入門：不吼不打的界線設定', desc: '溫和而堅定，從 A-C-T 三步驟開始', href: '/psychology', icon: Brain, tag: '心理', tagColor: 'bg-purple-100 text-purple-600' },
+    { title: '螢幕時間管理：不同年齡的建議', desc: '數位素養從小建立，避免成癮', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+    { title: '社交力培養：從平行遊戲到合作遊戲', desc: '讀懂孩子的社交發展階段', href: '/psychology', icon: Heart, tag: '教養', tagColor: 'bg-rose-100 text-rose-600' },
+  ],
+  '49+': [
+    { title: '入學準備：不只是認字寫字', desc: '自理能力 + 情緒管理更重要', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+    { title: '培養閱讀習慣的 5 個關鍵', desc: '從共讀到獨立閱讀的過渡', href: '/education', icon: BookOpen, tag: '教育', tagColor: 'bg-blue-100 text-blue-600' },
+    { title: '霸凌預防：教孩子表達與求助', desc: '角色扮演 + 同理心訓練', href: '/psychology', icon: Brain, tag: '心理', tagColor: 'bg-purple-100 text-purple-600' },
+  ],
+}
+
+function getStageArticles(months: number) {
+  if (months <= 3) return STAGE_ARTICLES['0-3']
+  if (months <= 6) return STAGE_ARTICLES['4-6']
+  if (months <= 12) return STAGE_ARTICLES['7-12']
+  if (months <= 24) return STAGE_ARTICLES['13-24']
+  if (months <= 48) return STAGE_ARTICLES['25-48']
+  return STAGE_ARTICLES['49+']
+}
+
+// 本週發展重點
+function getWeeklyFocus(months: number): { emoji: string; title: string; tips: string[] } {
+  if (months < 1) return { emoji: '🍼', title: '建立哺餵節奏', tips: ['按需哺餵，不需刻意設時間表', '觀察寶寶飢餓信號：嘴巴動、轉頭找', '每天記錄哺餵次數，幫助掌握規律'] }
+  if (months < 3) return { emoji: '😊', title: '安全感與互動', tips: ['多做肌膚接觸（袋鼠式照護）', '對寶寶微笑說話，建立社交連結', '保持規律的睡眠環境'] }
+  if (months < 6) return { emoji: '🔄', title: '探索與翻身', tips: ['每天趴趴時間 15-20 分鐘', '準備色彩鮮豔的視覺刺激玩具', '開始留意副食品準備時機'] }
+  if (months < 9) return { emoji: '🥣', title: '副食品新體驗', tips: ['嘗試新食材，保持正向用餐氣氛', '每次新食材間隔 3-5 天觀察', '讓寶寶用手抓握食物練習'] }
+  if (months < 12) return { emoji: '🚶', title: '移動與探索', tips: ['提供安全爬行空間', '玩「物體恆存」的遊戲（藏找玩具）', '多說日常事物名稱，增加詞彙輸入'] }
+  if (months < 18) return { emoji: '🗣️', title: '語言萌芽期', tips: ['回應寶寶的每個嘗試發音', '親子共讀，用手指指著圖片命名', '不要糾正發音，用正確發音重述'] }
+  if (months < 24) return { emoji: '🧩', title: '自主與界線', tips: ['給孩子「二選一」的選擇機會', '建立簡單的日常作息規律', '用「我們做...」取代「不可以」'] }
+  if (months < 36) return { emoji: '🎭', title: '假裝遊戲與社交', tips: ['加入孩子的假裝遊戲，豐富情節', '練習輪流等待與分享概念', '情緒來時先接住，再引導'] }
+  return { emoji: '📚', title: '學習與獨立', tips: ['鼓勵好奇心，回答每個「為什麼」', '讓孩子參與家務，培養責任感', '每天固定親子共讀或聊天時間'] }
+}
 
 export default function DashboardClient({ profile, children, recentMeal, latestGrowth, achievedMilestones }: Props) {
   const { setProfile, setChildren, activeChildId, setActiveChildId, activeChild: getActiveChild } = useProfileStore()
@@ -268,6 +324,63 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
             </Link>
           )}
 
+          {/* 本週發展重點 */}
+          {activeChild && (() => {
+            const focus = getWeeklyFocus(ageMonths)
+            return (
+              <Card className="bg-gradient-to-br from-[#EBF4FF] to-[#F0F8FF] border-[#C5D8E8]">
+                <div className="p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl">{focus.emoji}</span>
+                    <h3 className="font-bold text-[#3D6A8A]">本週發展重點：{focus.title}</h3>
+                  </div>
+                  <div className="space-y-2">
+                    {focus.tips.map((tip, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-xs font-bold text-[#7B9EBD] mt-0.5">{['①', '②', '③'][i]}</span>
+                        <p className="text-sm text-[#4A5568] leading-relaxed">{tip}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </Card>
+            )
+          })()}
+
+          {/* 階段推薦好文 */}
+          {activeChild && (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <h2 className="font-bold text-gray-700">推薦閱讀</h2>
+                <span className="text-xs text-[#7B9EBD] bg-[#EBF4FF] px-2 py-0.5 rounded-full">{getAgeStage(ageMonths)}</span>
+              </div>
+              <div className="space-y-2">
+                {getStageArticles(ageMonths).map((article, i) => {
+                  const Icon = article.icon
+                  return (
+                    <Link key={i} href={article.href}>
+                      <Card className="p-3 hover:shadow-md transition-shadow">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#EBF4FF] flex items-center justify-center shrink-0">
+                            <Icon size={18} className="text-[#7B9EBD]" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-0.5">
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${article.tagColor}`}>{article.tag}</span>
+                              <p className="font-semibold text-gray-800 text-sm truncate">{article.title}</p>
+                            </div>
+                            <p className="text-xs text-gray-500 line-clamp-1">{article.desc}</p>
+                          </div>
+                          <ChevronRight size={14} className="text-gray-300 shrink-0 mt-2" />
+                        </div>
+                      </Card>
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
           {/* 今日育兒小知識 */}
           <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-100">
             <div className="p-4">
@@ -298,9 +411,11 @@ export default function DashboardClient({ profile, children, recentMeal, latestG
             <div className="flex gap-3 overflow-x-auto pb-2">
               {[
                 { name: '國立海洋生物博物館', city: '屏東', emoji: '🐋' },
+                { name: '台北市立動物園', city: '台北', emoji: '🐼' },
                 { name: '奇美博物館', city: '台南', emoji: '🏛️' },
-                { name: '兒童新樂園', city: '台北', emoji: '🎠' },
-                { name: '日月潭', city: '南投', emoji: '🌊' },
+                { name: 'Xpark 水族館', city: '桃園', emoji: '🐠' },
+                { name: '溪頭自然園區', city: '南投', emoji: '🌲' },
+                { name: '駁二藝術特區', city: '高雄', emoji: '🎨' },
               ].map(place => (
                 <Link key={place.name} href="/places" className="shrink-0 w-32">
                   <div className="h-20 rounded-2xl bg-gradient-to-br from-[#EBF4FF] to-[#F5E6C8] flex items-center justify-center text-3xl mb-1.5">
