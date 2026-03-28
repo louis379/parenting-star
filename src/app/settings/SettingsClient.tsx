@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import {
   Settings, User, LogOut, ChevronRight, Baby, Bell,
-  Shield, Users, Info, Edit2, Check, Heart
+  Shield, Users, Info, Edit2, Check, Heart, X
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
@@ -55,6 +55,12 @@ export default function SettingsClient({ profile, email, children, family, myRol
   const [childSaving, setChildSaving] = useState(false)
   const [childSaved, setChildSaved] = useState(false)
 
+  const [showAddChild, setShowAddChild] = useState(false)
+  const [addChildForm, setAddChildForm] = useState({ nickname: '', birth_date: '', gender: '' })
+  const [addingChild, setAddingChild] = useState(false)
+  const [addedChild, setAddedChild] = useState(false)
+  const [localChildren, setLocalChildren] = useState(children)
+
   async function handleSaveProfile() {
     setSaving(true)
     const supabase = createClient()
@@ -77,6 +83,39 @@ export default function SettingsClient({ profile, email, children, family, myRol
     setChildSaving(false)
   }
 
+  async function handleAddChild() {
+    if (!addChildForm.nickname.trim() || !addChildForm.birth_date || !family?.id) return
+    setAddingChild(true)
+    try {
+      const res = await fetch('/api/children', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          family_id: family.id,
+          nickname: addChildForm.nickname.trim(),
+          birth_date: addChildForm.birth_date,
+          gender: addChildForm.gender || null,
+        }),
+      })
+      if (res.ok) {
+        const newChild = await res.json()
+        setLocalChildren(prev => [...prev, newChild])
+        setAddedChild(true)
+        setAddChildForm({ nickname: '', birth_date: '', gender: '' })
+        setTimeout(() => { setAddedChild(false); setShowAddChild(false) }, 1500)
+      }
+    } catch { /* ignore */ }
+    setAddingChild(false)
+  }
+
+  async function handleDeleteChild(childId: string) {
+    if (!confirm('確定要刪除這位小朋友的資料嗎？此操作無法復原。')) return
+    const res = await fetch(`/api/children?id=${childId}`, { method: 'DELETE' })
+    if (res.ok) {
+      setLocalChildren(prev => prev.filter(c => c.id !== childId))
+    }
+  }
+
   async function handleLogout() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -86,7 +125,7 @@ export default function SettingsClient({ profile, email, children, family, myRol
 
   const sections = [
     { key: 'profile', icon: User, label: '個人資料', desc: '編輯暱稱與顯示資訊' },
-    { key: 'children', icon: Baby, label: '孩子資料', desc: `${children.length} 位孩子`, badge: children.length > 0 ? children.length : undefined },
+    { key: 'children', icon: Baby, label: '孩子資料', desc: `${localChildren.length} 位孩子`, badge: localChildren.length > 0 ? localChildren.length : undefined },
     { key: 'family', icon: Users, label: '家庭設定', desc: family?.name ?? '我的家庭' },
     { key: 'notifications', icon: Bell, label: '通知偏好', desc: '成長提醒與報告通知' },
     { key: 'privacy', icon: Shield, label: '隱私與安全', desc: '帳號安全、資料隱私' },
@@ -161,11 +200,11 @@ export default function SettingsClient({ profile, email, children, family, myRol
         {activeSection === 'children' && (
           <div className="card-blue p-4 space-y-3">
             <p className="text-xs font-semibold text-gray-500">孩子資料管理</p>
-            {children.length === 0 ? (
+            {localChildren.length === 0 ? (
               <p className="text-sm text-gray-400 text-center py-3">尚未新增孩子資料</p>
             ) : (
               <div className="space-y-2">
-                {children.map(child => (
+                {localChildren.map(child => (
                   <div key={child.id}>
                     {editingChild?.id === child.id ? (
                       <div className="bg-[#EBF4FF] rounded-2xl p-3 space-y-2">
@@ -204,18 +243,88 @@ export default function SettingsClient({ profile, email, children, family, myRol
                         >
                           <Edit2 size={15} />
                         </button>
+                        <button
+                          onClick={() => handleDeleteChild(child.id)}
+                          className="p-1.5 text-red-300 hover:text-red-500"
+                        >
+                          <X size={15} />
+                        </button>
                       </div>
                     )}
                   </div>
                 ))}
               </div>
             )}
-            <a
-              href="/onboarding"
-              className="block w-full py-2.5 border-2 border-dashed border-[#C5D8E8] text-[#7B9EBD] rounded-2xl text-sm font-semibold text-center"
-            >
-              + 新增孩子
-            </a>
+
+            {/* 新增孩子表單 */}
+            {showAddChild ? (
+              <div className="bg-[#F0F7FF] rounded-2xl p-4 space-y-3 border border-[#C5D8E8]">
+                <p className="text-sm font-bold" style={{ color: '#5E85A3' }}>新增小朋友</p>
+                <div>
+                  <label className="text-xs font-semibold text-gray-500 mb-1 block">暱稱 *</label>
+                  <input
+                    value={addChildForm.nickname}
+                    onChange={e => setAddChildForm(prev => ({ ...prev, nickname: e.target.value }))}
+                    className="w-full px-3 py-2 rounded-xl border border-[#C5D8E8] text-sm outline-none bg-white"
+                    placeholder="例：小明"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-gray-500 mb-1 block">出生日期 *</label>
+                  <input
+                    type="date"
+                    value={addChildForm.birth_date}
+                    onChange={e => setAddChildForm(prev => ({ ...prev, birth_date: e.target.value }))}
+                    className="w-full px-3 py-2 rounded-xl border border-[#C5D8E8] text-sm outline-none bg-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-gray-500 mb-1 block">性別</label>
+                  <div className="flex gap-2">
+                    {[
+                      { value: 'male', label: '👦 男生' },
+                      { value: 'female', label: '👧 女生' },
+                      { value: '', label: '🧒 不指定' },
+                    ].map(opt => (
+                      <button
+                        key={opt.value}
+                        onClick={() => setAddChildForm(prev => ({ ...prev, gender: opt.value }))}
+                        className="flex-1 py-2 rounded-xl text-xs font-semibold transition-all"
+                        style={{
+                          background: addChildForm.gender === opt.value ? '#7B9EBD' : 'white',
+                          color: addChildForm.gender === opt.value ? 'white' : '#5E85A3',
+                          border: `1.5px solid ${addChildForm.gender === opt.value ? '#7B9EBD' : '#C5D8E8'}`,
+                        }}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleAddChild}
+                    disabled={addingChild || !addChildForm.nickname.trim() || !addChildForm.birth_date}
+                    className="flex-1 py-2.5 bg-[#7B9EBD] text-white rounded-xl text-sm font-semibold disabled:opacity-50 flex items-center justify-center gap-1"
+                  >
+                    {addedChild ? <><Check size={14} /> 已新增</> : addingChild ? '新增中...' : '確認新增'}
+                  </button>
+                  <button
+                    onClick={() => setShowAddChild(false)}
+                    className="flex-1 py-2.5 bg-gray-100 text-gray-500 rounded-xl text-sm font-semibold"
+                  >
+                    取消
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={() => setShowAddChild(true)}
+                className="block w-full py-2.5 border-2 border-dashed border-[#C5D8E8] text-[#7B9EBD] rounded-2xl text-sm font-semibold text-center"
+              >
+                + 新增孩子
+              </button>
+            )}
           </div>
         )}
 

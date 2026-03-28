@@ -2,10 +2,17 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { TrendingUp, Brain, BookOpen, School, MapPin } from 'lucide-react'
+import { TrendingUp, Brain, BookOpen, Home, User } from 'lucide-react'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const navItems = [
+  {
+    href: '/dashboard',
+    icon: Home,
+    label: '首頁',
+    color: '#7B9EBD',
+    activeColor: '#5E85A3',
+  },
   {
     href: '/growth',
     icon: TrendingUp,
@@ -28,16 +35,9 @@ const navItems = [
     activeColor: '#5E85A3',
   },
   {
-    href: '/schools',
-    icon: School,
-    label: '教育環境',
-    color: '#7B9EBD',
-    activeColor: '#5E85A3',
-  },
-  {
-    href: '/places',
-    icon: MapPin,
-    label: '親子景點',
+    href: '/settings',
+    icon: User,
+    label: '我的',
     color: '#7B9EBD',
     activeColor: '#5E85A3',
   },

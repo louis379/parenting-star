@@ -7,6 +7,7 @@ import {
   Plus, X, Utensils, ChevronDown, Shield, Heart,
 } from 'lucide-react'
 import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
+import { ChildSwitcher, useActiveChildId } from '@/components/ChildSwitcher'
 
 type MainTab = 'knowledge' | 'records'
 
@@ -578,6 +579,7 @@ const MOCK_AI_RESULTS: AIResult[] = [
 ]
 
 export default function GrowthClient() {
+  const childId = useActiveChildId()
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [selectedAge, setSelectedAge] = useState('1-2y')
   const [growthRecords, setGrowthRecords] = useState<GrowthRecord[]>([
@@ -672,6 +674,8 @@ export default function GrowthClient() {
           </button>
         </div>
       </div>
+
+      <ChildSwitcher />
 
       {/* === 專業知識 Tab === */}
       {mainTab === 'knowledge' && (
@@ -776,6 +780,15 @@ export default function GrowthClient() {
                   <span className="text-sm font-black px-3 py-1 rounded-xl" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{ageData.sleep}</span>
                 </div>
                 <p className="text-xs leading-relaxed" style={{ color: '#6B7B8D' }}>{ageData.sleepNote}</p>
+              </div>
+              {/* 睡眠倒退期提醒 */}
+              <div className="mt-3 p-3 rounded-2xl border" style={{ background: '#FFFBEB', borderColor: '#F59E0B' }}>
+                <p className="text-xs font-bold mb-1.5" style={{ color: '#92400E' }}>💡 常見睡眠倒退期（暫時性，不是退步）</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#78350F' }}>
+                  以下月份常見睡眠倒退：<strong>4月、6月、8月、12月、18月、2歲、2.5歲</strong>。
+                  原因通常是發展跳躍、長牙、分離焦慮，通常 2–4 週後自然改善。
+                  孩子突然難入睡，先確認是否在這些時間點附近，給自己和孩子多一點耐心。
+                </p>
               </div>
             </section>
 
@@ -905,7 +918,7 @@ export default function GrowthClient() {
           </section>
 
           {/* 智能拍照分析 */}
-          <SmartPhotoAnalyzer page="growth" storageKey="growth_photos" label="成長" />
+          <SmartPhotoAnalyzer key={childId} page="growth" storageKey={`growth_photos_${childId || 'default'}`} label="成長" />
 
           {/* 每日身體觀察 */}
           <section>

@@ -7,6 +7,7 @@ import {
   Info, TrendingUp, Plus, X, Clock, ChevronDown, Shield,
 } from 'lucide-react'
 import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
+import { ChildSwitcher, useActiveChildId } from '@/components/ChildSwitcher'
 
 const PSYCH_HUANG_TOPICS = [
   {
@@ -363,6 +364,7 @@ interface PsychRecord {
 }
 
 export default function PsychologyClient() {
+  const childId = useActiveChildId()
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeSection, setKnowledgeSection] = useState<KnowledgeSection>('emotion')
   const [selectedAge, setSelectedAge] = useState('3-5y')
@@ -416,6 +418,8 @@ export default function PsychologyClient() {
           </button>
         </div>
       </div>
+
+      <ChildSwitcher />
 
       {/* === 專業知識 Tab === */}
       {mainTab === 'knowledge' && (
@@ -776,7 +780,7 @@ export default function PsychologyClient() {
           </section>
 
           {/* 智能拍照分析 */}
-          <SmartPhotoAnalyzer page="psychology" storageKey="psych_photos" label="情緒" />
+          <SmartPhotoAnalyzer key={childId} page="psychology" storageKey={`psych_photos_${childId || 'default'}`} label="情緒" />
 
                     {/* 情境記錄 */}
           <section>

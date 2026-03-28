@@ -4,12 +4,119 @@ import { useState } from 'react'
 import {
   BookOpen, ClipboardList, MessageSquare, Lightbulb, GraduationCap,
   Camera, FileText, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
-  Info, TrendingUp, Plus, X, Star, ChevronDown, Shield,
+  Info, TrendingUp, Plus, X, Star, ChevronDown, Shield, Smartphone,
 } from 'lucide-react'
 import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
+import { ChildSwitcher, useActiveChildId } from '@/components/ChildSwitcher'
 
 type MainTab = 'knowledge' | 'records'
-type KnowledgeSection = 'language' | 'piaget' | 'guide'
+type KnowledgeSection = 'language' | 'piaget' | 'guide' | 'digital'
+
+const DIGITAL_LITERACY_DATA = [
+  {
+    ageGroup: '0–2歲',
+    emoji: '🍼',
+    screenTimeRule: '建議完全避免（除視訊通話外）',
+    color: '#5A8A5A',
+    bg: '#EBF4EB',
+    border: '#B8D8B8',
+    rationale: '這個階段大腦發育需要真實世界的感官刺激——觸覺、聲音、人臉互動。螢幕無法提供嬰兒大腦需要的雙向回應。',
+    digitalSkills: ['認識自己在螢幕上的臉（視訊通話）', '用手指觸碰有反應的介面（12月後）'],
+    parentTips: [
+      '用視訊讓寶寶和遠方的爺爺奶奶互動——這是有意義的螢幕使用',
+      '如果寶寶偶爾看到螢幕，不必焦慮，但不要讓它成為習慣',
+      '電視開著當背景音，也算螢幕時間，建議關掉',
+    ],
+    realThreat: '不是螢幕本身，而是螢幕「取代」了和你的互動時間',
+  },
+  {
+    ageGroup: '2–3歲',
+    emoji: '🧸',
+    screenTimeRule: '每天 30 分鐘以內，優先互動式內容',
+    color: '#5E85A3',
+    bg: '#EBF4FF',
+    border: '#B0C8DD',
+    rationale: '2歲開始可理解螢幕內容，但仍需父母共看共學（co-viewing）。獨自看螢幕對這個年齡學習效果很有限。',
+    digitalSkills: ['學習手勢操作（滑動、點擊）', '辨識熟悉的應用程式圖示', '用iPad視訊和家人互動'],
+    parentTips: [
+      '陪著看：「你看！那隻熊在做什麼？」——父母的解說讓螢幕有教育價值',
+      '選擇互動式APP（需要孩子回應的）而非純被動觀看',
+      '餐桌上、睡前30分鐘、戶外玩耍時——這些時間不開螢幕',
+    ],
+    realThreat: '用螢幕安撫情緒的習慣——這會影響孩子學習自我調節',
+  },
+  {
+    ageGroup: '3–6歲',
+    emoji: '🎨',
+    screenTimeRule: '每天 1 小時，每 30 分鐘休息 10 分鐘（護眼）',
+    color: '#B07548',
+    bg: '#FDF0E8',
+    border: '#D4B896',
+    rationale: '幼兒園階段可以開始學習數位工具的基本操作，但遊戲、閱讀、戶外活動仍是這個年齡最重要的學習方式。',
+    digitalSkills: ['理解螢幕內容是「有人製作的」（不是真實的）', '學習基本操作：搜尋、打開、關閉', '認識「螢幕時間到了要放下」的規則'],
+    parentTips: [
+      '設定固定的螢幕時間（例如下午4-5點），孩子有預期更容易接受結束',
+      '讓孩子選擇：「今天的螢幕時間要看動畫還是玩積木遊戲APP？」',
+      '告訴孩子廣告是什麼：「他們想讓你買東西哦，但我們不一定要」',
+    ],
+    realThreat: '超時使用影響睡眠品質（睡前2小時的藍光特別有害）',
+  },
+  {
+    ageGroup: '6–9歲',
+    emoji: '🔍',
+    screenTimeRule: '每天 1-2 小時（不含學習用途），重質不重量',
+    color: '#7A6A96',
+    bg: '#F0EBF8',
+    border: '#C5B8D8',
+    rationale: '這個階段開始使用螢幕學習（搜尋資料、打字、教育平台）。重點從限制時間，轉向建立「有目的的使用習慣」。',
+    digitalSkills: ['基本搜尋技能（用正確關鍵字搜尋）', '理解網路資訊不一定是真的', '保護個人資料（不分享真實姓名/學校）', '基礎打字能力'],
+    parentTips: [
+      '一起做「真假資訊」練習：搜尋一個主題，討論哪些來源可信',
+      '設定家庭媒體規則（全家一起，不只是孩子）：吃飯沒有手機',
+      '和孩子一起設定密碼——讓他學習帳號安全概念',
+    ],
+    realThreat: '被動消費（無限滾動、短影音）取代主動創造和閱讀',
+  },
+  {
+    ageGroup: '9–12歲',
+    emoji: '💻',
+    screenTimeRule: '重點從時間控管轉向內容品質管理',
+    color: '#5E85A3',
+    bg: '#EBF4FF',
+    border: '#B0C8DD',
+    rationale: '青春期前後開始使用社群媒體、遊戲，數位公民意識教育至關重要。這個年齡需要的不是禁止，而是對話和建立判斷力。',
+    digitalSkills: ['批判性評估線上資訊（事實 vs. 意見）', '理解演算法和資訊泡泡', '初步了解網路隱私和個資保護', '基礎程式設計概念（Scratch/Python）'],
+    parentTips: [
+      '一起討論你在網路上看到的資訊：「你覺得這個可信嗎？為什麼？」',
+      '談論社群媒體的演算法：「它為什麼一直推薦你這類影片？」',
+      '家庭協議（不是禁令）：討論並共同制定手機使用規則',
+    ],
+    realThreat: '網路霸凌、假訊息、成癮設計——這些需要提前對話，不能等到發生才處理',
+  },
+]
+
+const SCREEN_TIME_PRINCIPLES = [
+  {
+    title: '質量 > 數量',
+    desc: '30分鐘和爸媽一起有互動地看，比獨自看1小時效果更好。互動式內容（需孩子回應）> 被動觀看（動畫、影片）。',
+    emoji: '⭐',
+  },
+  {
+    title: '情境很重要',
+    desc: '吃飯時的螢幕、睡前的螢幕、戶外玩耍時的螢幕——同樣的時間，不同情境效果差很多。最差的是用螢幕安撫情緒。',
+    emoji: '📍',
+  },
+  {
+    title: '全家共同規則',
+    desc: '「孩子不能用手機，但爸媽一直滑」——孩子看得懂。家庭媒體規則要全家執行，吃飯時全部放下，才有說服力。',
+    emoji: '👨‍👩‍👧',
+  },
+  {
+    title: '替代活動準備好',
+    desc: '關掉螢幕後要有替代選擇——積木、繪本、戶外玩耍。「不能看」不夠，「我們去做⋯⋯」才能成功轉移。',
+    emoji: '🎯',
+  },
+]
 
 const AGE_GROUPS_LANG = [
   { key: '0-1y', label: '0–1歲' },
@@ -401,6 +508,7 @@ const EDU_HUANG_TOPICS = [
 ]
 
 export default function EducationClient() {
+  const childId = useActiveChildId()
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeSection, setKnowledgeSection] = useState<KnowledgeSection>('language')
   const [selectedAge, setSelectedAge] = useState('2-3y')
@@ -455,6 +563,8 @@ export default function EducationClient() {
         </div>
       </div>
 
+      <ChildSwitcher />
+
       {/* === 專業知識 Tab === */}
       {mainTab === 'knowledge' && (
         <div>
@@ -463,6 +573,7 @@ export default function EducationClient() {
               { key: 'language', label: '語言發展', icon: MessageSquare },
               { key: 'piaget', label: '認知階段', icon: Lightbulb },
               { key: 'guide', label: '學科引導', icon: GraduationCap },
+              { key: 'digital', label: '數位素養', icon: Smartphone },
             ].map(({ key, label, icon: Icon }) => (
               <button key={key} onClick={() => setKnowledgeSection(key as KnowledgeSection)}
                 className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border"
@@ -785,6 +896,105 @@ export default function EducationClient() {
         </div>
       )}
 
+      {/* === 數位素養 Tab === */}
+      {mainTab === 'knowledge' && knowledgeSection === 'digital' && (
+        <div className="px-5 py-5 space-y-5">
+          {/* 核心理念 */}
+          <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+            <div className="flex items-center gap-2 mb-2">
+              <Smartphone size={18} className="text-white" />
+              <h2 className="font-black text-white text-base">數位素養 × 螢幕時間</h2>
+            </div>
+            <p className="text-white text-sm opacity-90 leading-relaxed">
+              問題不是「能不能用螢幕」，而是「怎麼用得有價值」。從限制時間，到培養健康數位習慣。
+            </p>
+          </div>
+
+          {/* 四大原則 */}
+          <div>
+            <h3 className="font-bold text-sm mb-3" style={{ color: '#2D3436' }}>⚡ 四大核心原則</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {SCREEN_TIME_PRINCIPLES.map((p, i) => (
+                <div key={i} className="p-3 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
+                  <span className="text-xl">{p.emoji}</span>
+                  <p className="font-bold text-xs mt-1 mb-1" style={{ color: '#2D3436' }}>{p.title}</p>
+                  <p className="text-xs leading-relaxed" style={{ color: '#6B7B8D' }}>{p.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 各年齡指南 */}
+          <div>
+            <h3 className="font-bold text-sm mb-3" style={{ color: '#2D3436' }}>📱 各年齡段數位指南</h3>
+            <div className="space-y-2">
+              {DIGITAL_LITERACY_DATA.map((item, i) => (
+                <div key={i} className="rounded-2xl border overflow-hidden" style={{ borderColor: item.border }}>
+                  <button
+                    onClick={() => setOpenAccordion(openAccordion === 'digital_' + i ? null : 'digital_' + i)}
+                    className="w-full flex items-center justify-between p-4"
+                    style={{ background: item.bg }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span style={{ fontSize: 18 }}>{item.emoji}</span>
+                      <div className="text-left">
+                        <p className="font-bold text-sm" style={{ color: item.color }}>{item.ageGroup}</p>
+                        <p className="text-xs mt-0.5" style={{ color: item.color, opacity: 0.8 }}>{item.screenTimeRule}</p>
+                      </div>
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      style={{ color: item.color, transform: openAccordion === 'digital_' + i ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', flexShrink: 0 }}
+                    />
+                  </button>
+                  {openAccordion === 'digital_' + i && (
+                    <div className="px-4 pb-4 pt-2 bg-white space-y-3">
+                      <div className="p-3 rounded-xl" style={{ background: item.bg }}>
+                        <p className="text-xs leading-relaxed" style={{ color: '#4A5568' }}>💡 {item.rationale}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold mb-1.5" style={{ color: '#2D3436' }}>這個年齡可以發展的數位技能：</p>
+                        {item.digitalSkills.map((s, j) => (
+                          <div key={j} className="flex items-start gap-2 mb-1">
+                            <CheckCircle2 size={12} style={{ color: item.color, marginTop: 2, flexShrink: 0 }} />
+                            <p className="text-xs" style={{ color: '#4A5568' }}>{s}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold mb-1.5" style={{ color: '#2D3436' }}>實用親子建議：</p>
+                        {item.parentTips.map((t, j) => (
+                          <div key={j} className="flex items-start gap-2 mb-1">
+                            <span className="text-xs" style={{ color: item.color, flexShrink: 0 }}>→</span>
+                            <p className="text-xs leading-relaxed" style={{ color: '#4A5568' }}>{t}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="p-2.5 rounded-xl border" style={{ borderColor: '#FCA5A5', background: '#FEF2F2' }}>
+                        <p className="text-xs" style={{ color: '#DC2626' }}>⚠️ 真正的風險：{item.realThreat}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 台灣法規提醒 */}
+          <div className="p-4 rounded-2xl border" style={{ background: '#FFFBEB', borderColor: '#F59E0B' }}>
+            <div className="flex items-start gap-2">
+              <AlertTriangle size={16} style={{ color: '#D97706', flexShrink: 0, marginTop: 1 }} />
+              <div>
+                <p className="font-bold text-sm mb-1" style={{ color: '#92400E' }}>台灣法規重點</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#78350F' }}>
+                  依據《兒童及少年福利與保護法》，父母應協助兒童避免沈迷數位媒體。衛福部建議：2歲以下不使用螢幕、2-5歲每日30-60分鐘、6歲以上依學習需求調整。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* === 家長紀錄 Tab === */}
       {mainTab === 'records' && (
         <div className="px-5 py-5 space-y-5">
@@ -809,7 +1019,7 @@ export default function EducationClient() {
           </section>
 
           {/* 智能拍照分析 */}
-          <SmartPhotoAnalyzer page="education" storageKey="edu_photos" label="學習" />
+          <SmartPhotoAnalyzer key={childId} page="education" storageKey={`edu_photos_${childId || 'default'}`} label="學習" />
 
                     {/* AI 分析工具 */}
           <section>
