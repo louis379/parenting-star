@@ -177,7 +177,7 @@ export default function OnboardingPage() {
       // localStorage 不可用時靜默忽略
     }
 
-    // 呼叫 API 存入資料庫
+    // 呼叫 API 存入資料庫（失敗仍可繼續，資料已存 localStorage）
     setSaving(true)
     setSaveError('')
     try {
@@ -187,22 +187,15 @@ export default function OnboardingPage() {
         body: JSON.stringify(onboardingData),
       })
       if (!res.ok) {
-        const err = await res.json()
-        // 如果是未登入，存 localStorage 後仍可繼續
-        if (res.status === 401) {
-          setStep(4)
-          return
-        }
-        setSaveError(err.error || '儲存失敗，請稍後再試')
-        setSaving(false)
-        return
+        // 不論什麼錯誤，都允許繼續（資料已在 localStorage）
+        console.warn('Onboarding API error:', await res.json().catch(() => ({})))
       }
-      setStep(4)
-    } catch {
-      // 網路錯誤時仍允許繼續（資料在 localStorage）
-      setStep(4)
+    } catch (e) {
+      // 網路錯誤時靜默忽略
+      console.warn('Onboarding save failed:', e)
     }
     setSaving(false)
+    setStep(4)
   }
 
   const progress = ((step + 1) / STEPS.length) * 100
@@ -552,7 +545,6 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            {saveError && <p className="text-xs text-red-500 bg-red-50 rounded-xl px-3 py-2">{saveError}</p>}
             <Button
               size="lg"
               className="w-full mt-4"
