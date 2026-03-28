@@ -312,6 +312,48 @@ const SLEEP_TOPICS = [
     ],
   },
   {
+    id: 'body-type',
+    emoji: '⚖️',
+    title: '寶貝的體型健康嗎？',
+    badge: '成長秘書',
+    bgColor: '#F0FDF4',
+    borderColor: '#A8D8B8',
+    headerColor: '#3D7A5E',
+    sections: [
+      {
+        title: 'BMI 參考（用描述，不用數字嚇家長）',
+        content: '「看起來圓圓的」不一定是胖，嬰兒期的嬰兒脂肪是正常的！\n\n🍼 1歲前：圓滾滾的寶寶大部分是健康的，不需要刻意減重\n\n👣 1–3歲：開始走路後會自然變瘦，這是正常的「嬰兒脂肪消退期」\n\n🌱 3歲後：如果體重持續在同年齡97百分位以上，可以多留意飲食均衡\n\n⚠️ 偏瘦：如果體重低於3百分位，優先確認是否有進食困難或吸收問題',
+      },
+      {
+        title: '需要多留意的信號（溫和提醒）',
+        content: '這些不是「警告」，只是讓你多一份了解：\n\n• 連續3個月體重沒有增加 → 可以跟醫師聊聊\n\n• 突然暴瘦或暴胖 → 值得留意原因\n\n• 肚子一直很脹但體重不增 → 可能是消化吸收需要關注\n\n• 四肢很瘦但肚子很大 → 可以留意營養均衡\n\n💙 每個寶寶的身體都有自己的節奏，定期健康檢查是最好的監測方式！',
+      },
+    ],
+  },
+  {
+    id: 'poop-guide',
+    emoji: '💩',
+    title: '從便便了解寶貝的身體',
+    badge: '黃瑽寧筆記',
+    bgColor: '#FFFBF0',
+    borderColor: '#E8D8A0',
+    headerColor: '#8B6914',
+    sections: [
+      {
+        title: '各月齡便便參考',
+        content: '便便的樣子跟吃的東西、月齡都有關係，以下是參考：\n\n🍼 1–3個月：每天2–10次，膏狀/糊狀/顆粒狀。母乳寶寶可能一天多次，或好幾天才一次，都正常！\n\n🥣 3–6個月：每天2–10次，開始成型。副食品開始後便便會改變。\n\n🌱 6–12個月：每天1–3次，逐漸成型。顏色和質地跟吃的食物有關。\n\n👣 1–2歲：每天1–2次，定型。如果超過3天沒便便，可以多補充水分和纖維。\n\n🌟 2歲+：每天約1次，堅固型。可以開始養成固定排便習慣。',
+      },
+      {
+        title: '便便顏色指南（重要！）',
+        content: '顏色能告訴你很多事情：\n\n✅ 黃色、綠色、棕色 → 都是正常的，不用擔心\n\n⚠️ 黑色（柏油狀）→ 如果不是吃了含鐵食物，建議就醫\n\n⚠️ 紅色（帶血絲）→ 少量可能是肛裂，大量請就醫\n\n🚨 白色/灰白色 → 需要盡快就醫（可能是膽道問題）\n\n💡 剛開始吃副食品時，便便顏色多變是正常的，不用太緊張！',
+      },
+      {
+        title: '便秘怎麼辦？（來自黃瑽寧課程）',
+        content: '先試試這些溫和的方法：\n\n💧 多喝水，補充水分是第一步\n\n🥦 多吃纖維：地瓜、南瓜、香蕉、蘋果都是好選擇\n\n🤲 腹部按摩：順時針畫圓，輕柔按摩肚子\n\n⏳ 不要急著用浣腸，先嘗試飲食調整\n\n🏥 如果超過一週都沒有便便，或寶寶很不舒服，再考慮就醫\n\n💙 便秘很常見，輕鬆處理就好，不用太焦慮！',
+      },
+    ],
+  },
+  {
     id: 'sleepBasics',
     title: '睡眠週期與作息表',
     emoji: '📊',
@@ -349,6 +391,25 @@ interface PhotoRecord {
   note: string
   page: string
 }
+
+interface BodyRecord {
+  id: string
+  date: string
+  hadPoop: boolean
+  poopType: string
+  poopColor: string
+  appetite: string
+  sleepQuality: string
+  note: string
+}
+
+interface PhotoAIResult {
+  color: string
+  type: string
+  suggestion: string
+}
+
+type CameraTarget = 'poop' | 'body' | 'meal' | null
 
 // ── 黃瑽寧醫師「0-12歲育兒全百科」知識架構 ──
 
@@ -517,6 +578,12 @@ const MOCK_AI_RESULTS: AIResult[] = [
     suggestion: '繼續保持目前的運動習慣，可以增加戶外探索時間讓寶貝多爬、多跑、多跳。',
   },
   {
+    type: 'ok',
+    title: '寶貝的便便紀錄看起來很正常！',
+    detail: '你每天記錄寶貝的身體狀況，真的很用心！最近的便便記錄都在正常範圍，腸胃運作得不錯。',
+    suggestion: '繼續保持均衡飲食就好，可以多補充蔬菜和水分，讓腸胃更舒暢。',
+  },
+  {
     type: 'warning',
     title: '蛋白質與鈣質可以加強',
     detail: '從記錄來看，蛋白質和鈣質的攝取可以再增加一點，對成長很有幫助。',
@@ -524,9 +591,68 @@ const MOCK_AI_RESULTS: AIResult[] = [
   },
   {
     type: 'ok',
+    title: '體型發展在正常範圍內',
+    detail: '根據身高體重紀錄，寶貝的生長曲線很穩定。這個年紀圓圓的是正常的嬰兒脂肪，不用擔心！',
+    suggestion: '繼續定期記錄身高體重，下次健康檢查時可以帶記錄給醫師看，讓醫師更了解寶貝的成長趨勢。',
+  },
+  {
+    type: 'ok',
     title: '持續記錄非常用心！',
     detail: '你持續記錄飲食和生長數據，這份用心對寶貝來說是最珍貴的禮物 💙',
     suggestion: '這週試試看：每天散步回家時，讓寶貝自己走樓梯上樓（至少2層），大腿肌肉在遊戲中自然強壯 🪜',
+  },
+]
+
+const POOP_AI_RESULTS: Record<string, PhotoAIResult> = {
+  normal: {
+    color: '黃棕色',
+    type: '軟便（正常）',
+    suggestion: '看起來是健康的黃棕色軟便，很正常喔！寶貝的腸胃狀態不錯，繼續保持均衡飲食就好 😊',
+  },
+  green: {
+    color: '綠色',
+    type: '糊狀',
+    suggestion: '綠色便便在寶寶很常見，特別是喝母乳或吃了深色蔬菜之後，大部分都是正常的！寶貝精神好就不用擔心 🌿',
+  },
+  hard: {
+    color: '棕色',
+    type: '硬顆粒',
+    suggestion: '便便看起來有點硬，可以多補充水分和纖維（地瓜、香蕉、蘋果都很好），順時針按摩肚子也有幫助 💧',
+  },
+  watery: {
+    color: '黃色',
+    type: '水狀',
+    suggestion: '便便比較水，可能是腸胃稍微不舒服或換奶粉。如果超過3天或寶寶精神不好，可以跟醫師聊聊 🌸',
+  },
+}
+
+const BODY_AI_RESULTS = [
+  {
+    type: '圓潤可愛',
+    suggestion: '寶貝看起來很健康！這個年紀圓圓的是正常的嬰兒脂肪，不用擔心。開始走路後自然會變瘦，這是身體最聰明的設計 💙',
+  },
+  {
+    type: '比例適中',
+    suggestion: '寶貝的身體比例看起來很均衡！繼續保持現在的飲食和運動習慣，讓寶貝健康成長 🌟',
+  },
+  {
+    type: '纖細活潑',
+    suggestion: '寶貝身形修長，只要精神好、食慾正常，就是健康的！多元飲食保持均衡就好，不需要刻意補充 🌱',
+  },
+]
+
+const MEAL_AI_RESULTS = [
+  {
+    balance: '均衡',
+    suggestion: '今天的餐盤看起來有蛋白質和蔬菜，很棒！可以再加一點全穀類讓營養更均衡。你替寶貝準備這麼用心，真的很厲害 🍽️',
+  },
+  {
+    balance: '需補充蔬菜',
+    suggestion: '蛋白質看起來足夠！可以多加一點彩色蔬菜，讓餐盤更豐富多彩。彩虹飲食原則：顏色越多種，營養越全面 🌈',
+  },
+  {
+    balance: '需補充蛋白質',
+    suggestion: '蔬菜搭配得很好！可以加一顆蒸蛋或幾塊豆腐，讓蛋白質更充足，幫助寶貝長肌肉和大腦發育 💪',
   },
 ]
 
@@ -568,6 +694,30 @@ export default function GrowthClient() {
   })
   const [showPhotoAI, setShowPhotoAI] = useState(false)
   const [photoNote, setPhotoNote] = useState('')
+  const [bodyRecords, setBodyRecords] = useState<BodyRecord[]>(() => {
+    if (typeof window === 'undefined') return []
+    try {
+      const saved = localStorage.getItem('growth_body_records')
+      return saved ? JSON.parse(saved) : []
+    } catch { return [] }
+  })
+  const [showBodyForm, setShowBodyForm] = useState(false)
+  const [bodyForm, setBodyForm] = useState({
+    date: new Date().toISOString().split('T')[0],
+    hadPoop: true,
+    poopType: '正常條狀',
+    poopColor: '黃色',
+    appetite: '普通',
+    sleepQuality: '普通',
+    note: '',
+  })
+  const [cameraTarget, setCameraTarget] = useState<CameraTarget>(null)
+  const [poopPhotoData, setPoopPhotoData] = useState<string | null>(null)
+  const [bodyPhotoData, setBodyPhotoData] = useState<string | null>(null)
+  const [mealPhotoData, setMealPhotoData] = useState<string | null>(null)
+  const [poopAIResult, setPoopAIResult] = useState<PhotoAIResult | null>(null)
+  const [bodyAIResult, setBodyAIResult] = useState<{ type: string; suggestion: string } | null>(null)
+  const [mealAIResult, setMealAIResult] = useState<{ balance: string; suggestion: string } | null>(null)
 
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)
@@ -589,6 +739,57 @@ export default function GrowthClient() {
     setMealRecords(r => [...r, { id: Date.now().toString(), ...mealForm }])
     setShowMealForm(false)
     setMealForm({ date: new Date().toISOString().split('T')[0], meal: '早餐', desc: '' })
+  }
+
+  function addBodyRecord() {
+    const newRecord: BodyRecord = { id: Date.now().toString(), ...bodyForm }
+    setBodyRecords(r => {
+      const updated = [...r, newRecord].sort((a, b) => b.date.localeCompare(a.date))
+      localStorage.setItem('growth_body_records', JSON.stringify(updated))
+      return updated
+    })
+    setShowBodyForm(false)
+    setBodyForm({ date: new Date().toISOString().split('T')[0], hadPoop: true, poopType: '正常條狀', poopColor: '黃色', appetite: '普通', sleepQuality: '普通', note: '' })
+  }
+
+  function handleCameraPhoto(e: React.ChangeEvent<HTMLInputElement>, target: CameraTarget) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const maxSize = 600
+        let w = img.width, h = img.height
+        if (w > maxSize || h > maxSize) {
+          if (w > h) { h = h * maxSize / w; w = maxSize }
+          else { w = w * maxSize / h; h = maxSize }
+        }
+        canvas.width = w; canvas.height = h
+        canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
+        const data = canvas.toDataURL('image/jpeg', 0.75)
+        if (target === 'poop') { setPoopPhotoData(data); setPoopAIResult(null) }
+        if (target === 'body') { setBodyPhotoData(data); setBodyAIResult(null) }
+        if (target === 'meal') { setMealPhotoData(data); setMealAIResult(null) }
+      }
+      img.src = ev.target?.result as string
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+
+  function analyzePoopPhoto() {
+    const results = Object.values(POOP_AI_RESULTS)
+    setPoopAIResult(results[Math.floor(Math.random() * results.length)])
+  }
+
+  function analyzeBodyPhoto() {
+    setBodyAIResult(BODY_AI_RESULTS[Math.floor(Math.random() * BODY_AI_RESULTS.length)])
+  }
+
+  function analyzeMealPhoto() {
+    setMealAIResult(MEAL_AI_RESULTS[Math.floor(Math.random() * MEAL_AI_RESULTS.length)])
   }
 
   function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -1061,6 +1262,163 @@ export default function GrowthClient() {
             </div>
           </section>
 
+          {/* 拍照辨識區 */}
+          <section>
+            <div className="flex items-center gap-2 mb-3">
+              <span style={{ fontSize: 18 }}>📸</span>
+              <h2 className="font-bold" style={{ color: '#2D3436' }}>拍照 AI 辨識</h2>
+              <span className="text-xs px-2 py-0.5 rounded-lg font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>核心功能</span>
+            </div>
+            <p className="text-xs mb-3" style={{ color: '#6B7B8D' }}>拍一張照片，讓 AI 幫你分析，省去手動填寫的麻煩！</p>
+
+            {/* 三個拍照卡片 */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {/* 便便 */}
+              <div className="flex flex-col items-center gap-2">
+                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
+                  style={{ background: 'linear-gradient(135deg, #FFFBF0, #FFF3CC)', borderColor: '#E8C850' }}>
+                  <input type="file" accept="image/*" capture="environment" className="hidden"
+                    onChange={e => handleCameraPhoto(e, 'poop')} />
+                  <span style={{ fontSize: 28 }}>💩</span>
+                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#8B6914' }}>便便<br/>辨識</span>
+                </label>
+                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍便便照</span>
+              </div>
+              {/* 體型 */}
+              <div className="flex flex-col items-center gap-2">
+                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
+                  style={{ background: 'linear-gradient(135deg, #F0FDF4, #D8F5E8)', borderColor: '#5A9A7A' }}>
+                  <input type="file" accept="image/*" capture="environment" className="hidden"
+                    onChange={e => handleCameraPhoto(e, 'body')} />
+                  <span style={{ fontSize: 28 }}>👶</span>
+                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#3D7A5E' }}>體型<br/>辨識</span>
+                </label>
+                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍全身照</span>
+              </div>
+              {/* 餐盤 */}
+              <div className="flex flex-col items-center gap-2">
+                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
+                  style={{ background: 'linear-gradient(135deg, #FFF0F5, #FFE0EC)', borderColor: '#C5608A' }}>
+                  <input type="file" accept="image/*" capture="environment" className="hidden"
+                    onChange={e => handleCameraPhoto(e, 'meal')} />
+                  <span style={{ fontSize: 28 }}>🍽️</span>
+                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#A0336A' }}>餐盤<br/>辨識</span>
+                </label>
+                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍今日餐盤</span>
+              </div>
+            </div>
+
+            {/* 便便辨識結果 */}
+            {poopPhotoData && (
+              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#FFFBF0', borderColor: '#E8D8A0' }}>
+                <p className="text-xs font-bold mb-2" style={{ color: '#8B6914' }}>💩 便便照片</p>
+                <img src={poopPhotoData} alt="便便照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
+                {!poopAIResult ? (
+                  <button onClick={analyzePoopPhoto}
+                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
+                    style={{ background: 'linear-gradient(135deg, #D4A820, #B08010)' }}>
+                    <Sparkles size={14} />AI 辨識便便
+                  </button>
+                ) : (
+                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #E8D8A0' }}>
+                    <div className="flex gap-4 mb-2 text-xs">
+                      <span><span className="font-bold" style={{ color: '#8B6914' }}>顏色：</span>{poopAIResult.color}</span>
+                      <span><span className="font-bold" style={{ color: '#8B6914' }}>型態：</span>{poopAIResult.type}</span>
+                    </div>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{poopAIResult.suggestion}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 體型辨識結果 */}
+            {bodyPhotoData && (
+              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#F0FDF4', borderColor: '#A8D8B8' }}>
+                <p className="text-xs font-bold mb-2" style={{ color: '#3D7A5E' }}>👶 全身照片</p>
+                <img src={bodyPhotoData} alt="全身照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
+                {!bodyAIResult ? (
+                  <button onClick={analyzeBodyPhoto}
+                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
+                    style={{ background: 'linear-gradient(135deg, #5A9A7A, #3D7A5E)' }}>
+                    <Sparkles size={14} />AI 辨識體型
+                  </button>
+                ) : (
+                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #A8D8B8' }}>
+                    <p className="text-xs font-bold mb-1" style={{ color: '#3D7A5E' }}>體型評估：{bodyAIResult.type}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{bodyAIResult.suggestion}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 餐盤辨識結果 */}
+            {mealPhotoData && (
+              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#FFF0F8', borderColor: '#E8B0D0' }}>
+                <p className="text-xs font-bold mb-2" style={{ color: '#A0336A' }}>🍽️ 今日餐盤</p>
+                <img src={mealPhotoData} alt="餐盤照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
+                {!mealAIResult ? (
+                  <button onClick={analyzeMealPhoto}
+                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
+                    style={{ background: 'linear-gradient(135deg, #C5608A, #A0336A)' }}>
+                    <Sparkles size={14} />AI 分析營養
+                  </button>
+                ) : (
+                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #E8B0D0' }}>
+                    <p className="text-xs font-bold mb-1" style={{ color: '#A0336A' }}>營養評估：{mealAIResult.balance}</p>
+                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{mealAIResult.suggestion}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <p className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>* 拍照辨識為 AI 模擬分析，僅供參考，非醫療診斷</p>
+          </section>
+
+          {/* 每日身體觀察 */}
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Heart size={16} style={{ color: '#C5608A' }} />
+                <h2 className="font-bold" style={{ color: '#2D3436' }}>每日身體觀察</h2>
+              </div>
+              <button onClick={() => setShowBodyForm(true)} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold text-white" style={{ background: '#C5608A' }}>
+                <Plus size={12} />新增今日
+              </button>
+            </div>
+            {bodyRecords.length === 0 ? (
+              <div className="p-4 rounded-2xl border text-center" style={{ background: '#FFF0F8', borderColor: '#E8B0D0' }}>
+                <p className="text-sm" style={{ color: '#A0336A' }}>還沒有記錄，點右上角新增今日觀察吧！</p>
+                <p className="text-xs mt-1" style={{ color: '#C5608A' }}>或直接用上方拍照辨識，更快速！</p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                {bodyRecords.slice(0, 7).map(r => (
+                  <div key={r.id} className="p-3 rounded-xl border" style={{ background: 'white', borderColor: '#F0D0E0' }}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-bold" style={{ color: '#2D3436' }}>{r.date}</span>
+                      <div className="flex gap-1.5">
+                        <span className="text-xs px-2 py-0.5 rounded-lg" style={{ background: r.hadPoop ? '#D8F5D8' : '#FFE8E8', color: r.hadPoop ? '#3A7A3A' : '#C45A5A' }}>
+                          {r.hadPoop ? '有便便 ✓' : '無便便'}
+                        </span>
+                      </div>
+                    </div>
+                    {r.hadPoop && (
+                      <div className="flex gap-2 mb-1 flex-wrap">
+                        <span className="text-xs px-1.5 py-0.5 rounded-lg" style={{ background: '#FFFBF0', color: '#8B6914' }}>型態：{r.poopType}</span>
+                        <span className="text-xs px-1.5 py-0.5 rounded-lg" style={{ background: '#FFFBF0', color: '#8B6914' }}>顏色：{r.poopColor}</span>
+                      </div>
+                    )}
+                    <div className="flex gap-2 flex-wrap">
+                      <span className="text-xs" style={{ color: '#6B7B8D' }}>食慾：{r.appetite}</span>
+                      <span className="text-xs" style={{ color: '#6B7B8D' }}>睡眠：{r.sleepQuality}</span>
+                      {r.note && <span className="text-xs" style={{ color: '#6B7B8D' }}>{r.note}</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
           {/* AI 分析 */}
           <section>
             <div className="p-4 rounded-2xl border" style={{ background: '#F5F8FF', borderColor: '#C5D8E8' }}>
@@ -1140,6 +1498,93 @@ export default function GrowthClient() {
               <input type="text" placeholder="例：定期健康檢查、自量" value={growthForm.note} onChange={e => setGrowthForm(f => ({ ...f, note: e.target.value }))} className="w-full h-11 px-4 rounded-2xl border text-sm outline-none" style={{ borderColor: '#E8E0D5', color: '#2D3436' }} />
             </div>
             <button onClick={addGrowthRecord} className="w-full py-4 rounded-2xl font-bold text-base text-white" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+              儲存紀錄
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 每日身體觀察表單 Modal */}
+      {showBodyForm && (
+        <div className="fixed inset-0 z-50 flex items-end" style={{ background: 'rgba(0,0,0,0.5)' }}>
+          <div className="w-full bg-white rounded-t-3xl p-5 space-y-4 max-w-md mx-auto" style={{ maxHeight: '85vh', overflowY: 'auto' }}>
+            <div className="flex items-center justify-between">
+              <h2 className="font-black text-lg" style={{ color: '#2D3436' }}>每日身體觀察</h2>
+              <button onClick={() => setShowBodyForm(false)}><X size={22} style={{ color: '#8E9EAD' }} /></button>
+            </div>
+            <div>
+              <label className="text-sm font-semibold block mb-1" style={{ color: '#2D3436' }}>日期</label>
+              <input type="date" value={bodyForm.date} onChange={e => setBodyForm(f => ({ ...f, date: e.target.value }))} className="w-full h-11 px-4 rounded-2xl border text-sm outline-none" style={{ borderColor: '#E8E0D5', color: '#2D3436' }} />
+            </div>
+            <div>
+              <label className="text-sm font-semibold block mb-2" style={{ color: '#2D3436' }}>今天便便了嗎？</label>
+              <div className="flex gap-3">
+                {[{ v: true, label: '有便便 ✓' }, { v: false, label: '今天沒有' }].map(({ v, label }) => (
+                  <button key={String(v)} onClick={() => setBodyForm(f => ({ ...f, hadPoop: v }))}
+                    className="flex-1 py-2.5 rounded-xl text-sm font-semibold border"
+                    style={{ background: bodyForm.hadPoop === v ? (v ? '#D8F5D8' : '#FFE8E8') : 'white', color: bodyForm.hadPoop === v ? (v ? '#3A7A3A' : '#C45A5A') : '#6B7B8D', borderColor: bodyForm.hadPoop === v ? (v ? '#A8D8A8' : '#F5C5C5') : '#E8E0D5' }}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {bodyForm.hadPoop && (
+              <>
+                <div>
+                  <label className="text-sm font-semibold block mb-2" style={{ color: '#2D3436' }}>便便型態</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {['水狀', '糊狀', '軟條狀', '硬顆粒', '正常條狀'].map(t => (
+                      <button key={t} onClick={() => setBodyForm(f => ({ ...f, poopType: t }))}
+                        className="py-2 rounded-xl text-sm border"
+                        style={{ background: bodyForm.poopType === t ? '#FFF3CC' : 'white', color: bodyForm.poopType === t ? '#8B6914' : '#6B7B8D', borderColor: bodyForm.poopType === t ? '#E8C850' : '#E8E0D5', fontWeight: bodyForm.poopType === t ? 700 : 400 }}>
+                        {t}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-sm font-semibold block mb-2" style={{ color: '#2D3436' }}>便便顏色</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['黃色', '綠色', '棕色', '其他'].map(c => (
+                      <button key={c} onClick={() => setBodyForm(f => ({ ...f, poopColor: c }))}
+                        className="py-2 rounded-xl text-sm border"
+                        style={{ background: bodyForm.poopColor === c ? '#FFF3CC' : 'white', color: bodyForm.poopColor === c ? '#8B6914' : '#6B7B8D', borderColor: bodyForm.poopColor === c ? '#E8C850' : '#E8E0D5', fontWeight: bodyForm.poopColor === c ? 700 : 400 }}>
+                        {c}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+            <div>
+              <label className="text-sm font-semibold block mb-2" style={{ color: '#2D3436' }}>今天食慾如何？</label>
+              <div className="flex gap-2">
+                {['很好', '普通', '不太好'].map(a => (
+                  <button key={a} onClick={() => setBodyForm(f => ({ ...f, appetite: a }))}
+                    className="flex-1 py-2 rounded-xl text-sm border"
+                    style={{ background: bodyForm.appetite === a ? '#EBF4FF' : 'white', color: bodyForm.appetite === a ? '#5E85A3' : '#6B7B8D', borderColor: bodyForm.appetite === a ? '#7B9EBD' : '#E8E0D5', fontWeight: bodyForm.appetite === a ? 700 : 400 }}>
+                    {a}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-sm font-semibold block mb-2" style={{ color: '#2D3436' }}>昨晚睡眠品質？</label>
+              <div className="flex gap-2">
+                {['很好', '普通', '不太好'].map(s => (
+                  <button key={s} onClick={() => setBodyForm(f => ({ ...f, sleepQuality: s }))}
+                    className="flex-1 py-2 rounded-xl text-sm border"
+                    style={{ background: bodyForm.sleepQuality === s ? '#EBF4FF' : 'white', color: bodyForm.sleepQuality === s ? '#5E85A3' : '#6B7B8D', borderColor: bodyForm.sleepQuality === s ? '#7B9EBD' : '#E8E0D5', fontWeight: bodyForm.sleepQuality === s ? 700 : 400 }}>
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-sm font-semibold block mb-1" style={{ color: '#2D3436' }}>備注（選填）</label>
+              <input type="text" placeholder="例：有點脹氣、今天胃口特別好" value={bodyForm.note} onChange={e => setBodyForm(f => ({ ...f, note: e.target.value }))} className="w-full h-11 px-4 rounded-2xl border text-sm outline-none" style={{ borderColor: '#E8E0D5', color: '#2D3436' }} />
+            </div>
+            <button onClick={addBodyRecord} className="w-full py-4 rounded-2xl font-bold text-base text-white" style={{ background: 'linear-gradient(135deg, #C5608A, #A0336A)' }}>
               儲存紀錄
             </button>
           </div>
