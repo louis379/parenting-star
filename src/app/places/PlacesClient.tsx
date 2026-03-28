@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import {
-  MapPin, BookOpen, ClipboardList, Star, Clock, Baby,
+  MapPin, BookOpen, Star, Clock, Baby,
   Sun, CloudRain, Wind, Leaf, Search, SlidersHorizontal, X, ChevronDown, ChevronUp, Heart, ThumbsUp,
 } from 'lucide-react'
 
