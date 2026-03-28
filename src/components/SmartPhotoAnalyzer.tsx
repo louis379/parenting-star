@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { Camera, Sparkles, CheckCircle2, Video } from 'lucide-react'
+import { useProfile } from '@/hooks/useProfile'
 
 export type AnalysisPage = 'growth' | 'psychology' | 'education'
 
@@ -14,6 +15,7 @@ interface PhotoRecord {
   page: string
   aiSummary?: string
   developmentStage?: string
+  childId?: string
 }
 
 interface DevelopmentLevel {
@@ -40,6 +42,8 @@ interface TimelineRecord {
   type: 'photo' | 'video'
   thumbnail: string
   aiResult: AnalysisResult | null
+  childId?: string
+  detectedChildren?: { count: number; description: string }
 }
 
 // ── Growth 分析資料池 ──
@@ -351,6 +355,7 @@ interface SmartPhotoAnalyzerProps {
 }
 
 export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPhotoAnalyzerProps) {
+  const { activeChildId } = useProfile()
   const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
     if (typeof window === 'undefined') return []
     try {
@@ -387,6 +392,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
       imageData: compressed,
       note: '',
       page,
+      childId: activeChildId ?? undefined,
     }
     setPhotos(prev => {
       const updated = [newPhoto, ...prev].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
@@ -406,6 +412,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
         type: 'photo',
         thumbnail: compressed,
         aiResult: finalResult,
+        childId: activeChildId ?? undefined,
       })
     })
 
@@ -444,6 +451,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
         page,
         aiSummary: finalResult.developmentLevel?.stage,
         developmentStage: finalResult.developmentLevel?.stage,
+        childId: activeChildId ?? undefined,
       }
       newPhotos.push(newPhoto)
 
@@ -454,6 +462,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
         type: 'photo',
         thumbnail: compressed,
         aiResult: finalResult,
+        childId: activeChildId ?? undefined,
       })
 
       // 節流：每張間隔 1 秒
@@ -502,6 +511,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
         type: 'video',
         thumbnail,
         aiResult: finalResult,
+        childId: activeChildId ?? undefined,
       })
     } catch {
       setAnalysis(getRandomAnalysis(page))

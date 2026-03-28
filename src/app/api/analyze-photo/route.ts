@@ -96,6 +96,10 @@ export async function POST(req: NextRequest) {
     "description": "寶貝目前正在...（一到兩句話描述當前發展狀態）",
     "nextMilestone": "接下來可以期待...（一句話描述下一個里程碑）",
     "recommendedActivities": ["活動1", "活動2", "活動3"]
+  },
+  "detectedChildren": {
+    "count": 1,
+    "description": "照片中孩子的數量和外觀特徵描述（如有多位孩子請分別描述）"
   }
 }
 
@@ -103,7 +107,12 @@ export async function POST(req: NextRequest) {
 - 探索期：寶貝正在透過感官主動探索世界，好奇心旺盛
 - 建立期：寶貝正在建立基礎技能和習慣，需要重複練習
 - 穩定期：寶貝已掌握基本技能，正在鞏固並應用
-- 進階期：寶貝展現出超越年齡的能力，可以嘗試更有挑戰性的活動`,
+- 進階期：寶貝展現出超越年齡的能力，可以嘗試更有挑戰性的活動
+
+多孩偵測：
+- 請仔細觀察照片中有幾位孩子
+- 在 detectedChildren.count 填入孩子數量
+- 若有多位孩子，在 description 中分別描述每位孩子的特徵（如年齡估算、性別、外觀特徵），方便家長辨識和標注`,
             },
           ],
         },

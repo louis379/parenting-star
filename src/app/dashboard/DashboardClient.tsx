@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
-import { Bell, Settings, ChevronRight, TrendingUp, MapPin, School, AlertCircle, Plus, Utensils, Star, Heart } from 'lucide-react'
+import { Bell, Settings, ChevronRight, TrendingUp, MapPin, School, AlertCircle, Plus, Utensils, Star, Heart, Clock } from 'lucide-react'
 import { formatAge, getAgeStage, calcAgeMonths } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/Card'
 import { useProfileStore } from '@/stores/profileStore'
@@ -49,6 +49,7 @@ function getMilestones(ageMonths: number): string[] {
 
 const quickActions = [
   { href: '/growth', icon: TrendingUp, label: '記錄生長', color: 'bg-[#EBF4FF] text-[#7B9EBD]' },
+  { href: '/timeline', icon: Clock, label: '成長時間軸', color: 'bg-[#F0F8FF] text-[#5E85A3]' },
   { href: '/meals', icon: Utensils, label: '飲食日記', color: 'bg-[#F5E6C8] text-[#B89A78]' },
   { href: '/milestones', icon: Star, label: '里程碑', color: 'bg-[#EBF4EB] text-[#7BA87B]' },
   { href: '/places', icon: MapPin, label: '找景點', color: 'bg-[#EBF6F2] text-[#7BB8A8]' },
