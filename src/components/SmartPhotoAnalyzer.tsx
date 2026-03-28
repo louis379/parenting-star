@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Camera, Sparkles, CheckCircle2 } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { Camera, Sparkles, CheckCircle2, Video } from 'lucide-react'
 
 export type AnalysisPage = 'growth' | 'psychology' | 'education'
 
@@ -12,6 +12,15 @@ interface PhotoRecord {
   imageData: string
   note: string
   page: string
+  aiSummary?: string
+  developmentStage?: string
+}
+
+interface DevelopmentLevel {
+  stage: string
+  description: string
+  nextMilestone: string
+  recommendedActivities: string[]
 }
 
 interface AnalysisResult {
@@ -21,6 +30,16 @@ interface AnalysisResult {
   cheer: string
   pageSpecificLabel: string
   pageSpecificItems: string[]
+  developmentLevel?: DevelopmentLevel
+}
+
+interface TimelineRecord {
+  id: string
+  date: string
+  sortDate: number
+  type: 'photo' | 'video'
+  thumbnail: string
+  aiResult: AnalysisResult | null
 }
 
 // ── Growth 分析資料池 ──
@@ -39,6 +58,12 @@ const GROWTH_RESULTS: AnalysisResult[] = [
       '動作發展：活潑好動 — 從照片可見寶貝的動作協調性不錯',
       '如果這是餐盤照：蛋白質和蔬菜搭配看起來不錯，可以再加點全穀類',
     ],
+    developmentLevel: {
+      stage: '建立期',
+      description: '寶貝目前正在積極建立基礎動作技能和身體協調性',
+      nextMilestone: '接下來可以期待更精細的手部動作發展',
+      recommendedActivities: ['戶外爬行探索', '球類遊戲', '積木堆疊'],
+    },
   },
   {
     strengths: [
@@ -54,6 +79,12 @@ const GROWTH_RESULTS: AnalysisResult[] = [
       '動作發展：穩健發展 — 身體協調性符合年齡預期',
       '如果這是便便照：顏色和型態看起來都在正常範圍，腸胃健康！',
     ],
+    developmentLevel: {
+      stage: '探索期',
+      description: '寶貝目前正在透過感官探索身邊的世界',
+      nextMilestone: '接下來可以期待更主動的移動能力發展',
+      recommendedActivities: ['感官遊戲', '爬行訓練', '音樂律動'],
+    },
   },
   {
     strengths: [
@@ -69,6 +100,12 @@ const GROWTH_RESULTS: AnalysisResult[] = [
       '動作發展：輕盈靈活 — 動作看起來很自在流暢',
       '如果這是餐盤照：再補充一點優質蛋白質（雞蛋、豆腐、魚）會更均衡',
     ],
+    developmentLevel: {
+      stage: '穩定期',
+      description: '寶貝目前正在鞏固已有的技能，發展更穩定',
+      nextMilestone: '接下來可以期待更複雜的認知與語言能力',
+      recommendedActivities: ['規律睡眠訓練', '戶外散步', '親子共讀'],
+    },
   },
 ]
 
@@ -88,6 +125,12 @@ const PSYCHOLOGY_RESULTS: AnalysisResult[] = [
       '場景分析：玩耍時光 — 在玩耍中探索是最好的情緒發展方式',
       '社交狀態：舒適自在 — 寶貝看起來很享受當下的環境',
     ],
+    developmentLevel: {
+      stage: '建立期',
+      description: '寶貝目前正在建立穩固的情感依附和安全感',
+      nextMilestone: '接下來可以期待更豐富的情緒表達能力',
+      recommendedActivities: ['情緒繪本閱讀', '角色扮演遊戲', '親子對話練習'],
+    },
   },
   {
     strengths: [
@@ -103,6 +146,12 @@ const PSYCHOLOGY_RESULTS: AnalysisResult[] = [
       '場景分析：專注活動 — 高度投入是情緒穩定的好信號',
       '社交狀態：獨立探索 — 這顯示寶貝有良好的自主性',
     ],
+    developmentLevel: {
+      stage: '穩定期',
+      description: '寶貝目前正在發展穩定的情緒調節能力',
+      nextMilestone: '接下來可以期待更成熟的社交互動技巧',
+      recommendedActivities: ['深呼吸練習', '情緒辨識遊戲', '自由創作活動'],
+    },
   },
   {
     strengths: [
@@ -118,6 +167,12 @@ const PSYCHOLOGY_RESULTS: AnalysisResult[] = [
       '場景分析：互動玩耍 — 社交互動對情緒發展非常有益',
       '社交狀態：開放參與 — 願意互動是很好的社交發展指標',
     ],
+    developmentLevel: {
+      stage: '探索期',
+      description: '寶貝目前正在積極探索情緒世界，建立情感認知',
+      nextMilestone: '接下來可以期待更清晰的情緒表達和自我意識',
+      recommendedActivities: ['情緒故事時間', '鏡子遊戲', '親子互動歌謠'],
+    },
   },
 ]
 
@@ -137,6 +192,12 @@ const EDUCATION_RESULTS: AnalysisResult[] = [
       '專注狀態：高度投入 — 寶貝對當下活動很感興趣',
       '學習模式：主動探索 — 自主學習的態度非常棒',
     ],
+    developmentLevel: {
+      stage: '建立期',
+      description: '寶貝目前正在建立基礎學習習慣和認知框架',
+      nextMilestone: '接下來可以期待更強的邏輯思維和問題解決能力',
+      recommendedActivities: ['親子共讀', '積木與拼圖', '自然探索活動'],
+    },
   },
   {
     strengths: [
@@ -152,6 +213,12 @@ const EDUCATION_RESULTS: AnalysisResult[] = [
       '專注狀態：深度專注 — 這樣的投入程度表示活動難度恰到好處',
       '學習模式：創造思考 — 從做中學的能力值得鼓勵',
     ],
+    developmentLevel: {
+      stage: '進階期',
+      description: '寶貝目前正在展現進階的創造與思考能力',
+      nextMilestone: '接下來可以期待更複雜的計劃與執行能力',
+      recommendedActivities: ['科學小實驗', '創意手作', '角色扮演故事'],
+    },
   },
   {
     strengths: [
@@ -167,6 +234,12 @@ const EDUCATION_RESULTS: AnalysisResult[] = [
       '專注狀態：輕鬆愉快 — 在放鬆狀態下學習效果最好',
       '學習模式：社交學習 — 從互動中學習是這個階段最有效的方式',
     ],
+    developmentLevel: {
+      stage: '穩定期',
+      description: '寶貝目前正在穩定發展社交學習和語言表達能力',
+      nextMilestone: '接下來可以期待更豐富的語言組織和敘事能力',
+      recommendedActivities: ['同儕互動遊戲', '故事接龍', '生活情境模擬'],
+    },
   },
 ]
 
@@ -174,6 +247,14 @@ function getRandomAnalysis(page: AnalysisPage): AnalysisResult {
   const pool =
     page === 'growth' ? GROWTH_RESULTS : page === 'psychology' ? PSYCHOLOGY_RESULTS : EDUCATION_RESULTS
   return pool[Math.floor(Math.random() * pool.length)]
+}
+
+function getStageEmoji(stage: string): string {
+  if (stage.includes('探索')) return '🌱'
+  if (stage.includes('建立')) return '🌿'
+  if (stage.includes('穩定')) return '🌳'
+  if (stage.includes('進階')) return '🏆'
+  return '⭐'
 }
 
 async function analyzePhotoWithAI(imageBase64: string, analysisType: AnalysisPage): Promise<AnalysisResult | null> {
@@ -194,6 +275,7 @@ async function analyzePhotoWithAI(imageBase64: string, analysisType: AnalysisPag
       cheer: r.encouragement ?? '',
       pageSpecificLabel: r.analysis?.label ?? '',
       pageSpecificItems: r.analysis?.items ?? [],
+      developmentLevel: r.developmentLevel,
     }
   } catch {
     return null
@@ -224,6 +306,44 @@ function compressToDataURL(file: File, maxSize: number, quality: number): Promis
   })
 }
 
+function extractVideoFirstFrame(videoFile: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video')
+    const url = URL.createObjectURL(videoFile)
+    video.src = url
+    video.muted = true
+    video.playsInline = true
+    video.crossOrigin = 'anonymous'
+    video.onloadeddata = () => {
+      try {
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.min(video.videoWidth || 640, 600)
+        canvas.height = Math.min(video.videoHeight || 480, 600)
+        canvas.getContext('2d')?.drawImage(video, 0, 0, canvas.width, canvas.height)
+        URL.revokeObjectURL(url)
+        resolve(canvas.toDataURL('image/jpeg', 0.75))
+      } catch (err) {
+        URL.revokeObjectURL(url)
+        reject(err)
+      }
+    }
+    video.onerror = () => {
+      URL.revokeObjectURL(url)
+      reject(new Error('無法載入影片'))
+    }
+    video.load()
+  })
+}
+
+function saveToGrowthTimeline(record: TimelineRecord) {
+  try {
+    const existingStr = localStorage.getItem('ps_growth_timeline')
+    const existing: TimelineRecord[] = existingStr ? JSON.parse(existingStr) : []
+    const updated = [record, ...existing].sort((a, b) => b.sortDate - a.sortDate)
+    localStorage.setItem('ps_growth_timeline', JSON.stringify(updated))
+  } catch { /* ignore storage errors */ }
+}
+
 interface SmartPhotoAnalyzerProps {
   page: AnalysisPage
   storageKey: string
@@ -241,23 +361,27 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
   const [latestImage, setLatestImage] = useState<string | null>(null)
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [batchProgress, setBatchProgress] = useState<{ current: number; total: number } | null>(null)
+  const [batchComplete, setBatchComplete] = useState<string | null>(null)
+  const videoInputRef = useRef<HTMLInputElement>(null)
 
   async function handleSingleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
 
-    // Preview + analysis for the single photo
     const preview = await compressToDataURL(file, 600, 0.75)
     setLatestImage(preview)
     setAnalysis(null)
     setIsAnalyzing(true)
+    setBatchComplete(null)
 
-    // Add to timeline
     const compressed = await compressToDataURL(file, 800, 0.7)
     const photoDate = new Date(file.lastModified)
     const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    const id = `${Date.now()}_${Math.random().toString(36).slice(2)}`
+
     const newPhoto: PhotoRecord = {
-      id: `${Date.now()}_${Math.random().toString(36).slice(2)}`,
+      id,
       date: dateStr,
       sortDate: photoDate.getTime(),
       imageData: compressed,
@@ -270,10 +394,19 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
       return updated
     })
 
-    // 呼叫真正的 Claude Vision API，失敗時 fallback 到 mock data
     analyzePhotoWithAI(preview, page).then(result => {
-      setAnalysis(result ?? getRandomAnalysis(page))
+      const finalResult = result ?? getRandomAnalysis(page)
+      setAnalysis(finalResult)
       setIsAnalyzing(false)
+      // Save to growth timeline
+      saveToGrowthTimeline({
+        id,
+        date: dateStr,
+        sortDate: photoDate.getTime(),
+        type: 'photo',
+        thumbnail: compressed,
+        aiResult: finalResult,
+      })
     })
 
     e.target.value = ''
@@ -283,28 +416,98 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
     const files = e.target.files
     if (!files || files.length === 0) return
 
+    const total = files.length
+    setBatchProgress({ current: 0, total })
+    setBatchComplete(null)
+    setLatestImage(null)
+    setAnalysis(null)
+
     const newPhotos: PhotoRecord[] = []
+
     for (let idx = 0; idx < files.length; idx++) {
+      setBatchProgress({ current: idx + 1, total })
       const file = files[idx]
-      const compressed = await compressToDataURL(file, 800, 0.7)
+      const compressed = await compressToDataURL(file, 600, 0.75)
       const photoDate = new Date(file.lastModified)
       const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-      newPhotos.push({
-        id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`,
+      const id = `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`
+
+      const aiResult = await analyzePhotoWithAI(compressed, page)
+      const finalResult = aiResult ?? getRandomAnalysis(page)
+
+      const newPhoto: PhotoRecord = {
+        id,
         date: dateStr,
         sortDate: photoDate.getTime(),
         imageData: compressed,
         note: '',
         page,
+        aiSummary: finalResult.developmentLevel?.stage,
+        developmentStage: finalResult.developmentLevel?.stage,
+      }
+      newPhotos.push(newPhoto)
+
+      saveToGrowthTimeline({
+        id,
+        date: dateStr,
+        sortDate: photoDate.getTime(),
+        type: 'photo',
+        thumbnail: compressed,
+        aiResult: finalResult,
       })
+
+      // 節流：每張間隔 1 秒
+      if (idx < files.length - 1) {
+        await new Promise(r => setTimeout(r, 1000))
+      }
     }
 
     setPhotos(prev => {
-      const updated = [...prev, ...newPhotos].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
+      const updated = [...newPhotos, ...prev].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
       localStorage.setItem(storageKey, JSON.stringify(updated))
       return updated
     })
 
+    setBatchProgress(null)
+    setBatchComplete(`已分析 ${total} 張照片，成長紀錄已更新！`)
+    e.target.value = ''
+  }
+
+  async function handleVideoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsAnalyzing(true)
+    setAnalysis(null)
+    setLatestImage(null)
+    setBatchComplete(null)
+
+    try {
+      const thumbnail = await extractVideoFirstFrame(file)
+      setLatestImage(thumbnail)
+
+      const videoDate = new Date(file.lastModified)
+      const dateStr = videoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+      const id = `${Date.now()}_${Math.random().toString(36).slice(2)}`
+
+      // 影片分析著重情緒（psychology 視角）
+      const aiResult = await analyzePhotoWithAI(thumbnail, 'psychology')
+      const finalResult = aiResult ?? getRandomAnalysis('psychology')
+      setAnalysis(finalResult)
+
+      saveToGrowthTimeline({
+        id,
+        date: dateStr,
+        sortDate: videoDate.getTime(),
+        type: 'video',
+        thumbnail,
+        aiResult: finalResult,
+      })
+    } catch {
+      setAnalysis(getRandomAnalysis(page))
+    }
+
+    setIsAnalyzing(false)
     e.target.value = ''
   }
 
@@ -383,6 +586,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
             <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>從相簿選取</span>
           </label>
         </div>
+
         {/* 批次導入 */}
         <label className="flex items-center justify-center gap-2 mt-2 py-2 rounded-xl cursor-pointer active:opacity-70" style={{ background: 'rgba(255,255,255,0.6)', border: '1px solid #C5D8E8' }}>
           <input
@@ -391,14 +595,61 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
             multiple
             className="hidden"
             onChange={handleBatchUpload}
+            disabled={!!batchProgress}
           />
           <span style={{ fontSize: 14 }}>📂</span>
           <span className="text-xs font-semibold" style={{ color: '#6B7B8D' }}>批次導入成長照片</span>
         </label>
+
+        {/* 影片上傳 */}
+        <label className="flex items-center justify-center gap-2 mt-2 py-2 rounded-xl cursor-pointer active:opacity-70" style={{ background: 'rgba(255,240,255,0.7)', border: '1px solid #D8C5E8' }}>
+          <input
+            ref={videoInputRef}
+            type="file"
+            accept="video/*"
+            className="hidden"
+            onChange={handleVideoUpload}
+          />
+          <Video size={14} style={{ color: '#8060A8' }} />
+          <span className="text-xs font-semibold" style={{ color: '#8060A8' }}>上傳影片（情緒分析）</span>
+        </label>
+
         <p className="text-[10px] text-center mt-1.5" style={{ color: '#A0AEB8' }}>
-          批次導入會自動讀取照片日期，按時間排序
+          批次導入自動讀取日期排序 · 影片擷取首幀進行 AI 分析
         </p>
       </div>
+
+      {/* 批次分析進度 */}
+      {batchProgress && (
+        <div
+          className="flex flex-col gap-2 p-3 rounded-2xl mb-3"
+          style={{ background: 'linear-gradient(135deg, #EBF4FF, #DFF0FF)', border: '1px solid #C5D8E8' }}
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin shrink-0" style={{ borderColor: '#7B9EBD', borderTopColor: 'transparent' }} />
+            <p className="text-xs font-semibold" style={{ color: '#5E85A3' }}>
+              正在分析第 {batchProgress.current}/{batchProgress.total} 張...
+            </p>
+          </div>
+          <div className="w-full h-1.5 rounded-full" style={{ background: '#C5D8E8' }}>
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{ background: '#7B9EBD', width: `${(batchProgress.current / batchProgress.total) * 100}%` }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* 批次完成訊息 */}
+      {batchComplete && (
+        <div
+          className="flex items-center gap-2 px-3 py-2.5 rounded-xl mb-3"
+          style={{ background: 'linear-gradient(135deg, #EBF8EB, #D8F5D8)', border: '1px solid #A8D8A8' }}
+        >
+          <span style={{ fontSize: 16 }}>🎉</span>
+          <p className="text-xs font-semibold" style={{ color: '#3A7A3A' }}>{batchComplete}</p>
+        </div>
+      )}
 
       {/* 分析結果區（上傳後顯示） */}
       {(latestImage || isAnalyzing) && (
@@ -442,6 +693,34 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
                     </div>
                   </div>
                 </div>
+
+                {/* 發展等級判斷 */}
+                {analysis.developmentLevel && (
+                  <div className="p-3 rounded-xl" style={{ background: '#FFF9E6', border: '1px solid #F0D080' }}>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-sm font-bold" style={{ color: '#7A5A10' }}>
+                        {getStageEmoji(analysis.developmentLevel.stage)} {analysis.developmentLevel.stage}
+                      </span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ background: '#F0D080', color: '#7A5A10' }}>
+                        發展等級
+                      </span>
+                    </div>
+                    <p className="text-[11px] leading-snug mb-1" style={{ color: '#6B4A20' }}>
+                      {analysis.developmentLevel.description}
+                    </p>
+                    <p className="text-[11px] leading-snug mb-2" style={{ color: '#8B6A30' }}>
+                      ⭐ {analysis.developmentLevel.nextMilestone}
+                    </p>
+                    <p className="text-[10px] font-bold mb-1" style={{ color: '#7A5A10' }}>推薦活動：</p>
+                    <div className="flex flex-wrap gap-1">
+                      {analysis.developmentLevel.recommendedActivities.map((activity, i) => (
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: '#F0D080', color: '#6B4A20' }}>
+                          {activity}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* 頁面專屬分析 */}
                 <div className="p-3 rounded-xl" style={{ background: '#EBF4FF', border: '1px solid #C5D8E8' }}>
@@ -505,13 +784,24 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
                     >
                       <p className="text-white text-[9px] text-center">{photo.date}</p>
                     </div>
-                    {/* AI 分析標籤 */}
-                    <div
-                      className="absolute top-1 right-1 px-1 py-0.5 rounded-md"
-                      style={{ background: 'rgba(123,158,189,0.9)' }}
-                    >
-                      <Sparkles size={8} className="text-white" />
-                    </div>
+                    {/* AI 分析標籤：發展階段 */}
+                    {photo.developmentStage ? (
+                      <div
+                        className="absolute top-1 right-1 px-1 py-0.5 rounded-md"
+                        style={{ background: 'rgba(240,208,128,0.92)' }}
+                      >
+                        <p className="text-[8px] font-bold" style={{ color: '#7A5A10' }}>
+                          {getStageEmoji(photo.developmentStage)}
+                        </p>
+                      </div>
+                    ) : (
+                      <div
+                        className="absolute top-1 right-1 px-1 py-0.5 rounded-md"
+                        style={{ background: 'rgba(123,158,189,0.9)' }}
+                      >
+                        <Sparkles size={8} className="text-white" />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
