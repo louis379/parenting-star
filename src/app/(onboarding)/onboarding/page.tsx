@@ -127,6 +127,8 @@ export default function OnboardingPage() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [photoResult, setPhotoResult] = useState<typeof ONBOARDING_PHOTO_RESULTS[0] | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState('')
 
   function toggleArr(arr: string[], val: string): string[] {
     return arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]
@@ -146,7 +148,7 @@ export default function OnboardingPage() {
     e.target.value = ''
   }
 
-  function handleFinish() {
+  async function handleFinish() {
     const onboardingData = {
       child: {
         nickname: child.nickname,
@@ -168,13 +170,39 @@ export default function OnboardingPage() {
       completedAt: new Date().toISOString(),
     }
 
+    // 存 localStorage 備份
     try {
       localStorage.setItem('ps_onboarding', JSON.stringify(onboardingData))
     } catch {
       // localStorage 不可用時靜默忽略
     }
 
-    setStep(4)
+    // 呼叫 API 存入資料庫
+    setSaving(true)
+    setSaveError('')
+    try {
+      const res = await fetch('/api/onboarding', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(onboardingData),
+      })
+      if (!res.ok) {
+        const err = await res.json()
+        // 如果是未登入，存 localStorage 後仍可繼續
+        if (res.status === 401) {
+          setStep(4)
+          return
+        }
+        setSaveError(err.error || '儲存失敗，請稍後再試')
+        setSaving(false)
+        return
+      }
+      setStep(4)
+    } catch {
+      // 網路錯誤時仍允許繼續（資料在 localStorage）
+      setStep(4)
+    }
+    setSaving(false)
   }
 
   const progress = ((step + 1) / STEPS.length) * 100
@@ -524,12 +552,14 @@ export default function OnboardingPage() {
               </div>
             </div>
 
+            {saveError && <p className="text-xs text-red-500 bg-red-50 rounded-xl px-3 py-2">{saveError}</p>}
             <Button
               size="lg"
               className="w-full mt-4"
+              loading={saving}
               onClick={handleFinish}
             >
-              完成設定！
+              {saving ? '儲存中...' : '完成設定！'}
             </Button>
           </div>
         )}
@@ -553,16 +583,9 @@ export default function OnboardingPage() {
                 </div>
               ))}
             </div>
-            <Button size="lg" className="w-full mt-6" onClick={() => router.push('/growth')}>
+            <Button size="lg" className="w-full mt-6" onClick={() => router.push('/dashboard')}>
               開始使用
             </Button>
-            <button
-              type="button"
-              onClick={() => router.push('/register')}
-              className="w-full text-center text-sm text-gray-400 hover:text-gray-600 mt-3"
-            >
-              建立帳號以儲存資料
-            </button>
           </div>
         )}
       </div>

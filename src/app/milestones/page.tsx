@@ -25,7 +25,7 @@ export default async function MilestonesPage() {
     .limit(1)
     .maybeSingle()
 
-  if (!member) redirect('/onboarding')
+  if (!member) redirect('/dashboard')
 
   let children: any[] = []
   let milestones: any[] = []

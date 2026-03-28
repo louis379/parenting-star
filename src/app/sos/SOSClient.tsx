@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { AlertCircle, Heart, Wind, Phone, BookOpen, Coffee } from 'lucide-react'
+import { AlertCircle, Heart, Wind, Phone, BookOpen, Coffee, ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const CRISIS_CARDS = [
@@ -67,6 +68,7 @@ const AFFIRMATIONS = [
 ]
 
 export default function SOSClient() {
+  const router = useRouter()
   const [expanded, setExpanded] = useState<string | null>(null)
   const [affirmIdx, setAffirmIdx] = useState(0)
   const [breathing, setBreathing] = useState(false)
@@ -108,6 +110,9 @@ export default function SOSClient() {
     <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="bg-gradient-to-br from-[#EBF4FF]0 to-red-600 text-white px-5 pt-12 pb-8">
+        <button onClick={() => router.back()} className="flex items-center gap-1 text-white/80 text-sm mb-3 -ml-1">
+          <ArrowLeft size={18} /><span>返回</span>
+        </button>
         <div className="flex items-center gap-2 mb-2">
           <AlertCircle size={22} />
           <h1 className="text-xl font-black">崩潰急救站</h1>

@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Heart, ChevronDown, ChevronRight } from 'lucide-react'
+import { Heart, ChevronDown, ChevronRight, ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { AppShell } from '@/components/layouts/AppShell'
 import { Card } from '@/components/ui/Card'
 
@@ -285,11 +286,15 @@ function ArticleItem({ article }: { article: { title: string; content: string } 
 }
 
 export default function ParentsPage() {
+  const router = useRouter()
   return (
     <AppShell>
       <div style={{ background: '#FAFAF5' }} className="min-h-screen">
         {/* Header */}
         <div className="gradient-hero text-white px-5 pt-12 pb-8">
+          <button onClick={() => router.back()} className="flex items-center gap-1 text-white/80 text-sm mb-3 -ml-1">
+            <ArrowLeft size={18} /><span>返回</span>
+          </button>
           <div className="flex items-center gap-2 mb-2">
             <Heart size={22} />
             <h1 className="text-xl font-black">家長心態專區</h1>

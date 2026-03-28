@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Star, CheckCircle, Circle, ChevronDown, ChevronRight, Lightbulb } from 'lucide-react'
+import { Star, CheckCircle, Circle, ChevronDown, ChevronRight, Lightbulb, ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Card } from '@/components/ui/Card'
 import { calcAgeMonths } from '@/lib/utils'
@@ -81,6 +82,7 @@ const CATEGORY_CONFIG: Record<Category, { emoji: string; color: string; bg: stri
 }
 
 export default function MilestonesClient({ children, initialMilestones }: Props) {
+  const router = useRouter()
   const [activeChildIdx, setActiveChildIdx] = useState(0)
   const [milestones, setMilestones] = useState<Milestone[]>(initialMilestones)
   const [expandedCategories, setExpandedCategories] = useState<Set<Category>>(new Set(['大動作']))
@@ -157,6 +159,9 @@ export default function MilestonesClient({ children, initialMilestones }: Props)
     <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
+        <button onClick={() => router.back()} className="flex items-center gap-1 text-white/80 text-sm mb-3 -ml-1">
+          <ArrowLeft size={18} /><span>返回</span>
+        </button>
         <div className="flex items-center gap-2 mb-4">
           <Star size={22} />
           <h1 className="text-xl font-black">發展里程碑</h1>

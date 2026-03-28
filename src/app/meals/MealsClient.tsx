@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Plus, Utensils, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react'
+import { Plus, Utensils, ChevronDown, ChevronUp, AlertTriangle, ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -116,6 +117,7 @@ function getFoodSuggestion(ageMonths: number) {
 }
 
 export default function MealsClient({ children, initialRecords }: Props) {
+  const router = useRouter()
   const [activeChildIdx, setActiveChildIdx] = useState(0)
   const [records, setRecords] = useState<MealRecord[]>(initialRecords)
   const [showForm, setShowForm] = useState(false)
@@ -184,6 +186,9 @@ export default function MealsClient({ children, initialRecords }: Props) {
     <div style={{ background: '#FAFAF5' }} className="min-h-screen">
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-8">
+        <button onClick={() => router.back()} className="flex items-center gap-1 text-white/80 text-sm mb-3 -ml-1">
+          <ArrowLeft size={18} /><span>返回</span>
+        </button>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Utensils size={22} />
