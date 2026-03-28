@@ -260,24 +260,18 @@ export default function SettingsClient({ profile, email, children, family, myRol
             {showAddChild ? (
               <div className="bg-[#F0F7FF] rounded-2xl p-4 space-y-3 border border-[#C5D8E8]">
                 <p className="text-sm font-bold" style={{ color: '#5E85A3' }}>新增小朋友</p>
-                <div>
-                  <label className="text-xs font-semibold text-gray-500 mb-1 block">暱稱 *</label>
-                  <input
-                    value={addChildForm.nickname}
-                    onChange={e => setAddChildForm(prev => ({ ...prev, nickname: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl border border-[#C5D8E8] text-sm outline-none bg-white"
-                    placeholder="例：小明"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-semibold text-gray-500 mb-1 block">出生日期 *</label>
-                  <input
-                    type="date"
-                    value={addChildForm.birth_date}
-                    onChange={e => setAddChildForm(prev => ({ ...prev, birth_date: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl border border-[#C5D8E8] text-sm outline-none bg-white"
-                  />
-                </div>
+                <Input
+                  label="暱稱 *"
+                  value={addChildForm.nickname}
+                  onChange={e => setAddChildForm(prev => ({ ...prev, nickname: e.target.value }))}
+                  placeholder="例：小明"
+                />
+                <Input
+                  label="出生日期 *"
+                  type="date"
+                  value={addChildForm.birth_date}
+                  onChange={e => setAddChildForm(prev => ({ ...prev, birth_date: e.target.value }))}
+                />
                 <div>
                   <label className="text-xs font-semibold text-gray-500 mb-1 block">性別</label>
                   <div className="flex gap-2">

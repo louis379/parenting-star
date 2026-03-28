@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
   Sparkles, CheckCircle2, ChevronRight, AlertTriangle,
@@ -8,6 +8,8 @@ import {
 } from 'lucide-react'
 import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
 import { ChildSwitcher, useActiveChildId } from '@/components/ChildSwitcher'
+import { useProfile } from '@/hooks/useProfile'
+import { calcAgeMonths } from '@/lib/utils'
 
 type MainTab = 'knowledge' | 'records'
 
@@ -578,10 +580,29 @@ const MOCK_AI_RESULTS: AIResult[] = [
   },
 ]
 
+function ageMonthsToAgeGroupKey(months: number): string {
+  if (months < 4) return '0-3m'
+  if (months < 7) return '4-6m'
+  if (months < 10) return '7-9m'
+  if (months < 13) return '10-12m'
+  if (months < 24) return '1-2y'
+  if (months < 36) return '2-3y'
+  if (months < 48) return '3-4y'
+  if (months < 60) return '4-5y'
+  if (months < 72) return '5-6y'
+  if (months < 96) return '6-8y'
+  if (months < 120) return '8-10y'
+  return '10-12y'
+}
+
 export default function GrowthClient() {
   const childId = useActiveChildId()
+  const { activeChild } = useProfile()
+  const defaultAge = activeChild?.birth_date
+    ? ageMonthsToAgeGroupKey(calcAgeMonths(activeChild.birth_date))
+    : '1-2y'
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
-  const [selectedAge, setSelectedAge] = useState('1-2y')
+  const [selectedAge, setSelectedAge] = useState(defaultAge)
   const [growthRecords, setGrowthRecords] = useState<GrowthRecord[]>([
     { id: '1', date: '2026-01-15', height: '85', weight: '12.5', note: '健康檢查' },
     { id: '2', date: '2026-02-20', height: '86.5', weight: '12.8', note: '自量' },
@@ -612,6 +633,12 @@ export default function GrowthClient() {
     sleepQuality: '普通',
     note: '',
   })
+
+  useEffect(() => {
+    if (activeChild?.birth_date) {
+      setSelectedAge(ageMonthsToAgeGroupKey(calcAgeMonths(activeChild.birth_date)))
+    }
+  }, [activeChild?.id, activeChild?.birth_date])
 
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)

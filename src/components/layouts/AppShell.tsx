@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { TrendingUp, Brain, BookOpen, Home, User } from 'lucide-react'
+import { TrendingUp, Brain, BookOpen, Home, User, Clock } from 'lucide-react'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 const navItems = [
@@ -21,16 +21,16 @@ const navItems = [
     activeColor: '#5E85A3',
   },
   {
-    href: '/psychology',
-    icon: Brain,
-    label: '心理培養',
+    href: '/timeline',
+    icon: Clock,
+    label: '成長軌跡',
     color: '#7B9EBD',
     activeColor: '#5E85A3',
   },
   {
-    href: '/education',
-    icon: BookOpen,
-    label: '教育發展',
+    href: '/psychology',
+    icon: Brain,
+    label: '心理培養',
     color: '#7B9EBD',
     activeColor: '#5E85A3',
   },
