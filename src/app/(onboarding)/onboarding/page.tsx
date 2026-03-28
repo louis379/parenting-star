@@ -2,12 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChevronLeft, Baby, Heart, Home, CheckCircle } from 'lucide-react'
+import { ChevronLeft, Baby, Heart, Home, CheckCircle, Camera, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/lib/utils'
 
-// === Step 1: 孩子基本資料 ===
 interface ChildData {
   nickname: string
   birthDate: string
@@ -20,7 +19,6 @@ interface ChildData {
   specialTraits: string[]
 }
 
-// === Step 2: 家庭資訊 ===
 interface FamilyData {
   familyName: string
   city: string
@@ -36,10 +34,83 @@ const CITIES = ['台北市', '新北市', '桃園市', '台中市', '台南市',
 
 const STEPS = [
   { icon: Baby, title: '孩子的資料', subtitle: '讓我們認識你的寶貝' },
+  { icon: Camera, title: '照片初體驗', subtitle: '一張照片，AI 幫你解讀現在的寶貝' },
   { icon: Heart, title: '健康狀況', subtitle: '有助於更準確的推薦' },
   { icon: Home, title: '家庭資訊', subtitle: '個性化你的使用體驗' },
   { icon: CheckCircle, title: '設定完成！', subtitle: '你的育兒智多星已就緒' },
 ]
+
+// 根據月齡計算發展階段描述
+function getAgeStageInfo(birthDate: string): { stage: string; focus: string[] } {
+  if (!birthDate) return {
+    stage: '寶貝發展期',
+    focus: ['觀察日常行為發展', '記錄每天的成長時刻', '持續和寶貝互動溝通'],
+  }
+  const months = Math.floor((Date.now() - new Date(birthDate).getTime()) / (1000 * 60 * 60 * 24 * 30.44))
+  if (months < 3) return {
+    stage: '新生兒期（0–3個月）',
+    focus: ['建立規律哺餵和睡眠', '觀察追視和社交性微笑', '進行大量肌膚接觸和輕聲說話'],
+  }
+  if (months < 6) return {
+    stage: '翻身探索期（3–6個月）',
+    focus: ['鼓勵趴趴練習強化頸部和核心', '創造豐富的視覺和聽覺刺激', '開始準備副食品的心理建設'],
+  }
+  if (months < 12) return {
+    stage: '爬行成長期（6–12個月）',
+    focus: ['提供安全的爬行空間', '引入多種副食品擴展味覺', '玩聲音和物體永恆性的遊戲'],
+  }
+  if (months < 24) return {
+    stage: '學步語言爆發期（1–2歲）',
+    focus: ['大量說話和命名，豐富詞彙', '允許探索但設定安全界線', '建立固定的生活作息'],
+  }
+  if (months < 48) return {
+    stage: '自主探索期（2–4歲）',
+    focus: ['給予選擇機會培養自主感', '情緒同理重於行為糾正', '豐富的遊戲和社交互動'],
+  }
+  return {
+    stage: '社交學習期（4歲以上）',
+    focus: ['培養閱讀和邏輯思考習慣', '支持興趣發展不過度安排', '建立解決問題的自信心'],
+  }
+}
+
+// Mock 照片分析結果
+const ONBOARDING_PHOTO_RESULTS = [
+  {
+    observation: '寶貝看起來精神飽滿、充滿活力！',
+    highlights: ['氣色紅潤，健康狀態看起來很好', '表情自然放鬆，情緒狀態穩定'],
+  },
+  {
+    observation: '好可愛的寶貝！從照片感受到滿滿的生命力！',
+    highlights: ['笑容燦爛，安全感十足', '眼神好奇，學習動力旺盛'],
+  },
+  {
+    observation: '從照片可以感受到寶貝的活潑和好奇心！',
+    highlights: ['肢體動作自然，發展狀態良好', '表情豐富，情緒表達能力好'],
+  },
+]
+
+function compressImage(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const maxSize = 600
+        let w = img.width, h = img.height
+        if (w > maxSize || h > maxSize) {
+          if (w > h) { h = Math.round(h * maxSize / w); w = maxSize }
+          else { w = Math.round(w * maxSize / h); h = maxSize }
+        }
+        canvas.width = w; canvas.height = h
+        canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
+        resolve(canvas.toDataURL('image/jpeg', 0.75))
+      }
+      img.src = ev.target?.result as string
+    }
+    reader.readAsDataURL(file)
+  })
+}
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -52,8 +123,27 @@ export default function OnboardingPage() {
     familyName: '', city: '', district: '', parentingStyle: [],
   })
 
+  // Photo step state
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [photoResult, setPhotoResult] = useState<typeof ONBOARDING_PHOTO_RESULTS[0] | null>(null)
+
   function toggleArr(arr: string[], val: string): string[] {
     return arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]
+  }
+
+  async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const compressed = await compressImage(file)
+    setPhotoPreview(compressed)
+    setPhotoResult(null)
+    setIsAnalyzing(true)
+    setTimeout(() => {
+      setPhotoResult(ONBOARDING_PHOTO_RESULTS[Math.floor(Math.random() * ONBOARDING_PHOTO_RESULTS.length)])
+      setIsAnalyzing(false)
+    }, 1500)
+    e.target.value = ''
   }
 
   function handleFinish() {
@@ -84,18 +174,19 @@ export default function OnboardingPage() {
       // localStorage 不可用時靜默忽略
     }
 
-    setStep(3)
+    setStep(4)
   }
 
   const progress = ((step + 1) / STEPS.length) * 100
   const StepIcon = STEPS[step].icon
+  const stageInfo = getAgeStageInfo(child.birthDate)
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF5' }}>
       {/* Header */}
       <div className="gradient-hero text-white px-5 pt-12 pb-6">
         <div className="flex items-center gap-3 mb-4">
-          {step > 0 && step < 3 && (
+          {step > 0 && step < 4 && (
             <button onClick={() => setStep(s => s - 1)} className="text-white/80 hover:text-white">
               <ChevronLeft size={24} />
             </button>
@@ -190,8 +281,120 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 1: 健康狀況 */}
+        {/* Step 1: 照片辨識（新增） */}
         {step === 1 && (
+          <div className="space-y-4">
+            {/* 發展階段說明 */}
+            <div
+              className="p-4 rounded-2xl"
+              style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}
+            >
+              <p className="text-xs font-bold mb-1" style={{ color: '#5E85A3' }}>
+                📊 {child.nickname} 目前的發展階段
+              </p>
+              <p className="text-sm font-semibold mb-2" style={{ color: '#2D3436' }}>{stageInfo.stage}</p>
+              <p className="text-xs font-semibold mb-1.5" style={{ color: '#6B7B8D' }}>這個階段可以特別關注：</p>
+              {stageInfo.focus.map((f, i) => (
+                <div key={i} className="flex items-start gap-1.5 mb-1">
+                  <span className="shrink-0 text-xs font-bold" style={{ color: '#7B9EBD' }}>
+                    {['①', '②', '③'][i]}
+                  </span>
+                  <p className="text-xs leading-snug" style={{ color: '#4A5568' }}>{f}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* 上傳區 */}
+            {!photoPreview ? (
+              <div
+                className="p-6 rounded-2xl text-center"
+                style={{ background: 'linear-gradient(135deg, #F0F7FF, #EBF4FF)', border: '2px dashed #7B9EBD' }}
+              >
+                <div className="text-4xl mb-3">📸</div>
+                <p className="text-sm font-bold mb-1" style={{ color: '#5E85A3' }}>上傳一張寶貝的近照</p>
+                <p className="text-xs mb-4" style={{ color: '#8E9EAD' }}>AI 會分析寶貝的狀態，給你個性化的建議</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <label className="flex flex-col items-center gap-1.5 py-3 rounded-xl cursor-pointer active:opacity-70" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
+                    <Camera size={18} className="text-white" />
+                    <span className="text-xs font-bold text-white">拍照</span>
+                  </label>
+                  <label className="flex flex-col items-center gap-1.5 py-3 rounded-xl cursor-pointer active:opacity-70" style={{ background: 'white', border: '1.5px solid #C5D8E8' }}>
+                    <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                    <span style={{ fontSize: 18 }}>🖼️</span>
+                    <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>從相簿選取</span>
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid #C5D8E8' }}>
+                {/* 照片預覽 + 分析結果 */}
+                <div className="p-4 flex gap-3" style={{ background: 'white' }}>
+                  <img
+                    src={photoPreview}
+                    alt="寶貝照片"
+                    className="w-24 h-24 rounded-xl object-cover shrink-0"
+                    style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    {isAnalyzing ? (
+                      <div className="flex flex-col items-center justify-center h-full gap-2">
+                        <div
+                          className="w-6 h-6 rounded-full border-2 border-t-transparent animate-spin"
+                          style={{ borderColor: '#7B9EBD', borderTopColor: 'transparent' }}
+                        />
+                        <p className="text-xs" style={{ color: '#8E9EAD' }}>AI 正在認識寶貝…</p>
+                      </div>
+                    ) : photoResult ? (
+                      <div>
+                        <div className="flex items-center gap-1 mb-1.5">
+                          <Sparkles size={12} style={{ color: '#7B9EBD' }} />
+                          <p className="text-xs font-bold" style={{ color: '#5E85A3' }}>AI 觀察到</p>
+                        </div>
+                        <p className="text-xs mb-2 leading-snug" style={{ color: '#2D3436' }}>{photoResult.observation}</p>
+                        {photoResult.highlights.map((h, i) => (
+                          <p key={i} className="text-[11px] leading-snug" style={{ color: '#6B7B8D' }}>• {h}</p>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                {/* 鼓勵訊息 */}
+                {photoResult && (
+                  <div className="px-4 py-3" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
+                    <p className="text-xs text-white text-center">
+                      我們會陪著你和 {child.nickname} 一起成長！💙
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Button
+              size="lg"
+              className="w-full"
+              onClick={() => setStep(2)}
+            >
+              {photoResult ? '繼續' : '跳過，之後再上傳'}
+            </Button>
+            {!photoPreview && (
+              <button
+                type="button"
+                onClick={() => setStep(2)}
+                className="w-full text-center text-sm text-gray-400 hover:text-gray-600"
+              >
+                之後再上傳
+              </button>
+            )}
+            <p className="text-[10px] text-center" style={{ color: '#A0AEB8' }}>
+              * 照片僅用於 AI 分析，不會上傳至伺服器
+            </p>
+          </div>
+        )}
+
+        {/* Step 2: 健康狀況 */}
+        {step === 2 && (
           <div className="space-y-5">
             <div>
               <p className="text-sm font-semibold text-gray-700 mb-2">過敏原（可多選）</p>
@@ -256,12 +459,12 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            <Button size="lg" className="w-full mt-4" onClick={() => setStep(2)}>
+            <Button size="lg" className="w-full mt-4" onClick={() => setStep(3)}>
               下一步
             </Button>
             <button
               type="button"
-              onClick={() => setStep(2)}
+              onClick={() => setStep(3)}
               className="w-full text-center text-sm text-gray-400 hover:text-gray-600"
             >
               跳過（之後可補填）
@@ -269,8 +472,8 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 2: 家庭資訊 */}
-        {step === 2 && (
+        {/* Step 3: 家庭資訊 */}
+        {step === 3 && (
           <div className="space-y-4">
             <div className="space-y-1.5">
               <label className="block text-sm font-semibold text-gray-700">居住縣市</label>
@@ -331,8 +534,8 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 3: 完成 */}
-        {step === 3 && (
+        {/* Step 4: 完成 */}
+        {step === 4 && (
           <div className="text-center py-8">
             <div className="text-6xl mb-5">🎉</div>
             <h2 className="text-2xl font-black text-gray-800 mb-3">

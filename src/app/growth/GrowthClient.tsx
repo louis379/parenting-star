@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import {
   TrendingUp, BookOpen, ClipboardList, Ruler, Weight, Moon, Info,
-  Camera, Sparkles, CheckCircle2, ChevronRight, AlertTriangle,
+  Sparkles, CheckCircle2, ChevronRight, AlertTriangle,
   Plus, X, Utensils, ChevronDown, Shield, Heart,
 } from 'lucide-react'
+import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
 
 type MainTab = 'knowledge' | 'records'
 
@@ -148,7 +149,6 @@ const HUANG_TOPICS = [
     id: 'nutrition-feeding',
     emoji: '🍼',
     title: '營養餵食',
-    badge: '黃瑽寧醫師',
     bgColor: '#FDF0E8',
     borderColor: '#E8C4A0',
     headerColor: '#B07548',
@@ -195,7 +195,7 @@ const HUANG_TOPICS = [
     id: 'growthNutrition',
     title: '成長營養5大提醒',
     emoji: '🌱',
-    content: `黃瑽寧醫師的5個營養觀念校正：\n\n① 不需要急著補充各種營養品\n天然食物提供的營養已經足夠。各種「成長補充品」廣告常誇大效果，先吃好日常飲食最重要。\n\n② 天然的最好\n加工食品中的化學添加物要盡量避免。新鮮食材、少加工、少糖鹽，是最好的飲食原則。\n\n③ 肉吃不夠不代表有影響\n孩子不吃肉但會吃豆腐、雞蛋、魚等其他蛋白質來源，一樣可以長得很好，不必逼孩子吃肉。\n\n④ 偏挑食：帶孩子去戶外跑跑\n讓孩子消耗體力、增加飢餓感，是改善食慾最自然有效的方法。挑食很多時候是「不夠餓」。\n\n⑤ 關於身高：6個好時機\n生長激素分泌高峰：熟睡時（前3小時）、運動後、傍晚。確保充足睡眠 + 規律運動，對身高最有幫助。`,
+    content: `5個營養觀念校正：\n\n① 不需要急著補充各種營養品\n天然食物提供的營養已經足夠。各種「成長補充品」廣告常誇大效果，先吃好日常飲食最重要。\n\n② 天然的最好\n加工食品中的化學添加物要盡量避免。新鮮食材、少加工、少糖鹽，是最好的飲食原則。\n\n③ 肉吃不夠不代表有影響\n孩子不吃肉但會吃豆腐、雞蛋、魚等其他蛋白質來源，一樣可以長得很好，不必逼孩子吃肉。\n\n④ 偏挑食：帶孩子去戶外跑跑\n讓孩子消耗體力、增加飢餓感，是改善食慾最自然有效的方法。挑食很多時候是「不夠餓」。\n\n⑤ 關於身高：6個好時機\n生長激素分泌高峰：熟睡時（前3小時）、運動後、傍晚。確保充足睡眠 + 規律運動，對身高最有幫助。`,
   },
 ]
 
@@ -203,7 +203,6 @@ const SLEEP_TOPICS = [
   {
     id: 'sleepRitual',
     title: '睡眠作息',
-    badge: '黃瑽寧醫師',
     bgColor: '#EBF4FF',
     borderColor: '#C5D8E8',
     headerColor: '#5E85A3',
@@ -230,7 +229,6 @@ const SLEEP_TOPICS = [
     id: 'vaccine',
     emoji: '💉',
     title: '疫苗接種',
-    badge: '黃瑽寧醫師',
     bgColor: '#F0FDF4',
     borderColor: '#A7D7B8',
     headerColor: '#3D8B5E',
@@ -253,7 +251,6 @@ const SLEEP_TOPICS = [
     id: 'illness',
     emoji: '🌡️',
     title: '常見病症照顧',
-    badge: '黃瑽寧醫師',
     bgColor: '#FFF5F5',
     borderColor: '#FFC5C5',
     headerColor: '#C0392B',
@@ -284,7 +281,6 @@ const SLEEP_TOPICS = [
     id: 'growth-height',
     emoji: '📏',
     title: '生長判斷與身高',
-    badge: '黃瑽寧醫師',
     bgColor: '#F5F0FF',
     borderColor: '#C5B8E8',
     headerColor: '#6B4FA0',
@@ -307,7 +303,7 @@ const SLEEP_TOPICS = [
       },
       {
         title: '科學育兒 4 大 Tips',
-        content: '黃瑽寧醫師的科學育兒核心理念：\n\n① 培養成長型思維\n稱讚「努力過程」+「特質」，而不只是稱讚結果。大腦就像肌肉，是訓練出來的！\n\n② 告訴孩子誠實的好結果\n獎勵誠實的行為 + 以身作則（父母間也要誠實）\n\n③ 養邏輯思維\n多做創造性活動（不限制做法和說法），問「為什麼」比給答案更重要\n\n④ 支持型父母，培養內在動機\n7成事情讓孩子與父母討論，3成事情讓父母決定——讓孩子有參與感！',
+        content: '科學育兒核心理念：\n\n① 培養成長型思維\n稱讚「努力過程」+「特質」，而不只是稱讚結果。大腦就像肌肉，是訓練出來的！\n\n② 告訴孩子誠實的好結果\n獎勵誠實的行為 + 以身作則（父母間也要誠實）\n\n③ 養邏輯思維\n多做創造性活動（不限制做法和說法），問「為什麼」比給答案更重要\n\n④ 支持型父母，培養內在動機\n7成事情讓孩子與父母討論，3成事情讓父母決定——讓孩子有參與感！',
       },
     ],
   },
@@ -334,7 +330,6 @@ const SLEEP_TOPICS = [
     id: 'poop-guide',
     emoji: '💩',
     title: '從便便了解寶貝的身體',
-    badge: '黃瑽寧筆記',
     bgColor: '#FFFBF0',
     borderColor: '#E8D8A0',
     headerColor: '#8B6914',
@@ -348,7 +343,7 @@ const SLEEP_TOPICS = [
         content: '顏色能告訴你很多事情：\n\n✅ 黃色、綠色、棕色 → 都是正常的，不用擔心\n\n⚠️ 黑色（柏油狀）→ 如果不是吃了含鐵食物，建議就醫\n\n⚠️ 紅色（帶血絲）→ 少量可能是肛裂，大量請就醫\n\n🚨 白色/灰白色 → 需要盡快就醫（可能是膽道問題）\n\n💡 剛開始吃副食品時，便便顏色多變是正常的，不用太緊張！',
       },
       {
-        title: '便秘怎麼辦？（來自黃瑽寧課程）',
+        title: '便秘怎麼辦？（專業建議）',
         content: '先試試這些溫和的方法：\n\n💧 多喝水，補充水分是第一步\n\n🥦 多吃纖維：地瓜、南瓜、香蕉、蘋果都是好選擇\n\n🤲 腹部按摩：順時針畫圓，輕柔按摩肚子\n\n⏳ 不要急著用浣腸，先嘗試飲食調整\n\n🏥 如果超過一週都沒有便便，或寶寶很不舒服，再考慮就醫\n\n💙 便秘很常見，輕鬆處理就好，不用太焦慮！',
       },
     ],
@@ -357,7 +352,7 @@ const SLEEP_TOPICS = [
     id: 'sleepBasics',
     title: '睡眠週期與作息表',
     emoji: '📊',
-    content: `黃瑽寧醫師課程：睡眠基礎知識\n\n睡眠週期：嬰幼兒每個睡眠週期約 45–60 分鐘，成人為 90 分鐘。週期結束時寶寶會有短暫清醒，這是正常的！\n\n睡前儀式重點：\n• 洗澡/全身按摩 → 調暗燈光 → 輕音樂\n• 奶嘴有助防猝死（SIDS），放心使用\n• 3–6個月的寶寶（超過5kg）可以開始睡過夜\n• 不用特意保持家裡安靜，讓寶寶習慣正常家庭音量\n\n半夜醒來：15分鐘內自行入睡算連續睡眠，不需介入\n夜驚（上半夜）：大腦在整理白天刺激，不需介入\n惡夢（下半夜）：孩子清醒且記得，需要安撫\n\n每日建議睡眠時數：\n| 月齡 | 總時數 | 日間小睡次數 |\n|------|--------|-------------|\n| 1–3月 | 15–17小時 | 4–5次，每次3–5小時 |\n| 4–6月 | 13–16小時 | 3–4次 |\n| 7–12月 | 11–14小時 | 2–3次 |\n| 1–2歲 | 11–14小時 | 1–2次 |\n| 2–3歲 | 10–13小時 | 1次 |\n| 3–5歲 | 10–13小時 | 可不午睡 |\n| 5歲+ | 9–11小時 | 不需午睡 |\n\n尿布更換頻率參考：\n• 每2小時換一次是基準\n| 月齡 | 尿次數 | 尿量 | 便次數 |\n|------|--------|------|--------|\n| 1–3月 | 15–20次/天 | 10–70cc | 2–10次 |\n| 3–6月 | 10–15次/天 | 70–100cc | 2–10次 |\n| 6–12月 | 8–12次/天 | 100cc+ | 1–3次 |\n| 1–2歲 | 4–8次/天 | 80–100cc | 1–2次 |\n| 2歲+ | 3–6次/天 | 150cc+ | 1次 |`,
+    content: `育兒知識課程：睡眠基礎知識\n\n睡眠週期：嬰幼兒每個睡眠週期約 45–60 分鐘，成人為 90 分鐘。週期結束時寶寶會有短暫清醒，這是正常的！\n\n睡前儀式重點：\n• 洗澡/全身按摩 → 調暗燈光 → 輕音樂\n• 奶嘴有助防猝死（SIDS），放心使用\n• 3–6個月的寶寶（超過5kg）可以開始睡過夜\n• 不用特意保持家裡安靜，讓寶寶習慣正常家庭音量\n\n半夜醒來：15分鐘內自行入睡算連續睡眠，不需介入\n夜驚（上半夜）：大腦在整理白天刺激，不需介入\n惡夢（下半夜）：孩子清醒且記得，需要安撫\n\n每日建議睡眠時數：\n| 月齡 | 總時數 | 日間小睡次數 |\n|------|--------|-------------|\n| 1–3月 | 15–17小時 | 4–5次，每次3–5小時 |\n| 4–6月 | 13–16小時 | 3–4次 |\n| 7–12月 | 11–14小時 | 2–3次 |\n| 1–2歲 | 11–14小時 | 1–2次 |\n| 2–3歲 | 10–13小時 | 1次 |\n| 3–5歲 | 10–13小時 | 可不午睡 |\n| 5歲+ | 9–11小時 | 不需午睡 |\n\n尿布更換頻率參考：\n• 每2小時換一次是基準\n| 月齡 | 尿次數 | 尿量 | 便次數 |\n|------|--------|------|--------|\n| 1–3月 | 15–20次/天 | 10–70cc | 2–10次 |\n| 3–6月 | 10–15次/天 | 70–100cc | 2–10次 |\n| 6–12月 | 8–12次/天 | 100cc+ | 1–3次 |\n| 1–2歲 | 4–8次/天 | 80–100cc | 1–2次 |\n| 2歲+ | 3–6次/天 | 150cc+ | 1次 |`,
   },
 ]
 
@@ -383,15 +378,6 @@ interface AIResult {
   suggestion: string
 }
 
-interface PhotoRecord {
-  id: string
-  date: string
-  sortDate: number
-  imageData: string
-  note: string
-  page: string
-}
-
 interface BodyRecord {
   id: string
   date: string
@@ -403,15 +389,6 @@ interface BodyRecord {
   note: string
 }
 
-interface PhotoAIResult {
-  color: string
-  type: string
-  suggestion: string
-}
-
-type CameraTarget = 'poop' | 'body' | 'meal' | null
-
-// ── 黃瑽寧醫師「0-12歲育兒全百科」知識架構 ──
 
 const SYMPTOM_GUIDE = [
   {
@@ -434,7 +411,6 @@ const SYMPTOM_GUIDE = [
       '不要強迫吃東西，食慾差是正常的',
     ],
     urgent: '出現這些情況立刻就醫：① 3個月以下任何發燒 ② 發燒超過5天 ③ 熱痙攣（抽筋）④ 出疹 ⑤ 頸部僵硬 ⑥ 嗜睡叫不醒',
-    reference: '— 黃瑽寧醫師 CH5 發燒篇',
   },
   {
     id: 'cold',
@@ -454,7 +430,6 @@ const SYMPTOM_GUIDE = [
       '不要讓孩子帶病上學（傳染給同學）',
     ],
     urgent: '就醫時機：呼吸急促/呼吸困難、嘴唇發青、嗜睡叫不醒、超過5天沒改善',
-    reference: '— 黃瑽寧醫師 CH5 流感篇',
   },
   {
     type: 'warning',
@@ -481,7 +456,6 @@ const SYMPTOM_GUIDE = [
       '不要相信「斷根食療」「排毒飲食」等偏方',
     ],
     urgent: '急性氣喘發作（喘鳴、呼吸急促、說話困難）立刻就醫',
-    reference: '— 黃瑽寧醫師 CH5 過敏三部曲',
   },
   {
     type: 'ok',
@@ -507,7 +481,7 @@ const SYMPTOM_GUIDE = [
       '不要因短暫成長停滯就焦慮，季節性波動是正常的',
     ],
     urgent: '需要評估：① 4–6歲每年長高 <4cm ② 5歲以前就出現青春期特徵（性早熟） ③ 身高落在同齡同性別第3百分位以下',
-    reference: '— 黃瑽寧醫師課程：身高發展篇',
+    reference: '— 育兒知識課程：身高發展篇',
   },
 ]
 
@@ -603,72 +577,6 @@ const MOCK_AI_RESULTS: AIResult[] = [
   },
 ]
 
-const POOP_AI_RESULTS: Record<string, PhotoAIResult> = {
-  normal: {
-    color: '黃棕色',
-    type: '軟便（正常）',
-    suggestion: '看起來是健康的黃棕色軟便，很正常喔！寶貝的腸胃狀態不錯，繼續保持均衡飲食就好 😊',
-  },
-  green: {
-    color: '綠色',
-    type: '糊狀',
-    suggestion: '綠色便便在寶寶很常見，特別是喝母乳或吃了深色蔬菜之後，大部分都是正常的！寶貝精神好就不用擔心 🌿',
-  },
-  hard: {
-    color: '棕色',
-    type: '硬顆粒',
-    suggestion: '便便看起來有點硬，可以多補充水分和纖維（地瓜、香蕉、蘋果都很好），順時針按摩肚子也有幫助 💧',
-  },
-  watery: {
-    color: '黃色',
-    type: '水狀',
-    suggestion: '便便比較水，可能是腸胃稍微不舒服或換奶粉。如果超過3天或寶寶精神不好，可以跟醫師聊聊 🌸',
-  },
-}
-
-const BODY_AI_RESULTS = [
-  {
-    type: '圓潤可愛',
-    suggestion: '寶貝看起來很健康！這個年紀圓圓的是正常的嬰兒脂肪，不用擔心。開始走路後自然會變瘦，這是身體最聰明的設計 💙',
-  },
-  {
-    type: '比例適中',
-    suggestion: '寶貝的身體比例看起來很均衡！繼續保持現在的飲食和運動習慣，讓寶貝健康成長 🌟',
-  },
-  {
-    type: '纖細活潑',
-    suggestion: '寶貝身形修長，只要精神好、食慾正常，就是健康的！多元飲食保持均衡就好，不需要刻意補充 🌱',
-  },
-]
-
-const MEAL_AI_RESULTS = [
-  {
-    balance: '均衡',
-    suggestion: '今天的餐盤看起來有蛋白質和蔬菜，很棒！可以再加一點全穀類讓營養更均衡。你替寶貝準備這麼用心，真的很厲害 🍽️',
-  },
-  {
-    balance: '需補充蔬菜',
-    suggestion: '蛋白質看起來足夠！可以多加一點彩色蔬菜，讓餐盤更豐富多彩。彩虹飲食原則：顏色越多種，營養越全面 🌈',
-  },
-  {
-    balance: '需補充蛋白質',
-    suggestion: '蔬菜搭配得很好！可以加一顆蒸蛋或幾塊豆腐，讓蛋白質更充足，幫助寶貝長肌肉和大腦發育 💪',
-  },
-]
-
-const PHOTO_AI_RESULT = {
-  stage: '寶貝目前階段評估',
-  stageDesc: '從照片觀察，寶貝的發展狀態看起來活潑有朝氣！臉部比例、體型比例都很正常，繼續這樣健康成長就對了。',
-  trend: '累積記錄趨勢分析',
-  trendDesc: '你已經累積了多張成長照片，從時間序列來看，寶貝的成長軌跡很穩定。持續記錄下去，3個月後就能看到明顯的成長對比！',
-  suggestions: [
-    '每個月在固定地點、固定角度拍一張站立照，方便對比身高變化',
-    '拍照時讓寶貝自然放鬆，能更真實反映當下的發展狀態',
-    '可以在旁邊放一個固定物（如積木）作為比例參考',
-  ],
-  cheer: '每一張照片都是時間的禮物。現在看起來平凡的日常，幾年後都會變成珍貴的回憶。你做得很棒，繼續記錄下去 💙',
-}
-
 export default function GrowthClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [selectedAge, setSelectedAge] = useState('1-2y')
@@ -685,15 +593,6 @@ export default function GrowthClient() {
   const [showGrowthForm, setShowGrowthForm] = useState(false)
   const [showMealForm, setShowMealForm] = useState(false)
   const [showAI, setShowAI] = useState(false)
-  const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
-    if (typeof window === 'undefined') return []
-    try {
-      const saved = localStorage.getItem('growth_photos')
-      return saved ? JSON.parse(saved) : []
-    } catch { return [] }
-  })
-  const [showPhotoAI, setShowPhotoAI] = useState(false)
-  const [photoNote, setPhotoNote] = useState('')
   const [bodyRecords, setBodyRecords] = useState<BodyRecord[]>(() => {
     if (typeof window === 'undefined') return []
     try {
@@ -711,13 +610,6 @@ export default function GrowthClient() {
     sleepQuality: '普通',
     note: '',
   })
-  const [cameraTarget, setCameraTarget] = useState<CameraTarget>(null)
-  const [poopPhotoData, setPoopPhotoData] = useState<string | null>(null)
-  const [bodyPhotoData, setBodyPhotoData] = useState<string | null>(null)
-  const [mealPhotoData, setMealPhotoData] = useState<string | null>(null)
-  const [poopAIResult, setPoopAIResult] = useState<PhotoAIResult | null>(null)
-  const [bodyAIResult, setBodyAIResult] = useState<{ type: string; suggestion: string } | null>(null)
-  const [mealAIResult, setMealAIResult] = useState<{ balance: string; suggestion: string } | null>(null)
 
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)
@@ -750,87 +642,6 @@ export default function GrowthClient() {
     })
     setShowBodyForm(false)
     setBodyForm({ date: new Date().toISOString().split('T')[0], hadPoop: true, poopType: '正常條狀', poopColor: '黃色', appetite: '普通', sleepQuality: '普通', note: '' })
-  }
-
-  function handleCameraPhoto(e: React.ChangeEvent<HTMLInputElement>, target: CameraTarget) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = (ev) => {
-      const img = new Image()
-      img.onload = () => {
-        const canvas = document.createElement('canvas')
-        const maxSize = 600
-        let w = img.width, h = img.height
-        if (w > maxSize || h > maxSize) {
-          if (w > h) { h = h * maxSize / w; w = maxSize }
-          else { w = w * maxSize / h; h = maxSize }
-        }
-        canvas.width = w; canvas.height = h
-        canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
-        const data = canvas.toDataURL('image/jpeg', 0.75)
-        if (target === 'poop') { setPoopPhotoData(data); setPoopAIResult(null) }
-        if (target === 'body') { setBodyPhotoData(data); setBodyAIResult(null) }
-        if (target === 'meal') { setMealPhotoData(data); setMealAIResult(null) }
-      }
-      img.src = ev.target?.result as string
-    }
-    reader.readAsDataURL(file)
-    e.target.value = ''
-  }
-
-  function analyzePoopPhoto() {
-    const results = Object.values(POOP_AI_RESULTS)
-    setPoopAIResult(results[Math.floor(Math.random() * results.length)])
-  }
-
-  function analyzeBodyPhoto() {
-    setBodyAIResult(BODY_AI_RESULTS[Math.floor(Math.random() * BODY_AI_RESULTS.length)])
-  }
-
-  function analyzeMealPhoto() {
-    setMealAIResult(MEAL_AI_RESULTS[Math.floor(Math.random() * MEAL_AI_RESULTS.length)])
-  }
-
-  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-    Array.from(files).forEach((file, idx) => {
-      const photoDate = new Date(file.lastModified)
-      const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-      const reader = new FileReader()
-      reader.onload = (ev) => {
-        const img = new Image()
-        img.onload = () => {
-          const canvas = document.createElement('canvas')
-          const maxSize = 800
-          let w = img.width, h = img.height
-          if (w > maxSize || h > maxSize) {
-            if (w > h) { h = h * maxSize / w; w = maxSize }
-            else { w = w * maxSize / h; h = maxSize }
-          }
-          canvas.width = w; canvas.height = h
-          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
-          const compressed = canvas.toDataURL('image/jpeg', 0.7)
-          const newPhoto: PhotoRecord = {
-            id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`,
-            date: dateStr,
-            sortDate: photoDate.getTime(),
-            imageData: compressed,
-            note: '',
-            page: 'growth',
-          }
-          setPhotos(prev => {
-            const updated = [...prev, newPhoto].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
-            localStorage.setItem('growth_photos', JSON.stringify(updated))
-            return updated
-          })
-        }
-        img.src = ev.target?.result as string
-      }
-      reader.readAsDataURL(file)
-    })
-    e.target.value = ''
   }
 
   return (
@@ -988,11 +799,11 @@ export default function GrowthClient() {
               <p className="text-xs mt-2" style={{ color: '#8E9EAD' }}>* 依據 Cochrane Review: 早期嬰兒營養、台灣衛福部每日飲食指南</p>
             </section>
 
-            {/* 黃瑽寧醫師課程知識庫 */}
+            {/* 育兒知識課程知識庫 */}
             <section>
               <div className="flex items-center gap-2 mb-4">
                 <Shield size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+                <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>育兒知識課程</h2>
                 <span className="evidence-badge">59單元</span>
               </div>
               <div className="space-y-3">
@@ -1008,8 +819,7 @@ export default function GrowthClient() {
                         <span style={{ fontSize: 20 }}>{topic.emoji}</span>
                         <div className="text-left">
                           <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
-                          <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
-                        </div>
+                                                  </div>
                       </div>
                       <ChevronDown
                         size={16}
@@ -1094,285 +904,8 @@ export default function GrowthClient() {
             </div>
           </section>
 
-          {/* 成長相簿 */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-bold" style={{ color: '#2D3436' }}>成長相簿 📸</h2>
-              <span className="text-xs px-2 py-1 rounded-xl font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{photos.length} 張</span>
-            </div>
-
-            {/* 累積鼓勵訊息 */}
-            {photos.length > 0 && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #EBF8EB, #D8F5D8)', border: '1px solid #A8D8A8' }}>
-                <span style={{ fontSize: 16 }}>✨</span>
-                <p className="text-xs font-semibold" style={{ color: '#3A7A3A' }}>
-                  已累積 {photos.length} 張成長紀錄
-                  {photos.length >= 10 ? '，AI 分析越來越準確了！🎯' : photos.length >= 5 ? '，繼續加油，累積越多分析越精準！' : '，再多幾張，成長軌跡就會清晰起來！'}
-                </p>
-              </div>
-            )}
-
-            {/* 上傳按鈕區 */}
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              {/* 拍照（單張，使用相機） */}
-              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#7B9EBD', background: 'linear-gradient(135deg, #F0F7FF, #EBF4FF)' }}>
-                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
-                  <Camera size={18} className="text-white" />
-                </div>
-                <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>立即拍照</span>
-              </label>
-              {/* 批次導入（多選） */}
-              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#B07548', background: 'linear-gradient(135deg, #FFF8F0, #FDF0E8)' }}>
-                <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} />
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #D4885A, #B07548)' }}>
-                  <span style={{ fontSize: 18 }}>📸</span>
-                </div>
-                <span className="text-xs font-bold" style={{ color: '#B07548' }}>批次導入</span>
-              </label>
-            </div>
-            <p className="text-[10px] text-center mb-3" style={{ color: '#8E9EAD' }}>批次導入會自動讀取照片日期，按時間排序</p>
-
-            {/* 時間軸相簿 */}
-            {photos.length > 0 && (() => {
-              // 按月份分組
-              const groups: Record<string, PhotoRecord[]> = {}
-              photos.forEach(p => {
-                const d = new Date(p.sortDate ?? Date.now())
-                const key = `${d.getFullYear()}年${String(d.getMonth() + 1).padStart(2, '0')}月`
-                if (!groups[key]) groups[key] = []
-                groups[key].push(p)
-              })
-              const sortedGroups = Object.entries(groups).sort(([a], [b]) => b.localeCompare(a))
-              return (
-                <div className="space-y-4 mb-3">
-                  {sortedGroups.map(([month, monthPhotos]) => (
-                    <div key={month}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 rounded-full" style={{ background: '#7B9EBD' }} />
-                        <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>{month}</span>
-                        <span className="text-[10px]" style={{ color: '#8E9EAD' }}>{monthPhotos.length} 張</span>
-                      </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        {monthPhotos.map(photo => (
-                          <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
-                            <img src={photo.imageData} alt="成長照片" className="w-full h-full object-cover" />
-                            <div className="absolute bottom-0 left-0 right-0 px-1 py-0.5" style={{ background: 'rgba(0,0,0,0.45)' }}>
-                              <p className="text-white text-[9px] text-center">{photo.date}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )
-            })()}
-
-            {/* AI 分析照片按鈕 */}
-            {photos.length > 0 && (
-              <button
-                onClick={() => setShowPhotoAI(true)}
-                className="w-full py-3 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
-                style={{ background: 'linear-gradient(135deg, #A8C5DA, #5E85A3)' }}
-              >
-                <Sparkles size={16} />AI 分析成長照片（{photos.length} 張）
-              </button>
-            )}
-
-            {/* AI 分析結果 */}
-            {showPhotoAI && (
-              <div className="mt-1 space-y-3">
-                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span style={{ fontSize: 18 }}>🔍</span>
-                    <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>{PHOTO_AI_RESULT.stage}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{PHOTO_AI_RESULT.stageDesc}</p>
-                </div>
-                <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span style={{ fontSize: 18 }}>📈</span>
-                    <p className="font-bold text-sm" style={{ color: '#2D3436' }}>{PHOTO_AI_RESULT.trend}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#6B7B8D' }}>{PHOTO_AI_RESULT.trendDesc}</p>
-                </div>
-                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>📷 拍照建議</p>
-                  {PHOTO_AI_RESULT.suggestions.map((s, i) => (
-                    <div key={i} className="flex items-start gap-2 mb-1.5">
-                      <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
-                      <p className="text-xs leading-relaxed" style={{ color: '#2D3436' }}>{s}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
-                  <p className="text-sm leading-relaxed text-white">{PHOTO_AI_RESULT.cheer}</p>
-                </div>
-                <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析，非醫療診斷</p>
-              </div>
-            )}
-          </section>
-
-          {/* 身高體重記錄 */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-bold" style={{ color: '#2D3436' }}>身高體重紀錄</h2>
-              <button onClick={() => setShowGrowthForm(true)} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold text-white" style={{ background: '#7B9EBD' }}>
-                <Plus size={12} />新增
-              </button>
-            </div>
-            <div className="space-y-2">
-              {[...growthRecords].reverse().map(r => (
-                <div key={r.id} className="flex items-center justify-between p-3 rounded-xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: '#2D3436' }}>{r.date}</p>
-                    {r.note && <p className="text-xs" style={{ color: '#8E9EAD' }}>{r.note}</p>}
-                  </div>
-                  <div className="text-right text-sm space-y-0.5">
-                    {r.height && <p style={{ color: '#5E85A3' }}>{r.height} cm</p>}
-                    {r.weight && <p style={{ color: '#6B7B8D' }}>{r.weight} kg</p>}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 飲食記錄 */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Utensils size={16} style={{ color: '#7B9EBD' }} />
-                <h2 className="font-bold" style={{ color: '#2D3436' }}>飲食紀錄</h2>
-              </div>
-              <button onClick={() => setShowMealForm(true)} className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold text-white" style={{ background: '#7B9EBD' }}>
-                <Plus size={12} />新增
-              </button>
-            </div>
-            <div className="space-y-2">
-              {[...mealRecords].reverse().map(r => (
-                <div key={r.id} className="p-3 rounded-xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold" style={{ color: '#2D3436' }}>{r.date}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-lg" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{r.meal}</span>
-                  </div>
-                  <p className="text-sm" style={{ color: '#6B7B8D' }}>{r.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 拍照辨識區 */}
-          <section>
-            <div className="flex items-center gap-2 mb-3">
-              <span style={{ fontSize: 18 }}>📸</span>
-              <h2 className="font-bold" style={{ color: '#2D3436' }}>拍照 AI 辨識</h2>
-              <span className="text-xs px-2 py-0.5 rounded-lg font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>核心功能</span>
-            </div>
-            <p className="text-xs mb-3" style={{ color: '#6B7B8D' }}>拍一張照片，讓 AI 幫你分析，省去手動填寫的麻煩！</p>
-
-            {/* 三個拍照卡片 */}
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              {/* 便便 */}
-              <div className="flex flex-col items-center gap-2">
-                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
-                  style={{ background: 'linear-gradient(135deg, #FFFBF0, #FFF3CC)', borderColor: '#E8C850' }}>
-                  <input type="file" accept="image/*" capture="environment" className="hidden"
-                    onChange={e => handleCameraPhoto(e, 'poop')} />
-                  <span style={{ fontSize: 28 }}>💩</span>
-                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#8B6914' }}>便便<br/>辨識</span>
-                </label>
-                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍便便照</span>
-              </div>
-              {/* 體型 */}
-              <div className="flex flex-col items-center gap-2">
-                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
-                  style={{ background: 'linear-gradient(135deg, #F0FDF4, #D8F5E8)', borderColor: '#5A9A7A' }}>
-                  <input type="file" accept="image/*" capture="environment" className="hidden"
-                    onChange={e => handleCameraPhoto(e, 'body')} />
-                  <span style={{ fontSize: 28 }}>👶</span>
-                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#3D7A5E' }}>體型<br/>辨識</span>
-                </label>
-                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍全身照</span>
-              </div>
-              {/* 餐盤 */}
-              <div className="flex flex-col items-center gap-2">
-                <label className="w-full aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer active:opacity-70 border-2 border-dashed"
-                  style={{ background: 'linear-gradient(135deg, #FFF0F5, #FFE0EC)', borderColor: '#C5608A' }}>
-                  <input type="file" accept="image/*" capture="environment" className="hidden"
-                    onChange={e => handleCameraPhoto(e, 'meal')} />
-                  <span style={{ fontSize: 28 }}>🍽️</span>
-                  <span className="text-xs font-bold text-center leading-tight" style={{ color: '#A0336A' }}>餐盤<br/>辨識</span>
-                </label>
-                <span className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>拍今日餐盤</span>
-              </div>
-            </div>
-
-            {/* 便便辨識結果 */}
-            {poopPhotoData && (
-              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#FFFBF0', borderColor: '#E8D8A0' }}>
-                <p className="text-xs font-bold mb-2" style={{ color: '#8B6914' }}>💩 便便照片</p>
-                <img src={poopPhotoData} alt="便便照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
-                {!poopAIResult ? (
-                  <button onClick={analyzePoopPhoto}
-                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
-                    style={{ background: 'linear-gradient(135deg, #D4A820, #B08010)' }}>
-                    <Sparkles size={14} />AI 辨識便便
-                  </button>
-                ) : (
-                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #E8D8A0' }}>
-                    <div className="flex gap-4 mb-2 text-xs">
-                      <span><span className="font-bold" style={{ color: '#8B6914' }}>顏色：</span>{poopAIResult.color}</span>
-                      <span><span className="font-bold" style={{ color: '#8B6914' }}>型態：</span>{poopAIResult.type}</span>
-                    </div>
-                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{poopAIResult.suggestion}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 體型辨識結果 */}
-            {bodyPhotoData && (
-              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#F0FDF4', borderColor: '#A8D8B8' }}>
-                <p className="text-xs font-bold mb-2" style={{ color: '#3D7A5E' }}>👶 全身照片</p>
-                <img src={bodyPhotoData} alt="全身照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
-                {!bodyAIResult ? (
-                  <button onClick={analyzeBodyPhoto}
-                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
-                    style={{ background: 'linear-gradient(135deg, #5A9A7A, #3D7A5E)' }}>
-                    <Sparkles size={14} />AI 辨識體型
-                  </button>
-                ) : (
-                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #A8D8B8' }}>
-                    <p className="text-xs font-bold mb-1" style={{ color: '#3D7A5E' }}>體型評估：{bodyAIResult.type}</p>
-                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{bodyAIResult.suggestion}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 餐盤辨識結果 */}
-            {mealPhotoData && (
-              <div className="mb-3 p-4 rounded-2xl border" style={{ background: '#FFF0F8', borderColor: '#E8B0D0' }}>
-                <p className="text-xs font-bold mb-2" style={{ color: '#A0336A' }}>🍽️ 今日餐盤</p>
-                <img src={mealPhotoData} alt="餐盤照片" className="w-full max-h-40 object-cover rounded-xl mb-3" />
-                {!mealAIResult ? (
-                  <button onClick={analyzeMealPhoto}
-                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2"
-                    style={{ background: 'linear-gradient(135deg, #C5608A, #A0336A)' }}>
-                    <Sparkles size={14} />AI 分析營養
-                  </button>
-                ) : (
-                  <div className="p-3 rounded-xl" style={{ background: 'white', border: '1px solid #E8B0D0' }}>
-                    <p className="text-xs font-bold mb-1" style={{ color: '#A0336A' }}>營養評估：{mealAIResult.balance}</p>
-                    <p className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{mealAIResult.suggestion}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            <p className="text-[10px] text-center" style={{ color: '#8E9EAD' }}>* 拍照辨識為 AI 模擬分析，僅供參考，非醫療診斷</p>
-          </section>
+          {/* 智能拍照分析 */}
+          <SmartPhotoAnalyzer page="growth" storageKey="growth_photos" label="成長" />
 
           {/* 每日身體觀察 */}
           <section>

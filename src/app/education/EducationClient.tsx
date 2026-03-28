@@ -6,6 +6,7 @@ import {
   Camera, FileText, Sparkles, AlertTriangle, CheckCircle2, ChevronRight,
   Info, TrendingUp, Plus, X, Star, ChevronDown, Shield,
 } from 'lucide-react'
+import SmartPhotoAnalyzer from '@/components/SmartPhotoAnalyzer'
 
 type MainTab = 'knowledge' | 'records'
 type KnowledgeSection = 'language' | 'piaget' | 'guide'
@@ -165,7 +166,7 @@ const subjectGuide = [
   },
 ]
 
-// ===== 黃瑽寧醫師課程架構：教育深度指南 =====
+// ===== 教育深度指南 =====
 
 const INTELLIGENCE_TOPICS = [
   {
@@ -196,13 +197,13 @@ const INTELLIGENCE_TOPICS = [
     id: 'scientificParenting',
     title: '科學育兒5大心法',
     emoji: '🔬',
-    content: `黃瑽寧醫師：有科學根據的育兒方式\n\n① 成長型思維（最重要）\n• 稱讚「努力過程」而非「天賦結果」\n  ✅ 「你這次很努力練習！」\n  ❌ 「你真的很聰明！」\n• 對孩子說：「大腦就像肌肉，越練越強壯。」洗腦這個概念從小說起。\n• 遇到挫折說：「你還沒有學會，下次再試試。」（yet的力量）\n\n② 培養誠實\n• 獎勵誠實的行為，不只懲罰謊言\n• 身教最有效：父母在孩子面前的言行是最強的示範\n• 孩子說謊的原因通常是「害怕結果」，解決根本原因更重要\n\n③ 培養邏輯思考\n• 創造性活動：給孩子開放式問題，不限制做法和答案\n• 不要急著給答案，讓孩子思考：「你覺得呢？」\n• 允許犯錯，犯錯後才有學習\n\n④ 支持型父母（7:3原則）\n• 7成的事情與孩子一起討論後決定\n• 3成的事情父母直接決定（涉及安全和底線）\n• 這樣的比例培養出有主見又有邊界感的孩子\n\n⑤ 幼兒園選擇：學前重點\n• 培養抽象技能：專注力、工作記憶、合作、解決問題（比識字算術重要）\n• 多自由活動、多運動社交\n• 傾聽多於教導\n• 鼓勵正向行為`,
+    content: `有科學根據的育兒方式\n\n① 成長型思維（最重要）\n• 稱讚「努力過程」而非「天賦結果」\n  ✅ 「你這次很努力練習！」\n  ❌ 「你真的很聰明！」\n• 對孩子說：「大腦就像肌肉，越練越強壯。」洗腦這個概念從小說起。\n• 遇到挫折說：「你還沒有學會，下次再試試。」（yet的力量）\n\n② 培養誠實\n• 獎勵誠實的行為，不只懲罰謊言\n• 身教最有效：父母在孩子面前的言行是最強的示範\n• 孩子說謊的原因通常是「害怕結果」，解決根本原因更重要\n\n③ 培養邏輯思考\n• 創造性活動：給孩子開放式問題，不限制做法和答案\n• 不要急著給答案，讓孩子思考：「你覺得呢？」\n• 允許犯錯，犯錯後才有學習\n\n④ 支持型父母（7:3原則）\n• 7成的事情與孩子一起討論後決定\n• 3成的事情父母直接決定（涉及安全和底線）\n• 這樣的比例培養出有主見又有邊界感的孩子\n\n⑤ 幼兒園選擇：學前重點\n• 培養抽象技能：專注力、工作記憶、合作、解決問題（比識字算術重要）\n• 多自由活動、多運動社交\n• 傾聽多於教導\n• 鼓勵正向行為`,
   },
   {
     id: 'kindergartenChoice',
     title: '蒙特梭利 vs 華德福',
     emoji: '🏫',
-    content: `黃瑽寧醫師課程：兩大教育哲學比較\n\n共同點：\n• 都以「關注孩子需求」為出發點\n• 都重視全人教育（身心靈平衡發展）\n• 都反對純粹填鴨式、競爭導向的學習\n\n蒙特梭利（Montessori）特色：\n① 混齡教育（不同年齡一起學習）\n② 精心設計的「預備環境」，教具是關鍵\n③ 強調手的操作、實際操作（感官學習）\n④ 培養獨立思考、為自己負責、在宇宙中找到自己的定位\n⑤ 基於真實觀察的個別化學習計畫\n\n華德福（Waldorf/Steiner）特色：\n① 幼兒園混齡，小學後分齡\n② 老師就是課本（不使用制式教科書）\n③ 藝術為核心：繪畫、音樂、手工滲透所有科目\n④ 關注身心平衡，重視和自然的連結\n⑤ 故事和想象力是主要學習媒介\n\n如何選擇？\n• 孩子喜歡有秩序、獨立操作 → 可考慮蒙特梭利\n• 孩子藝術感強、需要更多自由創作空間 → 可考慮華德福\n• 最重要的不是「哪個哲學更好」，而是「老師和校園文化是否溫暖」\n\n💙 任何一所充滿愛、尊重孩子的幼兒園，都比焦慮尋找「最好的」幼兒園更重要。`,
+    content: `育兒知識課程：兩大教育哲學比較\n\n共同點：\n• 都以「關注孩子需求」為出發點\n• 都重視全人教育（身心靈平衡發展）\n• 都反對純粹填鴨式、競爭導向的學習\n\n蒙特梭利（Montessori）特色：\n① 混齡教育（不同年齡一起學習）\n② 精心設計的「預備環境」，教具是關鍵\n③ 強調手的操作、實際操作（感官學習）\n④ 培養獨立思考、為自己負責、在宇宙中找到自己的定位\n⑤ 基於真實觀察的個別化學習計畫\n\n華德福（Waldorf/Steiner）特色：\n① 幼兒園混齡，小學後分齡\n② 老師就是課本（不使用制式教科書）\n③ 藝術為核心：繪畫、音樂、手工滲透所有科目\n④ 關注身心平衡，重視和自然的連結\n⑤ 故事和想象力是主要學習媒介\n\n如何選擇？\n• 孩子喜歡有秩序、獨立操作 → 可考慮蒙特梭利\n• 孩子藝術感強、需要更多自由創作空間 → 可考慮華德福\n• 最重要的不是「哪個哲學更好」，而是「老師和校園文化是否溫暖」\n\n💙 任何一所充滿愛、尊重孩子的幼兒園，都比焦慮尋找「最好的」幼兒園更重要。`,
   },
 ]
 
@@ -223,7 +224,7 @@ const LANGUAGE_EXTRA_TOPICS = [
     id: 'languageTimeline',
     title: '語言發展完整時間軸',
     emoji: '📊',
-    content: `黃瑽寧醫師課程：語言里程碑完整版\n\n接收語言（理解）總是先於表達語言（說話）：\n\n0–6個月：牙牙學語開始，對聲音有反應，認出照顧者的聲音\n9個月：開始模仿大人說話，出現指物手勢，理解簡單詞彙\n1歲：說出「爸爸」「媽媽」等第一批有意義的詞\n1.5歲：認識並使用5個以上詞彙，能指認身體部位（眼睛、鼻子等）\n2歲：說2–3個字的短句（「爸爸走」「要水」）\n3歲：語音清晰度約75%（陌生人可聽懂大部分）\n4歲：語音基本完全清晰，能說複雜句子\n5歲：接近成人語言能力，能講完整故事\n\n雙語學習最佳時機：\n• 10歲前開始學第二語言，有可能達到母語者95%的程度\n• 最重要的是孩子喜歡和有機會使用，別強迫\n\n語言發展特別提醒：\n• 3–4歲出現口吃（語團）是正常的：大腦想法比嘴巴快，不要急著糾正，讓孩子把話說完\n• 4–5歲「大舌頭」（某些音說不清）也很常見，通常到6歲自然改善\n• 男孩語言發展平均比女孩慢2–3個月，但變異大，不用太緊張`,
+    content: `育兒知識課程：語言里程碑完整版\n\n接收語言（理解）總是先於表達語言（說話）：\n\n0–6個月：牙牙學語開始，對聲音有反應，認出照顧者的聲音\n9個月：開始模仿大人說話，出現指物手勢，理解簡單詞彙\n1歲：說出「爸爸」「媽媽」等第一批有意義的詞\n1.5歲：認識並使用5個以上詞彙，能指認身體部位（眼睛、鼻子等）\n2歲：說2–3個字的短句（「爸爸走」「要水」）\n3歲：語音清晰度約75%（陌生人可聽懂大部分）\n4歲：語音基本完全清晰，能說複雜句子\n5歲：接近成人語言能力，能講完整故事\n\n雙語學習最佳時機：\n• 10歲前開始學第二語言，有可能達到母語者95%的程度\n• 最重要的是孩子喜歡和有機會使用，別強迫\n\n語言發展特別提醒：\n• 3–4歲出現口吃（語團）是正常的：大腦想法比嘴巴快，不要急著糾正，讓孩子把話說完\n• 4–5歲「大舌頭」（某些音說不清）也很常見，通常到6歲自然改善\n• 男孩語言發展平均比女孩慢2–3個月，但變異大，不用太緊張`,
   },
 ]
 
@@ -256,13 +257,13 @@ const FOCUS_TOPICS = [
     id: 'focusFoundation',
     title: '專注力養成三要素',
     emoji: '🧩',
-    content: `黃瑽寧醫師：專注力不是天生固定的\n\n專注力 = 年齡 × 2–5 分鐘（正常範圍），所以2歲孩子能專注4–10分鐘是完全正常的！\n\n要素一：大腦基礎運作良好\n• 充足睡眠（各年齡建議：嬰兒14hr → 學前12hr → 小學11hr → 中學10hr → 高中9hr → 大學8hr）\n• 積極運動：每天至少1小時戶外活動，能量充分消耗後室內專注力自然提升\n• 健康飲食：避免化學添加物、過多糖分；早餐必吃（全麥+蛋+奶）\n• 控制疾病：過敏、睡眠呼吸中止等未控制的疾病直接影響專注力\n\n要素二：排除學習障礙\n• 視力和聽力問題（入學前必須檢查）\n• 閱讀障礙（不是懶，是神經運作方式不同）\n• ADHD（注意力不足過動症，是一個光譜，非黑白）\n• 以上都需要專業評估，不能只靠「努力」\n\n要素三：建立自信心（破除習得無助感）\n→ 建立歸屬感（讓孩子感覺被接納）\n→ 任務由淺入深（永遠比現在能力稍微高一點點）\n→ 建立自信心（「我做到了！」的感覺要多）\n→ 產生內在動機（「我想學」比「我要學」有效10倍）`,
+    content: `專注力不是天生固定的\n\n專注力 = 年齡 × 2–5 分鐘（正常範圍），所以2歲孩子能專注4–10分鐘是完全正常的！\n\n要素一：大腦基礎運作良好\n• 充足睡眠（各年齡建議：嬰兒14hr → 學前12hr → 小學11hr → 中學10hr → 高中9hr → 大學8hr）\n• 積極運動：每天至少1小時戶外活動，能量充分消耗後室內專注力自然提升\n• 健康飲食：避免化學添加物、過多糖分；早餐必吃（全麥+蛋+奶）\n• 控制疾病：過敏、睡眠呼吸中止等未控制的疾病直接影響專注力\n\n要素二：排除學習障礙\n• 視力和聽力問題（入學前必須檢查）\n• 閱讀障礙（不是懶，是神經運作方式不同）\n• ADHD（注意力不足過動症，是一個光譜，非黑白）\n• 以上都需要專業評估，不能只靠「努力」\n\n要素三：建立自信心（破除習得無助感）\n→ 建立歸屬感（讓孩子感覺被接納）\n→ 任務由淺入深（永遠比現在能力稍微高一點點）\n→ 建立自信心（「我做到了！」的感覺要多）\n→ 產生內在動機（「我想學」比「我要學」有效10倍）`,
   },
   {
     id: 'intelligenceDev',
     title: '如何科學養智力',
     emoji: '⚡',
-    content: `黃瑽寧醫師：三歲前最重要的三件事\n\n① 多說話（最重要）\n• 三歲前，每天和孩子說大量的話\n• 鼓勵的語言要比責備多7倍以上（7:1原則）\n• 描述孩子的動作、感受、周圍的事物\n• 說自己的思考過程：「媽媽在想要買哪個...因為...」\n\n② 擁抱和溫暖的互動\n• 安全的依附關係是大腦發展的基礎\n• 每6個月可以設定一個互動主題（例如：這個月多讀繪本）\n• 溫暖的眼神、笑容、肢體接觸都是大腦的「肥料」\n\n③ 一起玩\n• 讓孩子主導遊戲\n• 你的角色是「在場的夥伴」，不是老師\n• 自由遊戲比結構性課程對智力發展更有效\n\n語言發展時間軸（完整版）：\n• 牙牙學語（0–6月）\n• 9個月：模仿大人說話、理解簡單詞彙\n• 1歲：說出「爸爸」「媽媽」\n• 1.5歲：認識5個以上詞彙，能指認身體部位\n• 2歲：說短句子（媽媽走、要水）\n• 3歲：語音清晰度達75%（陌生人可聽懂）\n• 4歲：說複雜句子，語音基本清晰\n• 5歲：接近成人語言能力\n• 10歲前學英文，可達母語者95%的程度\n\n💙 大腦像肌肉，是訓練出來的。每一次說話、每一次擁抱、每一個遊戲，都是在鍛鍊大腦。`,
+    content: `三歲前最重要的三件事\n\n① 多說話（最重要）\n• 三歲前，每天和孩子說大量的話\n• 鼓勵的語言要比責備多7倍以上（7:1原則）\n• 描述孩子的動作、感受、周圍的事物\n• 說自己的思考過程：「媽媽在想要買哪個...因為...」\n\n② 擁抱和溫暖的互動\n• 安全的依附關係是大腦發展的基礎\n• 每6個月可以設定一個互動主題（例如：這個月多讀繪本）\n• 溫暖的眼神、笑容、肢體接觸都是大腦的「肥料」\n\n③ 一起玩\n• 讓孩子主導遊戲\n• 你的角色是「在場的夥伴」，不是老師\n• 自由遊戲比結構性課程對智力發展更有效\n\n語言發展時間軸（完整版）：\n• 牙牙學語（0–6月）\n• 9個月：模仿大人說話、理解簡單詞彙\n• 1歲：說出「爸爸」「媽媽」\n• 1.5歲：認識5個以上詞彙，能指認身體部位\n• 2歲：說短句子（媽媽走、要水）\n• 3歲：語音清晰度達75%（陌生人可聽懂）\n• 4歲：說複雜句子，語音基本清晰\n• 5歲：接近成人語言能力\n• 10歲前學英文，可達母語者95%的程度\n\n💙 大腦像肌肉，是訓練出來的。每一次說話、每一次擁抱、每一個遊戲，都是在鍛鍊大腦。`,
   },
 ]
 
@@ -272,15 +273,6 @@ interface LearningRecord {
   type: 'book' | 'exam' | 'milestone'
   desc: string
   analyzed: boolean
-}
-
-interface PhotoRecord {
-  id: string
-  date: string
-  sortDate: number
-  imageData: string
-  note: string
-  page: string
 }
 
 const BOOK_ANALYSIS: {
@@ -326,7 +318,6 @@ const EDU_HUANG_TOPICS = [
     id: 'intelligence',
     emoji: '🧠',
     title: '智力發展',
-    badge: '黃瑽寧醫師',
     bgColor: '#F0F4FF',
     borderColor: '#B8C5E8',
     headerColor: '#3A5AA0',
@@ -349,7 +340,6 @@ const EDU_HUANG_TOPICS = [
     id: 'language',
     emoji: '🗣️',
     title: '語言力',
-    badge: '黃瑽寧醫師',
     bgColor: '#FFF8F0',
     borderColor: '#F5D5A8',
     headerColor: '#B07548',
@@ -372,7 +362,6 @@ const EDU_HUANG_TOPICS = [
     id: 'focus',
     emoji: '🎯',
     title: '專注力',
-    badge: '黃瑽寧醫師',
     bgColor: '#F5FFF5',
     borderColor: '#A8D5A8',
     headerColor: '#2E7B2E',
@@ -395,7 +384,6 @@ const EDU_HUANG_TOPICS = [
     id: 'school-choice',
     emoji: '🏫',
     title: '幼兒園選擇指南',
-    badge: '黃瑽寧醫師',
     bgColor: '#F5F0FF',
     borderColor: '#C5B8E8',
     headerColor: '#6B4FA0',
@@ -412,19 +400,6 @@ const EDU_HUANG_TOPICS = [
   },
 ]
 
-const EDU_PHOTO_AI_RESULT = {
-  stage: '學習狀態觀察',
-  stageDesc: '從照片的專注神情來看，寶貝處於積極學習的狀態！眼神有光、身體前傾，都是投入學習的好信號。',
-  trend: '學習成長趨勢',
-  trendDesc: '持續記錄學習歷程照片，可以看出孩子的學習偏好——是動手操作型？視覺型？還是聽覺型？了解孩子的學習風格，才能選擇最適合的學習方式。',
-  suggestions: [
-    '記錄孩子「自主閱讀」的照片，觀察他/她自己選擇看什麼，反映真實興趣',
-    '記錄手工、繪畫、積木等創作過程照片，累積起來是很好的發展記錄',
-    '和孩子一起看這些照片，問「你那時候在做什麼？」培養語言和自我認知',
-  ],
-  cheer: '每一張學習照片都是成長的足跡。你願意這樣陪伴孩子，記錄下來的不只是外貌，更是一個孩子正在發現世界的樣子 💙',
-}
-
 export default function EducationClient() {
   const [mainTab, setMainTab] = useState<MainTab>('knowledge')
   const [knowledgeSection, setKnowledgeSection] = useState<KnowledgeSection>('language')
@@ -435,15 +410,6 @@ export default function EducationClient() {
   ])
   const [showForm, setShowForm] = useState(false)
   const [openAccordion, setOpenAccordion] = useState<string | null>(null)
-  const [photos, setPhotos] = useState<PhotoRecord[]>(() => {
-    if (typeof window === 'undefined') return []
-    try {
-      const saved = localStorage.getItem('edu_photos')
-      return saved ? JSON.parse(saved) : []
-    } catch { return [] }
-  })
-  const [showPhotoAI, setShowPhotoAI] = useState(false)
-
   function toggleAccordion(id: string) {
     setOpenAccordion(prev => prev === id ? null : id)
   }
@@ -460,47 +426,6 @@ export default function EducationClient() {
     setRecords(r => [...r, { id: Date.now().toString(), ...recordForm, analyzed: false }])
     setShowForm(false)
     setRecordForm({ date: new Date().toISOString().split('T')[0], type: 'milestone', desc: '' })
-  }
-
-  function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-    Array.from(files).forEach((file, idx) => {
-      const photoDate = new Date(file.lastModified)
-      const dateStr = photoDate.toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-      const reader = new FileReader()
-      reader.onload = (ev) => {
-        const img = new Image()
-        img.onload = () => {
-          const canvas = document.createElement('canvas')
-          const maxSize = 800
-          let w = img.width, h = img.height
-          if (w > maxSize || h > maxSize) {
-            if (w > h) { h = h * maxSize / w; w = maxSize }
-            else { w = w * maxSize / h; h = maxSize }
-          }
-          canvas.width = w; canvas.height = h
-          canvas.getContext('2d')?.drawImage(img, 0, 0, w, h)
-          const compressed = canvas.toDataURL('image/jpeg', 0.7)
-          const newPhoto: PhotoRecord = {
-            id: `${Date.now()}_${idx}_${Math.random().toString(36).slice(2)}`,
-            date: dateStr,
-            sortDate: photoDate.getTime(),
-            imageData: compressed,
-            note: '',
-            page: 'education',
-          }
-          setPhotos(prev => {
-            const updated = [...prev, newPhoto].sort((a, b) => (b.sortDate ?? 0) - (a.sortDate ?? 0))
-            localStorage.setItem('edu_photos', JSON.stringify(updated))
-            return updated
-          })
-        }
-        img.src = ev.target?.result as string
-      }
-      reader.readAsDataURL(file)
-    })
-    e.target.value = ''
   }
 
   return (
@@ -615,7 +540,7 @@ export default function EducationClient() {
                   <div className="flex items-center gap-2 mb-3">
                     <MessageSquare size={15} style={{ color: '#7B9EBD' }} />
                     <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>語言力深度指南</h3>
-                    <span className="evidence-badge">黃瑽寧醫師</span>
+                    
                   </div>
                   <div className="space-y-2">
                     {LANGUAGE_EXTRA_TOPICS.map(topic => (
@@ -699,7 +624,7 @@ export default function EducationClient() {
                 <div className="flex items-center gap-2 mb-3">
                   <Lightbulb size={15} style={{ color: '#7B9EBD' }} />
                   <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>智力發展深度指南</h3>
-                  <span className="evidence-badge">黃瑽寧醫師</span>
+                  
                 </div>
                 <div className="space-y-2">
                   {INTELLIGENCE_TOPICS.map(topic => (
@@ -772,7 +697,7 @@ export default function EducationClient() {
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp size={15} style={{ color: '#7B9EBD' }} />
                   <h3 className="font-bold text-sm" style={{ color: '#2D3436' }}>專注力與學習深度指南</h3>
-                  <span className="evidence-badge">黃瑽寧醫師</span>
+                  
                 </div>
                 <div className="space-y-2">
                   {FOCUS_TOPICS.map(topic => (
@@ -804,11 +729,11 @@ export default function EducationClient() {
             </div>
           )}
 
-          {/* 黃瑽寧醫師課程：教育發展 */}
+          {/* 教育發展 */}
           <div className="px-5 py-5 space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <Shield size={16} style={{ color: '#7B9EBD' }} />
-              <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>黃瑽寧醫師課程</h2>
+              <h2 className="font-bold text-base" style={{ color: '#2D3436' }}>育兒知識課程</h2>
               <span className="evidence-badge">教育發展</span>
             </div>
             <div className="space-y-3">
@@ -823,7 +748,6 @@ export default function EducationClient() {
                       <span style={{ fontSize: 20 }}>{topic.emoji}</span>
                       <div className="text-left">
                         <div className="font-bold text-sm" style={{ color: topic.headerColor }}>{topic.title}</div>
-                        <div className="text-xs" style={{ color: topic.headerColor, opacity: 0.7 }}>{topic.badge}</div>
                       </div>
                     </div>
                     <ChevronDown
@@ -884,122 +808,10 @@ export default function EducationClient() {
             </div>
           </section>
 
-          {/* 學習相簿 */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="font-bold" style={{ color: '#2D3436' }}>學習相簿 📸</h2>
-              <span className="text-xs px-2 py-1 rounded-xl font-semibold" style={{ background: '#EBF4FF', color: '#5E85A3' }}>{photos.length} 張</span>
-            </div>
+          {/* 智能拍照分析 */}
+          <SmartPhotoAnalyzer page="education" storageKey="edu_photos" label="學習" />
 
-            {/* 累積鼓勵訊息 */}
-            {photos.length > 0 && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl mb-3" style={{ background: 'linear-gradient(135deg, #EBF8EB, #D8F5D8)', border: '1px solid #A8D8A8' }}>
-                <span style={{ fontSize: 16 }}>✨</span>
-                <p className="text-xs font-semibold" style={{ color: '#3A7A3A' }}>
-                  已累積 {photos.length} 張學習記錄
-                  {photos.length >= 10 ? '，AI 分析越來越準確了！🎯' : photos.length >= 5 ? '，繼續加油，累積越多分析越精準！' : '，再多幾張，學習模式就會清晰起來！'}
-                </p>
-              </div>
-            )}
-
-            {/* 上傳按鈕區 */}
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#7B9EBD', background: 'linear-gradient(135deg, #F0F7FF, #EBF4FF)' }}>
-                <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handlePhotoUpload} />
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
-                  <Camera size={18} className="text-white" />
-                </div>
-                <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>立即拍照</span>
-              </label>
-              <label className="flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-dashed cursor-pointer active:opacity-70" style={{ borderColor: '#B07548', background: 'linear-gradient(135deg, #FFF8F0, #FDF0E8)' }}>
-                <input type="file" accept="image/*" multiple className="hidden" onChange={handlePhotoUpload} />
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #D4885A, #B07548)' }}>
-                  <span style={{ fontSize: 18 }}>📸</span>
-                </div>
-                <span className="text-xs font-bold" style={{ color: '#B07548' }}>批次導入</span>
-              </label>
-            </div>
-            <p className="text-[10px] text-center mb-3" style={{ color: '#8E9EAD' }}>批次導入會自動讀取照片日期，按時間排序</p>
-
-            {/* 時間軸相簿 */}
-            {photos.length > 0 && (() => {
-              const groups: Record<string, PhotoRecord[]> = {}
-              photos.forEach(p => {
-                const d = new Date(p.sortDate ?? Date.now())
-                const key = `${d.getFullYear()}年${String(d.getMonth() + 1).padStart(2, '0')}月`
-                if (!groups[key]) groups[key] = []
-                groups[key].push(p)
-              })
-              const sortedGroups = Object.entries(groups).sort(([a], [b]) => b.localeCompare(a))
-              return (
-                <div className="space-y-4 mb-3">
-                  {sortedGroups.map(([month, monthPhotos]) => (
-                    <div key={month}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-2 h-2 rounded-full" style={{ background: '#7B9EBD' }} />
-                        <span className="text-xs font-bold" style={{ color: '#5E85A3' }}>{month}</span>
-                        <span className="text-[10px]" style={{ color: '#8E9EAD' }}>{monthPhotos.length} 張</span>
-                      </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        {monthPhotos.map(photo => (
-                          <div key={photo.id} className="relative aspect-square rounded-xl overflow-hidden" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
-                            <img src={photo.imageData} alt="學習記錄" className="w-full h-full object-cover" />
-                            <div className="absolute bottom-0 left-0 right-0 px-1 py-0.5" style={{ background: 'rgba(0,0,0,0.45)' }}>
-                              <p className="text-white text-[9px] text-center">{photo.date}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )
-            })()}
-
-            {photos.length > 0 && (
-              <button
-                onClick={() => setShowPhotoAI(true)}
-                className="w-full py-3 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 mb-2"
-                style={{ background: 'linear-gradient(135deg, #A8C5DA, #5E85A3)' }}
-              >
-                <Sparkles size={16} />AI 分析學習狀態（{photos.length} 張）
-              </button>
-            )}
-
-            {showPhotoAI && (
-              <div className="mt-1 space-y-3">
-                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #EBF4FF, #F0F8FF)', border: '1px solid #C5D8E8' }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span style={{ fontSize: 18 }}>🔍</span>
-                    <p className="font-bold text-sm" style={{ color: '#5E85A3' }}>{EDU_PHOTO_AI_RESULT.stage}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#2D3436' }}>{EDU_PHOTO_AI_RESULT.stageDesc}</p>
-                </div>
-                <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span style={{ fontSize: 18 }}>📈</span>
-                    <p className="font-bold text-sm" style={{ color: '#2D3436' }}>{EDU_PHOTO_AI_RESULT.trend}</p>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#6B7B8D' }}>{EDU_PHOTO_AI_RESULT.trendDesc}</p>
-                </div>
-                <div className="p-4 rounded-2xl border" style={{ background: '#EBF8EB', borderColor: '#A8D8A8' }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: '#3A7A3A' }}>📷 記錄建議</p>
-                  {EDU_PHOTO_AI_RESULT.suggestions.map((s, i) => (
-                    <div key={i} className="flex items-start gap-2 mb-1.5">
-                      <CheckCircle2 size={13} className="shrink-0 mt-0.5" style={{ color: '#5A8A5A' }} />
-                      <p className="text-xs leading-relaxed" style={{ color: '#2D3436' }}>{s}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="p-4 rounded-2xl" style={{ background: 'linear-gradient(135deg, #7B9EBD, #5E85A3)' }}>
-                  <p className="text-sm leading-relaxed text-white">{EDU_PHOTO_AI_RESULT.cheer}</p>
-                </div>
-                <p className="text-xs text-center" style={{ color: '#8E9EAD' }}>* 此為模擬分析，非醫療診斷</p>
-              </div>
-            )}
-          </section>
-
-          {/* AI 分析工具 */}
+                    {/* AI 分析工具 */}
           <section>
             <h2 className="font-bold mb-3" style={{ color: '#2D3436' }}>AI 學習分析</h2>
             <div className="space-y-3">
