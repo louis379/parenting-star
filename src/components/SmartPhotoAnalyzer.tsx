@@ -176,6 +176,30 @@ function getRandomAnalysis(page: AnalysisPage): AnalysisResult {
   return pool[Math.floor(Math.random() * pool.length)]
 }
 
+async function analyzePhotoWithAI(imageBase64: string, analysisType: AnalysisPage): Promise<AnalysisResult | null> {
+  try {
+    const res = await fetch('/api/analyze-photo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64, analysisType }),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    if (!data.success || !data.result) return null
+    const r = data.result
+    return {
+      strengths: r.positives ?? [],
+      suggestions: r.suggestions ?? [],
+      weeklyGoal: r.weeklyGoal ?? '',
+      cheer: r.encouragement ?? '',
+      pageSpecificLabel: r.analysis?.label ?? '',
+      pageSpecificItems: r.analysis?.items ?? [],
+    }
+  } catch {
+    return null
+  }
+}
+
 function compressToDataURL(file: File, maxSize: number, quality: number): Promise<string> {
   return new Promise((resolve) => {
     const reader = new FileReader()
@@ -246,11 +270,11 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
       return updated
     })
 
-    // Simulate AI processing
-    setTimeout(() => {
-      setAnalysis(getRandomAnalysis(page))
+    // 呼叫真正的 Claude Vision API，失敗時 fallback 到 mock data
+    analyzePhotoWithAI(preview, page).then(result => {
+      setAnalysis(result ?? getRandomAnalysis(page))
       setIsAnalyzing(false)
-    }, 1200)
+    })
 
     e.target.value = ''
   }
@@ -394,7 +418,7 @@ export default function SmartPhotoAnalyzer({ page, storageKey, label }: SmartPho
             {isAnalyzing ? (
               <div className="flex flex-col items-center gap-3 py-4">
                 <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin" style={{ borderColor: '#7B9EBD', borderTopColor: 'transparent' }} />
-                <p className="text-xs" style={{ color: '#8E9EAD' }}>AI 正在分析照片…</p>
+                <p className="text-xs" style={{ color: '#8E9EAD' }}>AI 正在分析中，請稍候…</p>
               </div>
             ) : analysis && latestImage ? (
               <div className="space-y-3">
