@@ -144,7 +144,6 @@ export default function PlacesClient({ initialPlaces }: { initialPlaces?: any[] 
   const [hasFiltered, setHasFiltered] = useState(false)
 
   const filtered = useMemo(() => {
-    if (!hasFiltered) return []
     return places.filter(p => {
       if (filter.city && p.city !== filter.city) return false
       if (filter.indoorOutdoor === 'indoor' && !p.is_indoor) return false
@@ -273,26 +272,25 @@ export default function PlacesClient({ initialPlaces }: { initialPlaces?: any[] 
           </button>
 
           {/* 篩選摘要 */}
-          {hasFiltered && (
-            <div className="flex items-center justify-between">
-              <p className="text-xs" style={{ color: '#8E9EAD' }}>共找到 {filtered.length} 個景點</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs" style={{ color: '#8E9EAD' }}>共找到 {filtered.length} 個景點</p>
+            {hasFiltered && (
               <button onClick={() => { setFilter(DEFAULT_FILTER); setHasFiltered(false) }} className="text-xs flex items-center gap-1" style={{ color: '#C45A5A' }}>
                 <X size={12} />清除篩選
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* 結果列表 */}
-          {hasFiltered ? (
-            <div className="space-y-3">
-              {filtered.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-4xl mb-3">🔍</p>
-                  <p style={{ color: '#8E9EAD' }}>沒有找到符合條件的景點</p>
-                  <p className="text-xs mt-1" style={{ color: '#8E9EAD' }}>試試放寬篩選條件</p>
-                </div>
-              ) : (
-                filtered.map(place => (
+          <div className="space-y-3">
+            {filtered.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-4xl mb-3">🔍</p>
+                <p style={{ color: '#8E9EAD' }}>沒有找到符合條件的景點</p>
+                <p className="text-xs mt-1" style={{ color: '#8E9EAD' }}>試試放寬篩選條件</p>
+              </div>
+            ) : (
+              filtered.map(place => (
                   <button key={place.id} onClick={() => setSelectedPlace(place)} className="w-full text-left">
                     <div className="p-4 rounded-2xl border" style={{ background: 'white', borderColor: '#E8E0D5' }}>
                       <div className="flex gap-3">
@@ -335,14 +333,7 @@ export default function PlacesClient({ initialPlaces }: { initialPlaces?: any[] 
                   </button>
                 ))
               )}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-5xl mb-4">🗺️</p>
-              <p className="font-semibold mb-2" style={{ color: '#2D3436' }}>設定篩選條件</p>
-              <p className="text-sm" style={{ color: '#6B7B8D' }}>填寫住家地址、過敏內容、孩子年齡等條件<br />找到最適合你們家的親子景點</p>
-            </div>
-          )}
+          </div>
         </div>
       )}
 
